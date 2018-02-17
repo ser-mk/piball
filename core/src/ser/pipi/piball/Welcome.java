@@ -2,8 +2,10 @@ package ser.pipi.piball;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -38,6 +40,15 @@ class Welcome implements Screen {
 
     State state = State.CHOICE;
 
+    final GameInterface gameInterface;
+    final GameInspector  gameInspector;
+    BitmapFont fontGameInspector;
+
+    public Welcome(GameInterface gameInterface) {
+        this.gameInterface = gameInterface;
+        gameInspector = new GameInspector(gameInterface);
+    }
+
     @Override
     public void show() {
         spriteBatch = new SpriteBatch();
@@ -47,6 +58,9 @@ class Welcome implements Screen {
         }
         confirmFlag = new Texture("confirm.png");
         approveFlag = new Texture("approve.png");
+        fontGameInspector = new BitmapFont();
+        fontGameInspector.setColor(Color.RED);
+        fontGameInspector.getData().setScale(2);
         reset_variable();
     }
 
@@ -63,6 +77,7 @@ class Welcome implements Screen {
     }
 
     private void update(float delta){
+        gameInspector.checkPiPos(delta);
         switch (state) {
             case CHOICE: choice(delta); break;
             case CONFIRM_WAIT: confirm(delta); break;
@@ -112,7 +127,14 @@ class Welcome implements Screen {
         spriteBatch.begin();
         spriteBatch.draw(field, 0, 0, Settings.screen_width, Settings.screen_heigth);
         renderFlags();
+        print_status();
         spriteBatch.end();
+    }
+
+    private void print_status(){
+        final String status = gameInspector.getStatus();
+        fontGameInspector.draw(spriteBatch,status,
+                Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/2);
     }
 
     private int getNumberTouchedFlag(){
