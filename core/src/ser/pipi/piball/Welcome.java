@@ -125,7 +125,7 @@ class Welcome implements Screen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
-        spriteBatch.draw(field, 0, 0, Settings.screen_width, Settings.screen_heigth);
+        spriteBatch.draw(field, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         renderFlags();
         print_status();
         spriteBatch.end();
