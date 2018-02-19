@@ -17,5 +17,7 @@ public class AndroidLauncher extends AndroidApplication {
 		config.useWakelock = true;
 		config.hideStatusBar = true;
 		initialize(new piball(), config);
+		Gdx.input.setInputProcessor(new PII_Stub());
+		Gdx.input.setCatchBackKey(true);
 	}
 }
