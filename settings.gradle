@@ -1,1 +1,2 @@
-include 'desktop', 'android', 'core'
+include 'desktop', 'android', 'core', ':PiLib'
+project(':PiLib').projectDir = new File('EXT/PiLib')
