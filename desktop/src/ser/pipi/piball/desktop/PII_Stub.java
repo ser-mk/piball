@@ -63,6 +63,8 @@ class PII_Stub implements GameInterface, InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        //Gdx.app.log(TAG, "touchDragged screenX " + screenX + " " + pointer);
+        position = (screenX*GameInterface.POSITION_MAX) / Gdx.graphics.getWidth();
         return false;
     }
 

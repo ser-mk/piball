@@ -11,10 +11,11 @@ import com.badlogic.gdx.InputProcessor;
 class PII_Stub implements GameInterface, InputProcessor {
 
     final String TAG = this.getClass().getName();
+    int position = 0;
 
     @Override
     public int getPosition() {
-        return 0;
+        return position;
     }
 
     @Override
@@ -55,6 +56,7 @@ class PII_Stub implements GameInterface, InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        position = (screenX*GameInterface.POSITION_MAX) / Gdx.graphics.getWidth();
         return false;
     }
 
