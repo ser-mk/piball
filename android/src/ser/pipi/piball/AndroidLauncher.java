@@ -6,8 +6,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import ser.pipi.piball.piball;
+import sermk.pipi.pilib.PiBind;
 
 public class AndroidLauncher extends AndroidApplication {
+	final String TAG = this.getClass().getName();
+
+	PiBind piBind;
+
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -16,9 +21,17 @@ public class AndroidLauncher extends AndroidApplication {
 		config.useCompass = false;
 		config.useWakelock = true;
 		config.hideStatusBar = true;
-		PII_Stub pii = new PII_Stub();
+		piBind = new PiBind(this);
+		PII_Stub pii = new PII_Stub(piBind);
 		initialize(new piball(pii), config);
 		Gdx.input.setInputProcessor(pii);
 		Gdx.input.setCatchBackKey(true);
+	}
+
+	@Override
+	protected void onDestroy() {
+		Gdx.app.log(TAG, "onDestroy");
+		piBind.release(this);
+		super.onDestroy();
 	}
 }

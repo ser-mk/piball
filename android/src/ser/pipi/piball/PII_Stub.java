@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
+import sermk.pipi.pilib.PiBind;
+
 /**
  * Created by ser on 17.02.18.
  */
@@ -11,7 +13,13 @@ import com.badlogic.gdx.InputProcessor;
 class PII_Stub implements GameInterface, InputProcessor {
 
     final String TAG = this.getClass().getName();
-    int position = 0;
+    int state = GameInterface.NORMAL_WORK;
+    int position = 500;
+    PiBind piBind;
+
+    public PII_Stub(PiBind piBind) {
+        this.piBind = piBind;
+    }
 
     @Override
     public int getPosition() {
@@ -19,16 +27,29 @@ class PII_Stub implements GameInterface, InputProcessor {
     }
 
     @Override
-    public void release() {
+    public int getState() {
+        return state;
+    }
 
+    @Override
+    public void update() {
+        final int answer = piBind.getPosition();
+        //Gdx.app.log(TAG, "position " + position);
+        if(answer > GameInterface.POSITION_UNDEFINED) {
+            position = answer;
+        } else {
+            Gdx.app.log(TAG, "position " + position);
+            state = answer;
+        }
     }
 
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == Keys.BACK){
             // Respond to the back button click here
-            Gdx.app.log(TAG, "keycode " + keycode);
-            return true;
+            Gdx.app.log(TAG, "back press keycode " + keycode);
+            Gdx.app.exit();
+            //return true;
         }
         return false;
     }
