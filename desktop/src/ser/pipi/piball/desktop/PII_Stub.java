@@ -13,7 +13,8 @@ import com.badlogic.gdx.InputProcessor;
 class PII_Stub implements GameInterface, InputProcessor {
 
     final String TAG = this.getClass().getName();
-    int position = 0;
+    int state = GameInterface.NORMAL_WORK;
+    int position = 500;
 
     @Override
     public int getPosition() {
@@ -21,9 +22,17 @@ class PII_Stub implements GameInterface, InputProcessor {
     }
 
     @Override
-    public void release() {
+    public int getState() {
+        return state;
+    }
+
+    @Override
+    public void update() {
+        /*
         Gdx.app.log(TAG, "exit");
         Gdx.app.exit();
+        return state;
+        */
     }
 
     @Override
@@ -35,13 +44,13 @@ class PII_Stub implements GameInterface, InputProcessor {
     public boolean keyUp(int keycode) {
         if(keycode == Input.Keys.C){
             Gdx.app.log(TAG, "CLOSE_GAME");
-            position = GameInterface.CLOSE_GAME;
+            state = GameInterface.CLOSE_GAME;
         } else if (keycode == Input.Keys.X){
             Gdx.app.log(TAG, "CONNECTED_PROBLEM");
-            position = GameInterface.CONNECTED_PROBLEM;
+            state = GameInterface.CONNECTED_PROBLEM;
         } else if (keycode == Input.Keys.SPACE){
             Gdx.app.log(TAG, "POSITION_UNDEFINED");
-            position = GameInterface.POSITION_UNDEFINED;
+            state = GameInterface.POSITION_UNDEFINED;
         }
         return false;
     }
@@ -65,6 +74,7 @@ class PII_Stub implements GameInterface, InputProcessor {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         //Gdx.app.log(TAG, "touchDragged screenX " + screenX + " " + pointer);
         position = (screenX*GameInterface.POSITION_MAX) / Gdx.graphics.getWidth();
+        state = GameInterface.NORMAL_WORK;
         return false;
     }
 
