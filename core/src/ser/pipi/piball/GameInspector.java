@@ -1,10 +1,12 @@
 package ser.pipi.piball;
 
+import com.badlogic.gdx.Gdx;
+
 /**
  * Created by ser on 18.02.18.
  */
 
-class GameInspector {
+public class GameInspector {
 
     GameInterface pii;
     public GameInspector(GameInterface pii) {
@@ -19,7 +21,7 @@ class GameInspector {
     private float wait_exit = 0;
 
     public void checkPiPos(float delta){
-        checkPI(pii.getPosition(),delta);
+        checkPI(pii.getState(),delta);
     }
 
     public void checkPI(int pos, float delta){
@@ -36,7 +38,8 @@ class GameInspector {
 
         wait_exit += delta;
         if(wait_exit > TIMEOUT_EXIT){
-            pii.release();
+            //pii.update();
+            Gdx.app.exit();
         }
     }
 
