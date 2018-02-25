@@ -21,11 +21,13 @@ public class RenderSystem {
     Texture field;
     BitmapFont fontGoal;
 
-    StateStore stateStore;
+    final StateStore stateStore;
+    final LocalState localState;
 
-    public RenderSystem(StateStore stateStore) {
+    public RenderSystem(StateStore stateStore, LocalState localState) {
 
         this.stateStore = stateStore;
+        this.localState = localState;
         shapeRenderer = new ShapeRenderer();
         spriteBatch = new SpriteBatch();
 
@@ -53,15 +55,22 @@ public class RenderSystem {
 
         spriteBatch.begin();
         goalStatistic();
+        print_status();
         spriteBatch.end();
+    }
+
+    private void print_status(){
+        final String status = localState.status;
+        fontGoal.draw(spriteBatch,status,
+                Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/2);
     }
 
     private void paddleSelf(){
         shapeRenderer.setColor(255 / 255.0f, 109 / 255.0f, 120 / 255.0f, 1);
 
         // Draws the rectangle from myWorld (Using ShapeType.Filled)
-        shapeRenderer.rect(this.stateStore.paddleSelf.getX(), this.stateStore.paddleSelf.getY(),
-                this.stateStore.paddleSelf.getWidth(), this.stateStore.paddleSelf.getHeight());
+        shapeRenderer.rect(this.localState.paddleSelf.getX(), this.localState.paddleSelf.getY(),
+                this.localState.paddleSelf.getWidth(), this.localState.paddleSelf.getHeight());
     }
 
     private void paddleEnemy(){

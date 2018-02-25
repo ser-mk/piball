@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 
+import ser.pipi.piball.engine.LocalController;
+import ser.pipi.piball.engine.LocalState;
 import ser.pipi.piball.engine.RenderSystem;
 import ser.pipi.piball.engine.StateController;
 import ser.pipi.piball.engine.StateStore;
@@ -16,13 +18,16 @@ public class Arena implements Screen {
 
     RenderSystem render;
     StateController stateController;
+    LocalController localController;
 
     public Arena(GameInterface gameInterface) {
 
         SettingsStruct ss = new SettingsStruct();
         StateStore stateStore = new StateStore(ss);
+        LocalState localState = new LocalState(ss);
+        localController = new LocalController(localState, gameInterface);
         stateController = new StateController(stateStore, gameInterface);
-        render = new RenderSystem(stateStore);
+        render = new RenderSystem(stateStore, localState);
     }
 
     @Override
@@ -31,8 +36,8 @@ public class Arena implements Screen {
 
     @Override
     public void render(float delta) {
+        localController.update(delta);
         stateController.update(delta);
-
         Gdx.gl.glClearColor(0, 0.5f, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         render.update();

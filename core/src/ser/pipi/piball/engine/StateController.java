@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import ser.pipi.piball.GameInspector;
 import ser.pipi.piball.GameInterface;
 
 /**
@@ -16,8 +17,9 @@ public class StateController {
 
     final String TAG = this.getClass().getName();
 
-    StateStore stateStore;
-    GameInterface gameInterface;
+    final StateStore stateStore;
+    final GameInterface gameInterface;
+
     Rectangle borderLine;
 
     public StateController(StateStore stateStore, GameInterface gameInterface) {
@@ -27,7 +29,8 @@ public class StateController {
     }
 
     public void update(float delta){
-        paddleSelf();
+        gameInterface.update();
+        paddleSelf(delta);
         ball(delta);
         reflection();
         int goal = goal();
@@ -36,8 +39,11 @@ public class StateController {
         }
     }
 
-    private void paddleSelf(){
+    private void paddleSelf(float delta){
         final int pos = gameInterface.getPosition();
+        if (pos < GameInterface.POSITION_MIN){
+            return;
+        }
         final float XP = (Gdx.graphics.getWidth()*pos)/gameInterface.POSITION_MAX;
         stateStore.paddleSelf.setX(XP);
         stateStore.paddleEnemy.setX(XP);
