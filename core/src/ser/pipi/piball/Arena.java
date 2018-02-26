@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import ser.pipi.piball.engine.LocalController;
 import ser.pipi.piball.engine.LocalState;
 import ser.pipi.piball.engine.RenderSystem;
+import ser.pipi.piball.engine.SoundSystem;
 import ser.pipi.piball.engine.StateController;
 import ser.pipi.piball.engine.StateStore;
 
@@ -16,9 +17,10 @@ import ser.pipi.piball.engine.StateStore;
 
 public class Arena implements Screen {
 
-    RenderSystem render;
-    StateController stateController;
-    LocalController localController;
+    final RenderSystem render;
+    final SoundSystem soundSystem;
+    final StateController stateController;
+    final LocalController localController;
 
     public Arena(GameInterface gameInterface) {
 
@@ -28,6 +30,7 @@ public class Arena implements Screen {
         localController = new LocalController(localState, gameInterface);
         stateController = new StateController(stateStore, gameInterface);
         render = new RenderSystem(stateStore, localState);
+        soundSystem = new SoundSystem(stateStore, localState);
     }
 
     @Override
@@ -41,6 +44,7 @@ public class Arena implements Screen {
         Gdx.gl.glClearColor(0, 0.5f, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         render.update();
+        soundSystem.update();
     }
 
     @Override

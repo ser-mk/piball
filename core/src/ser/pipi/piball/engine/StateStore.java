@@ -18,6 +18,8 @@ public class StateStore {
     Vector2 ballVelocity;
     int selfGoal;
     int enemyGoal;
+    String[] soundEffect;
+    String musicFon;
 
     public StateStore(SettingsStruct ss) {
         final float X_MID = Gdx.graphics.getWidth()/2;
@@ -34,5 +36,8 @@ public class StateStore {
         final float Y_VELOCITY = -88;
         ballVelocity = new Vector2(X_VELOCITY, Y_VELOCITY);
         selfGoal = enemyGoal = 0;
+
+        soundEffect = new String[0];
+        musicFon = SoundSystem.getDefaultMusic();
     }
 }
