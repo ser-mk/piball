@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import pipi.piball.Asserts.SoundsList;
 
 /**
  * Created by ser on 26.02.18.
@@ -26,25 +29,23 @@ public class SoundSystem {
     }
 
     private void initSounds(){
-        final String kick = "kick.wav";
-        sounds.put(kick,
+
+        sounds.put(SoundsList.effects.kick,
                 Gdx.audio.newSound(Gdx.files.internal(
-                        "sounds/" + kick)));
-        final String referee = "referee.wav";
-        sounds.put(referee,
+                        "sounds/" + SoundsList.effects.kick)));
+        sounds.put(SoundsList.effects.referee,
                 Gdx.audio.newSound(Gdx.files.internal(
-                        "sounds/" + referee)));
+                        "sounds/" + SoundsList.effects.referee)));
     }
 
     private void initMusics(){
-        final String stadium = "stadium.wav";
-        musics.put(stadium,
+
+        musics.put(SoundsList.musics.stadium,
                 Gdx.audio.newMusic(Gdx.files.internal(
-                        "musics/" + stadium)));
-        final String goal = "goal.wav";
-        musics.put(goal,
+                        "musics/" + SoundsList.musics.stadium)));
+        musics.put(SoundsList.musics.goal,
                 Gdx.audio.newMusic(Gdx.files.internal(
-                        "musics/" + goal)));
+                        "musics/" + SoundsList.musics.goal)));
     }
     
     static public String getDefaultMusic(){
@@ -52,7 +53,8 @@ public class SoundSystem {
     }
 
     public void update(){
-
+        effects();
+        musicFon();
     }
     
     
@@ -75,7 +77,7 @@ public class SoundSystem {
     final String EMPTY_MUSIC = new String();
     private String currentMusic = EMPTY_MUSIC;
 
-    private void music_fon(){
+    private void musicFon(){
         final String musicState = stateStore.musicFon;
         if(musicState == null)
             return;
@@ -85,11 +87,30 @@ public class SoundSystem {
         if(!musics.containsKey(musicState))
             return;
 
+        if(musicState == currentMusic)
+            return;
+
         if (currentMusic != EMPTY_MUSIC )
             musics.get(currentMusic).stop();
 
         currentMusic = musicState;
         musics.get(currentMusic).setLooping(true);
         musics.get(currentMusic).play();
+    }
+
+    public static boolean appendSound(ArrayList<String> soundList, String effect){
+        if(soundList.contains(effect)){
+            return false;
+        }
+        soundList.add(effect);
+        return true;
+    }
+
+    public static boolean removeSound(ArrayList<String> soundList, String effect){
+        if(!soundList.contains(effect)){
+            return false;
+        }
+        soundList.remove(effect);
+        return true;
     }
 }
