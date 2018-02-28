@@ -12,6 +12,7 @@ public class piball extends Game {
 
 	@Override
 	public void create () {
-		setScreen(new Welcome(this.pii));
+		//setScreen(new Welcome(this.pii));
+		setScreen(new Arena(this.pii));
 	}
 }
