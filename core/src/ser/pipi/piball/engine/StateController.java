@@ -6,7 +6,10 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import ser.pipi.piball.GameInspector;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import pipi.piball.Asserts.SoundsList;
 import ser.pipi.piball.GameInterface;
 
 /**
@@ -32,7 +35,8 @@ public class StateController {
         gameInterface.update();
         paddleSelf(delta);
         ball(delta);
-        reflection();
+        final boolean wasReflection = reflection();
+        reflectionEffect(wasReflection);
         int goal = goal();
         if(goal != 0){
             resetMatch(goal);
@@ -50,7 +54,7 @@ public class StateController {
     }
 
     private float valueBallVelocity(){
-        return 155;
+        return 222;
     }
 
     private void ball(float delta){
@@ -58,6 +62,20 @@ public class StateController {
         float new_x_pos = stateStore.ball.x + delta_pos.x;
         float new_y_pos = stateStore.ball.y + delta_pos.y;
         stateStore.ball.setPosition(new_x_pos, new_y_pos);
+    }
+
+
+
+    private void reflectionEffect(boolean wasReflection){
+        ArrayList<String> list = new ArrayList( Arrays.asList(stateStore.soundEffect));
+
+        if (wasReflection){
+            Gdx.app.log(TAG, "appendSound " + SoundsList.effects.kick);
+            SoundSystem.appendSound(list, SoundsList.effects.kick);
+        } else {
+            SoundSystem.removeSound(list, SoundsList.effects.kick);
+        }
+        stateStore.soundEffect = list.toArray(new String[0]);
     }
 
     private Vector2 reflectPaddleBall(Circle ball, Vector2 velocityBall,
@@ -76,22 +94,24 @@ public class StateController {
         return new_velocity;
     }
 
-    private void reflection(){
+    private boolean reflection(){
         if(Intersector.overlaps(stateStore.ball,stateStore.paddleSelf)){
             stateStore.ballVelocity = reflectPaddleBall(stateStore.ball, stateStore.ballVelocity,
                     stateStore.paddleSelf, -22);
+            return true;
         }
 
         if(Intersector.overlaps(stateStore.ball,stateStore.paddleEnemy)){
             stateStore.ballVelocity = reflectPaddleBall(stateStore.ball, stateStore.ballVelocity,
                     stateStore.paddleEnemy, +22);
+            return true;
         }
 
-        IntersectionBorderLine(stateStore.ball, stateStore.ballVelocity, borderLine);
+        return IntersectionBorderLine(stateStore.ball, stateStore.ballVelocity, borderLine);
     }
 
     private boolean noTouchBorderLine = true;
-    private void IntersectionBorderLine(Circle ball, Vector2 ballVelocity, Rectangle borderLine){
+    private boolean IntersectionBorderLine(Circle ball, Vector2 ballVelocity, Rectangle borderLine){
 
         int rotateBall = checkIntersectionBorderLine(stateStore.ball, borderLine);
 
@@ -107,6 +127,7 @@ public class StateController {
                 noTouchBorderLine = true;
                 //Gdx.app.log(TAG, "noTouchBorderLine " + noTouchBorderLine);
         }
+        return !noTouchBorderLine;
     }
 
     static Vector2 reflectVertcalVector(Vector2 velocity){
