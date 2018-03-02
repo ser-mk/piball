@@ -24,7 +24,7 @@ public class LocalController {
 
     public void update(float delta){
         gameInspector.checkPiPos(delta);
-        localStore.status = gameInspector.getStatus();
+        localStore.statusPI = gameInspector.getStatus();
 
         final int pos = gameInterface.getPosition();
         if (pos < GameInterface.POSITION_MIN){

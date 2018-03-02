@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-import ser.pipi.piball.Settings;
-
 /**
  * Created by ser on 19.02.18.
  */
@@ -60,9 +58,13 @@ public class RenderSystem {
     }
 
     private void print_status(){
-        final String status = localState.status;
-        fontGoal.draw(spriteBatch,status,
+        final String statusPI = localState.statusPI;
+        fontGoal.draw(spriteBatch,statusPI,
                 Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/2);
+
+        final String statusNET = localState.statusNET;
+        fontGoal.draw(spriteBatch,statusNET,
+                Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/2 - fontGoal.getLineHeight()*2);
     }
 
     private void paddleSelf(){
