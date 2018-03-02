@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -98,7 +99,7 @@ public class SoundSystem {
         musics.get(currentMusic).play();
     }
 
-    public static boolean appendSound(ArrayList<String> soundList, String effect){
+    private static boolean appendSound(ArrayList<String> soundList, String effect){
         if(soundList.contains(effect)){
             return false;
         }
@@ -106,11 +107,23 @@ public class SoundSystem {
         return true;
     }
 
-    public static boolean removeSound(ArrayList<String> soundList, String effect){
+    private static boolean removeSound(ArrayList<String> soundList, String effect){
         if(!soundList.contains(effect)){
             return false;
         }
         soundList.remove(effect);
         return true;
+    }
+
+    public static String[] appendSound(String[] soundEffect, String effect){
+        ArrayList<String> list = new ArrayList( Arrays.asList(soundEffect));
+        appendSound(list, effect);
+        return list.toArray(new String[0]);
+    }
+
+    public static String[] removeSound(String[] soundEffect, String effect){
+        ArrayList<String> list = new ArrayList( Arrays.asList(soundEffect));
+        removeSound(list, effect);
+        return list.toArray(new String[0]);
     }
 }

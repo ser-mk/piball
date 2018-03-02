@@ -43,6 +43,9 @@ public class StateController {
         int goal = reflactionSystem.goal(stateStore);
         if(goal != 0){
             resetMatch(goal);
+            stateStore.soundEffect = SoundSystem.appendSound(stateStore.soundEffect, SoundsList.effects.referee);
+        } else {
+            stateStore.soundEffect = SoundSystem.removeSound(stateStore.soundEffect, SoundsList.effects.referee);
         }
     }
 
@@ -70,15 +73,13 @@ public class StateController {
 
 
     private void reflectionEffect(boolean wasReflection){
-        ArrayList<String> list = new ArrayList( Arrays.asList(stateStore.soundEffect));
 
         if (wasReflection){
             Gdx.app.log(TAG, "appendSound " + SoundsList.effects.kick);
-            SoundSystem.appendSound(list, SoundsList.effects.kick);
+            stateStore.soundEffect = SoundSystem.appendSound(stateStore.soundEffect, SoundsList.effects.kick);
         } else {
-            SoundSystem.removeSound(list, SoundsList.effects.kick);
+            stateStore.soundEffect = SoundSystem.removeSound(stateStore.soundEffect, SoundsList.effects.kick);
         }
-        stateStore.soundEffect = list.toArray(new String[0]);
     }
 
     private boolean reflection() {
