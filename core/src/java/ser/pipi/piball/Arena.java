@@ -21,14 +21,15 @@ public class Arena implements Screen {
     final SoundSystem soundSystem;
     final StateController stateController;
     final LocalController localController;
+    final NetworkInterface networkInterface;
 
-    public Arena(GameInterface gameInterface) {
+    public Arena(Piball piball) {
 
-        SettingsStruct ss = new SettingsStruct();
+        SettingsStruct ss = piball.getSettingsStruct();
         StateStore stateStore = new StateStore(ss);
         LocalState localState = new LocalState(ss);
-        localController = new LocalController(localState, gameInterface);
-        stateController = new StateController(ss, stateStore, gameInterface);
+        localController = new LocalController(localState, piball.getGameInterface());
+        stateController = new StateController(ss, stateStore, piball.getGameInterface());
         render = new RenderSystem(stateStore, localState);
         soundSystem = new SoundSystem(stateStore, localState);
     }

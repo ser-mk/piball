@@ -44,8 +44,8 @@ class Welcome implements Screen {
     final GameInspector  gameInspector;
     BitmapFont fontGameInspector;
 
-    public Welcome(GameInterface gameInterface) {
-        this.gameInterface = gameInterface;
+    public Welcome(Piball piball) {
+        this.gameInterface = piball.getGameInterface();
         gameInspector = new GameInspector(gameInterface);
     }
 

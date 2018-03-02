@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import ser.pipi.piball.piball;
+
 import sermk.pipi.pilib.PiBind;
 
 public class AndroidLauncher extends AndroidApplication {
@@ -23,7 +23,7 @@ public class AndroidLauncher extends AndroidApplication {
 		config.hideStatusBar = true;
 		piBind = new PiBind(this);
 		PII_Stub pii = new PII_Stub(piBind);
-		initialize(new piball(pii), config);
+		initialize(new Piball(pii), config);
 		Gdx.input.setInputProcessor(pii);
 		Gdx.input.setCatchBackKey(true);
 	}

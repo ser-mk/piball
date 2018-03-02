@@ -18,7 +18,7 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "ser.pipi.piball"
+        applicationId "ser.pipi.Piball"
         minSdkVersion 24
         targetSdkVersion 26
         versionCode 1
@@ -71,7 +71,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'ser.pipi.piball/ser.pipi.piball.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'ser.pipi.Piball/ser.pipi.Piball.AndroidLauncher'
 }
 
 // sets up the Android Idea project, using the old Ant based build.
