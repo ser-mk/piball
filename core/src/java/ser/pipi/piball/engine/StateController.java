@@ -22,13 +22,15 @@ public class StateController {
 
     final StateStore stateStore;
     final GameInterface gameInterface;
+    final ReflactionSystem reflactionSystem;
 
-    Rectangle borderLine;
 
     public StateController(StateStore stateStore, GameInterface gameInterface) {
         this.stateStore = stateStore;
         this.gameInterface = gameInterface;
-        this.borderLine = new Rectangle(0,0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        this.reflactionSystem = new ReflactionSystem(
+                new Rectangle(
+                        0,0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight()));
     }
 
     public void update(float delta){
@@ -37,7 +39,8 @@ public class StateController {
         ball(delta);
         final boolean wasReflection = reflection();
         reflectionEffect(wasReflection);
-        int goal = goal();
+
+        int goal = reflactionSystem.goal(stateStore);
         if(goal != 0){
             resetMatch(goal);
         }
@@ -78,96 +81,8 @@ public class StateController {
         stateStore.soundEffect = list.toArray(new String[0]);
     }
 
-    private Vector2 reflectPaddleBall(Circle ball, Vector2 velocityBall,
-                                   Rectangle paddle, float focus){
-        final float x_mid_paddle = paddle.getX() + paddle.getWidth()/2;
-        float y_focus_paddle;
-        if(focus > 0) {
-            y_focus_paddle = paddle.getY() + paddle.getHeight() + focus;
-        } else {
-            y_focus_paddle = paddle.getY() + focus;
-        }
-        float x_ball_velocity = ball.x - x_mid_paddle;
-        float y_ball_velocity = ball.y - y_focus_paddle;
-        Vector2 new_velocity = new Vector2(x_ball_velocity, y_ball_velocity);
-        new_velocity.nor().scl(valueBallVelocity());
-        return new_velocity;
-    }
-
-    private boolean reflection(){
-        if(Intersector.overlaps(stateStore.ball,stateStore.paddleSelf)){
-            stateStore.ballVelocity = reflectPaddleBall(stateStore.ball, stateStore.ballVelocity,
-                    stateStore.paddleSelf, -22);
-            return true;
-        }
-
-        if(Intersector.overlaps(stateStore.ball,stateStore.paddleEnemy)){
-            stateStore.ballVelocity = reflectPaddleBall(stateStore.ball, stateStore.ballVelocity,
-                    stateStore.paddleEnemy, +22);
-            return true;
-        }
-
-        return IntersectionBorderLine(stateStore.ball, stateStore.ballVelocity, borderLine);
-    }
-
-    private boolean noTouchBorderLine = true;
-    private boolean IntersectionBorderLine(Circle ball, Vector2 ballVelocity, Rectangle borderLine){
-
-        int rotateBall = checkIntersectionBorderLine(stateStore.ball, borderLine);
-
-        if(rotateBall != 0){
-            //rotateBall = ballVelocity.angle() > 180 ? -rotateBall : rotateBall;
-            if(noTouchBorderLine) {
-                //ballVelocity.rotate90(rotateBall);
-                stateStore.ballVelocity = reflectVertcalVector(stateStore.ballVelocity);
-                Gdx.app.log(TAG, "RotateBall " + rotateBall);
-                noTouchBorderLine = false;
-            }
-        } else {
-                noTouchBorderLine = true;
-                //Gdx.app.log(TAG, "noTouchBorderLine " + noTouchBorderLine);
-        }
-        return !noTouchBorderLine;
-    }
-
-    static Vector2 reflectVertcalVector(Vector2 velocity){
-        Vector2 rotateVelocity = velocity.cpy();
-        final float angle = rotateVelocity.angle();
-        float rotateAngle = angle < 180 ? 180 - angle : 540-angle;
-        rotateVelocity.setAngle(rotateAngle);
-        return rotateVelocity;
-    }
-
-    static private int checkIntersectionBorderLine(Circle ball, Rectangle borderLine){
-        //left border
-        if(ball.x - ball.radius <= borderLine.getX()){
-            return -1;
-        }
-        if(ball.x + ball.radius >= borderLine.getX() + borderLine.getWidth()){
-            return 1;
-        }
-        return 0;
-    }
-
-    private int goal(){
-        int goal = checkGoal(stateStore.ball, borderLine);
-        if(goal == 0)
-            return 0;
-        if(goal > 0){
-            stateStore.selfGoal +=1;
-        } else {
-            stateStore.enemyGoal += 1;
-        }
-        return goal;
-    }
-
-    static private int  checkGoal(Circle ball, Rectangle goalLine){
-        if(goalLine.getY() > ball.y)
-            return -1;
-        if(goalLine.getY() + goalLine.getHeight() < ball.y)
-            return +1;
-
-        return 0;
+    private boolean reflection() {
+        return reflactionSystem.check(stateStore);
     }
 
     private void resetMatch(int goal){
