@@ -28,7 +28,7 @@ public class Arena implements Screen {
         StateStore stateStore = new StateStore(ss);
         LocalState localState = new LocalState(ss);
         localController = new LocalController(localState, gameInterface);
-        stateController = new StateController(stateStore, gameInterface);
+        stateController = new StateController(ss, stateStore, gameInterface);
         render = new RenderSystem(stateStore, localState);
         soundSystem = new SoundSystem(stateStore, localState);
     }

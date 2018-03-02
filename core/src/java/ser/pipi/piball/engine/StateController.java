@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 import pipi.piball.Asserts.SoundsList;
 import ser.pipi.piball.GameInterface;
+import ser.pipi.piball.SettingsStruct;
 
 /**
  * Created by ser on 20.02.18.
@@ -25,7 +26,7 @@ public class StateController {
     final ReflactionSystem reflactionSystem;
 
 
-    public StateController(StateStore stateStore, GameInterface gameInterface) {
+    public StateController(SettingsStruct ss, StateStore stateStore, GameInterface gameInterface) {
         this.stateStore = stateStore;
         this.gameInterface = gameInterface;
         this.reflactionSystem = new ReflactionSystem(
