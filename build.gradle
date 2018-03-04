@@ -67,7 +67,7 @@ project(":core") {
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        
+        compile "com.esotericsoftware:kryonet:2.22.0-RC1"
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.mockito:mockito-core:2.2.7"
