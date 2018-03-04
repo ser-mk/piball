@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ser.pipi.piball" >
 
-    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="26" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="26" />
 
     <application
         android:allowBackup="true"
