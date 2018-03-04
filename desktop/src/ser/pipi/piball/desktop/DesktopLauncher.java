@@ -6,16 +6,29 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import ser.pipi.piball.Settings;
 import ser.pipi.piball.Piball;
+import ser.pipi.piball.SettingsStruct;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
+
+		System.out.println("arg : " + arg[0] + " " + arg[1]);
+
+		final SettingsStruct ss = new SettingsStruct();
+		final boolean server = arg[0].equals("s");
+		final int bankport = Integer.parseInt(arg[1]);
+		ss.server = server;
+		ss.bankPort = bankport;
+
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.title = "ball";
+		config.title = server ? "server" : "client";
 		config.width = Settings.screen_width;
 		config.height = Settings.screen_heigth;
 		config.resizable = false;
 		final PII_Stub pii = new PII_Stub();
-		new LwjglApplication(new Piball(pii), config);
+		//new LwjglApplication(new Piball(pii), config);
+
+		new LwjglApplication(new Piball(pii,ss), config);
+
 		Gdx.input.setInputProcessor(pii);
 
 	}
