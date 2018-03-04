@@ -1,4 +1,4 @@
-package pipi.piball.engine;
+package ser.pipi.piball.engine;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
  * Created by ser on 27.02.18.
  */
 public class SoundSystemTest {
+    /*
     @Test
     public void appendSound() throws Exception {
         ArrayList<String> test = new ArrayList<String>(
@@ -34,5 +35,5 @@ public class SoundSystemTest {
         SoundSystem.removeSound(test,"c");
         Assert.assertEquals(test.size(),2);
     }
-
+*/
 }
