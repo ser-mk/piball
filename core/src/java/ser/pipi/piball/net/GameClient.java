@@ -1,0 +1,116 @@
+package ser.pipi.piball.net;
+
+import com.badlogic.gdx.Gdx;
+import com.esotericsoftware.kryonet.Client;
+import com.esotericsoftware.kryonet.Connection;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.List;
+
+import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.engine.LocalState;
+
+import ser.pipi.piball.net.Network.ConnectionState;
+
+/**
+ * Created by ser on 02.03.18.
+ */
+
+public class GameClient extends  NetworkBaseClass {
+
+    final String TAG = this.getClass().getName();
+
+    final private Client client;
+    final SettingsStruct ss;
+
+    InetAddress server;
+
+    public GameClient(SettingsStruct ss, LocalState localState) {
+        super(localState);
+        this.ss = ss;
+        client = new Client();
+        super.init(client);
+    }
+
+    private List<InetAddress> discoverServer(){
+        List<InetAddress> hosts = client.discoverHosts(
+                Network.portBrodcast(ss.bankPort), ss.timeoutDiscoverHost);
+        Gdx.app.log(TAG,"InetAddress : " + hosts);
+
+        return  hosts;
+    }
+
+    private boolean tryConnect(InetAddress inetAddress){
+        try {
+            client.start();
+            client.connect(ss.timeoutServerConnect,
+                    inetAddress,
+                    Network.portTCP(ss.bankPort),
+                    Network.portUDP(ss.bankPort));
+            state = ConnectionState.CONNECTED_PLAYER;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Gdx.app.log(TAG, " @@@@@@@@@" +  e.toString());
+            state = ConnectionState.NETWORK_EXCEPTION;
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void received(Connection connection, Object object) {
+        Gdx.app.log(TAG, "received: " + object.toString());
+    }
+
+    static public void localHostCut(List<InetAddress> addresses){
+        try {
+            final InetAddress localHost = InetAddress.getByName("localhost");
+            Gdx.app.log("localHostCut", "getLocalHost : " + localHost);
+            while (addresses.contains(localHost)) {
+                addresses.remove(localHost);
+            }
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    @Override
+    public void disconnected(Connection connection) {
+        super.disconnected(connection);
+        Gdx.app.log(TAG,"disconnected : " + connection);
+        server = null;
+    }
+
+
+    @Override
+    public boolean noWaitPlayer(float delta) {
+        if (server != null){
+            return true;
+        }
+
+        if (state == ConnectionState.CONNECTED_PLAYER) {
+            return true;
+        }
+
+        final List<InetAddress> servers = discoverServer();
+        localHostCut(servers);
+        if(servers.size() == 0 ){
+            state = ConnectionState.WAIT_PLAYER;
+            return false;
+        }
+
+        if(servers.size() > 1 ){
+            state = ConnectionState.COLLISION_PLAYER;
+            return false;
+        }
+
+        return tryConnect(servers.get(0));
+
+    }
+
+}
