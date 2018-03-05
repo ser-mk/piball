@@ -18,12 +18,13 @@ import ser.pipi.piball.net.Network.ConnectionState;
  * Created by ser on 02.03.18.
  */
 
-public class GameClient extends  NetworkBaseClass {
+public class GameClient extends  NetworkBaseClass implements Runnable {
 
     final String TAG = this.getClass().getName();
 
     final private Client client;
     final SettingsStruct ss;
+    Thread discoverThread;
 
     InetAddress server;
 
@@ -31,6 +32,7 @@ public class GameClient extends  NetworkBaseClass {
         super(localState);
         this.ss = ss;
         client = new Client();
+        discoverThread = new Thread(this);
         super.init(client);
     }
 
@@ -89,7 +91,7 @@ public class GameClient extends  NetworkBaseClass {
 
     @Override
     public boolean noWaitPlayer(float delta) {
-        if (server != null){
+        if (server != null) {
             return true;
         }
 
@@ -97,20 +99,33 @@ public class GameClient extends  NetworkBaseClass {
             return true;
         }
 
-        final List<InetAddress> servers = discoverServer();
-        localHostCut(servers);
-        if(servers.size() == 0 ){
-            state = ConnectionState.WAIT_PLAYER;
-            return false;
+        if (!discoverThread.isAlive()) {
+            discoverThread = new Thread(this);
+            discoverThread.start();
         }
 
-        if(servers.size() > 1 ){
-            state = ConnectionState.COLLISION_PLAYER;
-            return false;
-        }
-
-        return tryConnect(servers.get(0));
-
+        return false;
     }
 
+
+    @Override
+    public void run() {
+        List<InetAddress> servers = discoverServer();
+        while(servers.size() != 1) {
+            servers = discoverServer();
+            localHostCut(servers);
+
+            if (servers.size() == 0) {
+                state = ConnectionState.WAIT_PLAYER;
+                continue;
+            }
+
+            if (servers.size() > 1) {
+                state = ConnectionState.COLLISION_PLAYER;
+                continue;
+            }
+        }
+
+        while(!tryConnect(servers.get(0))){}
+    }
 }
