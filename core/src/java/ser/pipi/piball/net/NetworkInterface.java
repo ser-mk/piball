@@ -10,4 +10,6 @@ public interface NetworkInterface {
     boolean noWaitPlayer(float delta);
     void setStatus(float delta);
 
+    void release();
+
 }

@@ -107,6 +107,11 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
         return false;
     }
 
+    @Override
+    public void release() {
+
+    }
+
 
     @Override
     public void run() {

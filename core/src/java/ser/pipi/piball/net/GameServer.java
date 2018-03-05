@@ -62,4 +62,9 @@ public class GameServer extends NetworkBaseClass {
 
         return false;
     }
+
+    @Override
+    public void release() {
+        
+    }
 }
