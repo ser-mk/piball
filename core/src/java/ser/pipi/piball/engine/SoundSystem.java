@@ -16,14 +16,14 @@ import pipi.piball.Asserts.SoundsList;
  */
 
 public class SoundSystem {
-    final StateStore stateStore;
+    final AllObjectsState allObjectsState;
     final LocalState localState;
     
     final private Map<String, Sound> sounds = new HashMap<String, Sound>();
     final private Map<String, Music> musics = new HashMap<String, Music>();
 
-    public SoundSystem(StateStore stateStore, LocalState localState) {
-        this.stateStore = stateStore;
+    public SoundSystem(AllObjectsState allObjectsState, LocalState localState) {
+        this.allObjectsState = allObjectsState;
         this.localState = localState;
         initSounds();
         initMusics();
@@ -61,7 +61,7 @@ public class SoundSystem {
     
     
     private void effects(){
-        final String[] soundEffect = stateStore.soundEffect;
+        final String[] soundEffect = allObjectsState.soundEffect;
         if(soundEffect == null)
             return;
         if (soundEffect.length == 0)
@@ -79,7 +79,7 @@ public class SoundSystem {
     private String currentMusic = EMPTY_MUSIC;
 
     private void musicFon(){
-        final String musicState = stateStore.musicFon;
+        final String musicState = allObjectsState.musicFon;
         if(musicState == null)
             return;
         if (musicState.isEmpty())

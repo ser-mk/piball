@@ -1,9 +1,7 @@
 package ser.pipi.piball.engine;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -24,8 +22,8 @@ class ReflactionSystem {
         this.borderLine = borderLine;
     }
 
-    public boolean check(StateStore stateStore){
-        final ReflectObject reflect = checkBall(stateStore);
+    public boolean check(AllObjectsState allObjectsState){
+        final ReflectObject reflect = checkBall(allObjectsState);
         if (reflect == ReflectObject.NONE){
             lastReflect = reflect;
             return false;
@@ -38,12 +36,12 @@ class ReflactionSystem {
         switch (reflect){
             case LEFT_BORDER:
             case RIGHT_BORDER:
-                stateStore.ballVelocity = forwardXReflectBall(stateStore.ballVelocity);
+                allObjectsState.ballVelocity = forwardXReflectBall(allObjectsState.ballVelocity);
                 break;
             case SELF_PADDLE:
             case ENEMY_PADDLE:
-                stateStore.ballVelocity = paddleReflectBall(
-                        stateStore, reflect);
+                allObjectsState.ballVelocity = paddleReflectBall(
+                        allObjectsState, reflect);
                 break;
         }
 
@@ -52,20 +50,20 @@ class ReflactionSystem {
         return true;
     }
 
-    private ReflectObject checkBall(StateStore stateStore){
-        if(Intersector.overlaps(stateStore.ball,stateStore.paddleSelf)){
+    private ReflectObject checkBall(AllObjectsState allObjectsState){
+        if(Intersector.overlaps(allObjectsState.ball, allObjectsState.paddleSelf)){
             return ReflectObject.SELF_PADDLE;
         }
 
-        if(Intersector.overlaps(stateStore.ball,stateStore.paddleEnemy)){
+        if(Intersector.overlaps(allObjectsState.ball, allObjectsState.paddleEnemy)){
             return ReflectObject.ENEMY_PADDLE;
         }
 
         //left border
-        if(stateStore.ball.x - stateStore.ball.radius <= borderLine.getX()){
+        if(allObjectsState.ball.x - allObjectsState.ball.radius <= borderLine.getX()){
             return ReflectObject.LEFT_BORDER;
         }
-        if(stateStore.ball.x + stateStore.ball.radius >= borderLine.getX() + borderLine.getWidth()){
+        if(allObjectsState.ball.x + allObjectsState.ball.radius >= borderLine.getX() + borderLine.getWidth()){
             return ReflectObject.RIGHT_BORDER;
         }
 
@@ -82,18 +80,18 @@ class ReflactionSystem {
     final static float deltaGap = 2;
 
 
-    static public Vector2 paddleReflectBall(StateStore stateStore, ReflectObject type){
+    static public Vector2 paddleReflectBall(AllObjectsState allObjectsState, ReflectObject type){
         Vector2 focusVector = new Vector2();
         if (type == ReflectObject.ENEMY_PADDLE){
-            focusVector = stateStore.paddleEnemy.getCenter(focusVector);
+            focusVector = allObjectsState.paddleEnemy.getCenter(focusVector);
             focusVector.y = FOCUS;
         } else {
-            focusVector = stateStore.paddleSelf.getCenter(focusVector);
+            focusVector = allObjectsState.paddleSelf.getCenter(focusVector);
             focusVector.y = -FOCUS;
         }
-        focusVector.x = focusVector.x - stateStore.ball.x;
+        focusVector.x = focusVector.x - allObjectsState.ball.x;
 
-        return focusReflectBall(stateStore.ballVelocity, focusVector);
+        return focusReflectBall(allObjectsState.ballVelocity, focusVector);
     }
 
     static public Vector2 focusReflectBall(Vector2 velocityBall, Vector2 focus){
@@ -127,14 +125,14 @@ class ReflactionSystem {
         return false;
     }
 
-    public int goal(StateStore stateStore){
-        int goal = checkGoal(stateStore.ball, borderLine);
+    public int goal(AllObjectsState allObjectsState){
+        int goal = checkGoal(allObjectsState.ball, borderLine);
         if(goal == 0)
             return 0;
         if(goal > 0){
-            stateStore.selfGoal +=1;
+            allObjectsState.selfGoal +=1;
         } else {
-            stateStore.enemyGoal += 1;
+            allObjectsState.enemyGoal += 1;
         }
         return goal;
     }

@@ -4,16 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 
+import ser.pipi.piball.engine.AllObjectsState;
 import ser.pipi.piball.engine.LocalController;
 import ser.pipi.piball.engine.LocalState;
 import ser.pipi.piball.engine.RenderSystem;
 import ser.pipi.piball.engine.SoundSystem;
-import ser.pipi.piball.engine.StateController;
-import ser.pipi.piball.engine.StateStore;
 import ser.pipi.piball.engine.SyncSystem;
-import ser.pipi.piball.net.GameClient;
-import ser.pipi.piball.net.GameServer;
-import ser.pipi.piball.net.NetworkInterface;
 
 /**
  * Created by ser on 19.02.18.
@@ -29,12 +25,12 @@ public class Arena implements Screen {
     public Arena(Piball piball) {
 
         SettingsStruct ss = piball.getSettingsStruct();
-        StateStore stateStore = new StateStore(ss);
+        AllObjectsState allObjectsState = new AllObjectsState(ss);
         LocalState localState = new LocalState(ss);
         localController = new LocalController(localState, piball.getGameInterface());
-        render = new RenderSystem(stateStore, localState);
-        soundSystem = new SoundSystem(stateStore, localState);
-        syncSystem = new SyncSystem(ss, stateStore, localState);
+        render = new RenderSystem(allObjectsState, localState);
+        soundSystem = new SoundSystem(allObjectsState, localState);
+        syncSystem = new SyncSystem(ss, allObjectsState, localState);
     }
 
     @Override

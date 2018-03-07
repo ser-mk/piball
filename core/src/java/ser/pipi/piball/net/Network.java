@@ -3,10 +3,9 @@ package ser.pipi.piball.net;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
-import com.esotericsoftware.minlog.Log;
 
+import ser.pipi.piball.engine.AllObjectsState;
 import ser.pipi.piball.engine.LocalState;
-import ser.pipi.piball.engine.StateStore;
 
 /**
  * Created by ser on 02.03.18.
@@ -24,7 +23,7 @@ public class Network {
     static public void register (EndPoint endPoint) {
         //Log.set(Log.LEVEL_DEBUG);
         Kryo kryo = endPoint.getKryo();
-        kryo.register(StateStore.class, new CustJsonSerializer(StateStore.class));
+        kryo.register(AllObjectsState.class, new CustJsonSerializer(AllObjectsState.class));
         kryo.register(LocalState.class, new CustJsonSerializer(LocalState.class));
     }
 

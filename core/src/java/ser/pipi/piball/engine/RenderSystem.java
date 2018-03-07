@@ -19,12 +19,12 @@ public class RenderSystem {
     Texture field;
     BitmapFont fontGoal;
 
-    final StateStore stateStore;
+    final AllObjectsState allObjectsState;
     final LocalState localState;
 
-    public RenderSystem(StateStore stateStore, LocalState localState) {
+    public RenderSystem(AllObjectsState allObjectsState, LocalState localState) {
 
-        this.stateStore = stateStore;
+        this.allObjectsState = allObjectsState;
         this.localState = localState;
         shapeRenderer = new ShapeRenderer();
         spriteBatch = new SpriteBatch();
@@ -76,8 +76,8 @@ public class RenderSystem {
         shapeRenderer.setColor(1.0f, 1.0f, 1.0f, 1);
 
         // Draws the rectangle from myWorld (Using ShapeType.Filled)
-        shapeRenderer.rect(this.stateStore.paddleEnemy.getX(), this.stateStore.paddleEnemy.getY(),
-                this.stateStore.paddleEnemy.getWidth(), this.stateStore.paddleEnemy.getHeight());
+        shapeRenderer.rect(this.allObjectsState.paddleEnemy.getX(), this.allObjectsState.paddleEnemy.getY(),
+                this.allObjectsState.paddleEnemy.getWidth(), this.allObjectsState.paddleEnemy.getHeight());
 
     }
 
@@ -85,15 +85,15 @@ public class RenderSystem {
         shapeRenderer.setColor(87 / 255.0f, 200 / 255.0f, 255 / 255.0f, 1);
 
         // Draws the rectangle from myWorld (Using ShapeType.Filled)
-        shapeRenderer.circle(this.stateStore.ball.x, this.stateStore.ball.y,
-                this.stateStore.ball.radius);
+        shapeRenderer.circle(this.allObjectsState.ball.x, this.allObjectsState.ball.y,
+                this.allObjectsState.ball.radius);
     }
 
     private void goalStatistic(){
 
-        fontGoal.draw(spriteBatch,String.valueOf(stateStore.selfGoal),
+        fontGoal.draw(spriteBatch,String.valueOf(allObjectsState.selfGoal),
                 Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/3);
-        fontGoal.draw(spriteBatch,String.valueOf(stateStore.enemyGoal),
+        fontGoal.draw(spriteBatch,String.valueOf(allObjectsState.enemyGoal),
                 Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()*2/3);
     }
 }

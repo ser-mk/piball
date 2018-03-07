@@ -15,13 +15,13 @@ public class StateController {
 
     final String TAG = this.getClass().getName();
 
-    final StateStore stateStore;
+    final AllObjectsState allObjectsState;
     final ReflactionSystem reflactionSystem;
     final LocalState localStore;
 
 
-    public StateController(SettingsStruct ss, StateStore stateStore, LocalState localStore) {
-        this.stateStore = stateStore;
+    public StateController(SettingsStruct ss, AllObjectsState allObjectsState, LocalState localStore) {
+        this.allObjectsState = allObjectsState;
         this.localStore = localStore;
         this.reflactionSystem = new ReflactionSystem(
                 new Rectangle(
@@ -34,18 +34,18 @@ public class StateController {
         final boolean wasReflection = reflection();
         reflectionEffect(wasReflection);
 
-        int goal = reflactionSystem.goal(stateStore);
+        int goal = reflactionSystem.goal(allObjectsState);
         if(goal != 0){
             resetMatch(goal);
-            stateStore.soundEffect = SoundSystem.appendSound(stateStore.soundEffect, SoundsList.effects.referee);
+            allObjectsState.soundEffect = SoundSystem.appendSound(allObjectsState.soundEffect, SoundsList.effects.referee);
         } else {
-            stateStore.soundEffect = SoundSystem.removeSound(stateStore.soundEffect, SoundsList.effects.referee);
+            allObjectsState.soundEffect = SoundSystem.removeSound(allObjectsState.soundEffect, SoundsList.effects.referee);
         }
     }
 
     private void paddleEnemy(float delta){
         final float XP = localStore.paddleSelf.getX();
-        stateStore.paddleEnemy.setX(XP);
+        allObjectsState.paddleEnemy.setX(XP);
     }
 
     private float valueBallVelocity(){
@@ -53,10 +53,10 @@ public class StateController {
     }
 
     private void ball(float delta){
-        Vector2 delta_pos = stateStore.ballVelocity.cpy().scl(delta);
-        float new_x_pos = stateStore.ball.x + delta_pos.x;
-        float new_y_pos = stateStore.ball.y + delta_pos.y;
-        stateStore.ball.setPosition(new_x_pos, new_y_pos);
+        Vector2 delta_pos = allObjectsState.ballVelocity.cpy().scl(delta);
+        float new_x_pos = allObjectsState.ball.x + delta_pos.x;
+        float new_y_pos = allObjectsState.ball.y + delta_pos.y;
+        allObjectsState.ball.setPosition(new_x_pos, new_y_pos);
     }
 
 
@@ -65,18 +65,18 @@ public class StateController {
 
         if (wasReflection){
             Gdx.app.log(TAG, "appendSound " + SoundsList.effects.kick);
-            stateStore.soundEffect = SoundSystem.appendSound(stateStore.soundEffect, SoundsList.effects.kick);
+            allObjectsState.soundEffect = SoundSystem.appendSound(allObjectsState.soundEffect, SoundsList.effects.kick);
         } else {
-            stateStore.soundEffect = SoundSystem.removeSound(stateStore.soundEffect, SoundsList.effects.kick);
+            allObjectsState.soundEffect = SoundSystem.removeSound(allObjectsState.soundEffect, SoundsList.effects.kick);
         }
     }
 
     private boolean reflection() {
-        return reflactionSystem.check(stateStore);
+        return reflactionSystem.check(allObjectsState);
     }
 
     private void resetMatch(int goal){
-        stateStore.ball.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
-        stateStore.ballVelocity.set(0,goal*valueBallVelocity());
+        allObjectsState.ball.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+        allObjectsState.ballVelocity.set(0,goal*valueBallVelocity());
     }
 }

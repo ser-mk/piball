@@ -22,20 +22,20 @@ public class SyncSystem implements GameNetImpl {
     final StateController stateController;
     final NetworkInterface networkInterface;
     final LocalState localState;
-    final StateStore stateStore;
+    final AllObjectsState allObjectsState;
     final boolean isServer;
 
-    public SyncSystem(SettingsStruct ss, StateStore stateStore, LocalState localState) {
+    public SyncSystem(SettingsStruct ss, AllObjectsState allObjectsState, LocalState localState) {
         isServer = ss.server;
         this.localState = localState;
-        this.stateStore= stateStore;
+        this.allObjectsState = allObjectsState;
         if (isServer){
             networkInterface = new GameServer(ss, this);
         } else {
             networkInterface = new GameClient(ss, this);
         }
 
-        stateController = new StateController(ss, stateStore, localState);
+        stateController = new StateController(ss, allObjectsState, localState);
     }
 
     public void update(float delta){
@@ -47,7 +47,7 @@ public class SyncSystem implements GameNetImpl {
 
         if (isServer) {
             stateController.update(delta);
-            networkInterface.sendState(stateStore);
+            networkInterface.sendState(allObjectsState);
         } else {
             networkInterface.sendState(localState);
         }
@@ -56,21 +56,21 @@ public class SyncSystem implements GameNetImpl {
 
     @Override
     public void recieve(Connection connection, Object object) {
-        if (object instanceof StateStore) {
-            cloneStateStore((StateStore)object);
+        if (object instanceof AllObjectsState) {
+            cloneStateStore((AllObjectsState)object);
         }
 
         if (object instanceof LocalState) {
-            //cloneStateStore((StateStore)object);
+            //cloneStateStore((AllObjectsState)object);
             Gdx.app.log(TAG, "recieve : " + ((LocalState) object).paddleSelf);
         }
     }
 
-    private boolean cloneStateStore(StateStore obj){
+    private boolean cloneStateStore(AllObjectsState obj){
         try{
             for (Field field : obj.getClass().getDeclaredFields()) {
                 field.setAccessible(true);
-                field.set(stateStore, field.get(obj));
+                field.set(allObjectsState, field.get(obj));
             }
             return true;
         }catch(Exception e){

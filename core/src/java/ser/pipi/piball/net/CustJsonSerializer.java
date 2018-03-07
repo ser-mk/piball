@@ -1,14 +1,10 @@
 package ser.pipi.piball.net;
 
-import com.badlogic.gdx.Gdx;
 import com.esotericsoftware.jsonbeans.Json;
-import com.esotericsoftware.jsonbeans.JsonException;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-
-import ser.pipi.piball.engine.StateStore;
 
 /**
  * Created by ser on 06.03.18.
