@@ -1,10 +1,11 @@
 package ser.pipi.piball.net;
 
+
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
+import com.esotericsoftware.minlog.Log;
 
-import ser.pipi.piball.Settings;
-import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.engine.LocalState;
 import ser.pipi.piball.engine.StateStore;
 
 /**
@@ -21,8 +22,10 @@ public class Network {
         COLLISION_PLAYER}
 
     static public void register (EndPoint endPoint) {
+        //Log.set(Log.LEVEL_DEBUG);
         Kryo kryo = endPoint.getKryo();
-        kryo.register(StateStore.class);
+        kryo.register(StateStore.class, new CustJsonSerializer(StateStore.class));
+        kryo.register(LocalState.class, new CustJsonSerializer(LocalState.class));
     }
 
     static final int basePort = 5000;

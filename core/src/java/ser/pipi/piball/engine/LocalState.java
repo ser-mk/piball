@@ -14,6 +14,8 @@ public class LocalState {
     String statusPI;
     public String statusNET;
 
+    public LocalState(){}
+
     public LocalState(SettingsStruct ss) {
         final float X_MID = Gdx.graphics.getWidth()/2;
         final float Y_PADDLE_SELF = ss.yPaddleSelf;
