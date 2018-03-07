@@ -1,16 +1,10 @@
 package ser.pipi.piball.engine;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import pipi.piball.Asserts.SoundsList;
-import ser.pipi.piball.GameInterface;
 import ser.pipi.piball.SettingsStruct;
 
 /**
@@ -22,21 +16,20 @@ public class StateController {
     final String TAG = this.getClass().getName();
 
     final StateStore stateStore;
-    final GameInterface gameInterface;
     final ReflactionSystem reflactionSystem;
+    final LocalState localStore;
 
 
-    public StateController(SettingsStruct ss, StateStore stateStore, GameInterface gameInterface) {
+    public StateController(SettingsStruct ss, StateStore stateStore, LocalState localStore) {
         this.stateStore = stateStore;
-        this.gameInterface = gameInterface;
+        this.localStore = localStore;
         this.reflactionSystem = new ReflactionSystem(
                 new Rectangle(
                         0,0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight()));
     }
 
     public void update(float delta){
-        gameInterface.update();
-        paddleSelf(delta);
+        //paddleEnemy(delta);
         ball(delta);
         final boolean wasReflection = reflection();
         reflectionEffect(wasReflection);
@@ -50,13 +43,8 @@ public class StateController {
         }
     }
 
-    private void paddleSelf(float delta){
-        final int pos = gameInterface.getPosition();
-        if (pos < GameInterface.POSITION_MIN){
-            return;
-        }
-        final float XP = (Gdx.graphics.getWidth()*pos)/gameInterface.POSITION_MAX;
-        stateStore.paddleSelf.setX(XP);
+    private void paddleEnemy(float delta){
+        final float XP = localStore.paddleSelf.getX();
         stateStore.paddleEnemy.setX(XP);
     }
 
