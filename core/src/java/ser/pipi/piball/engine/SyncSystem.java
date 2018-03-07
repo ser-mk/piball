@@ -58,12 +58,29 @@ public class SyncSystem implements GameNetImpl {
     public void recieve(Connection connection, Object object) {
         if (object instanceof AllObjectsState) {
             cloneStateStore((AllObjectsState)object);
+            inversServerState(allObjectsState);
         }
 
         if (object instanceof LocalState) {
-            //cloneStateStore((AllObjectsState)object);
-            Gdx.app.log(TAG, "recieve : " + ((LocalState) object).paddleSelf);
+            final LocalState ls =  (LocalState) object;
+            //Gdx.app.log(TAG, "enemy : " + ls.paddleSelf.getX());
+            inverseLocalPaddle(ls);
+            allObjectsState.paddleEnemy.setX(ls.paddleSelf.getX());
+            allObjectsState.statusPIEnemy = ls.statusPI;
         }
+    }
+
+    private void inversServerState(AllObjectsState server){
+        final float width =  Gdx.graphics.getWidth();
+        final float heigth = Gdx.graphics.getHeight();
+        server.paddleEnemy.x = width - server.paddleSelf.x - server.paddleSelf.width;
+        server.ball.x = width -  server.ball.x;
+        server.ball.y = heigth -  server.ball.y;
+    }
+
+    private void inverseLocalPaddle(LocalState ls){
+        final float width =  Gdx.graphics.getWidth();
+        ls.paddleSelf.x = width - ls.paddleSelf.x - ls.paddleSelf.width;
     }
 
     private boolean cloneStateStore(AllObjectsState obj){

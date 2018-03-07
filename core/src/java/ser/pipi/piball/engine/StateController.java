@@ -29,7 +29,7 @@ public class StateController {
     }
 
     public void update(float delta){
-        //paddleEnemy(delta);
+        paddleSelf(delta);
         ball(delta);
         final boolean wasReflection = reflection();
         reflectionEffect(wasReflection);
@@ -43,9 +43,9 @@ public class StateController {
         }
     }
 
-    private void paddleEnemy(float delta){
+    private void paddleSelf(float delta){
         final float XP = localStore.paddleSelf.getX();
-        allObjectsState.paddleEnemy.setX(XP);
+        allObjectsState.paddleSelf.setX(XP);
     }
 
     private float valueBallVelocity(){
