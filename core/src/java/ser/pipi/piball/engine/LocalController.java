@@ -2,6 +2,8 @@ package ser.pipi.piball.engine;
 
 import com.badlogic.gdx.Gdx;
 
+import java.awt.Rectangle;
+
 import ser.pipi.piball.GameInspector;
 import ser.pipi.piball.GameInterface;
 
@@ -31,8 +33,13 @@ public class LocalController {
             return;
         }
         final float XP = (Gdx.graphics.getWidth()*pos)/gameInterface.POSITION_MAX;
-        localState.paddleSelf.setX(XP);
+        //localState.paddleSelf.setX(XP);
+        setXCenterPaddle(XP);
 
+    }
+
+    private void setXCenterPaddle(float xc){
+        localState.paddleSelf.x = xc - localState.paddleSelf.getWidth()/2;
     }
 
 }
