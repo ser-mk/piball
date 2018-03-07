@@ -10,6 +10,10 @@ import ser.pipi.piball.engine.RenderSystem;
 import ser.pipi.piball.engine.SoundSystem;
 import ser.pipi.piball.engine.StateController;
 import ser.pipi.piball.engine.StateStore;
+import ser.pipi.piball.engine.SyncSystem;
+import ser.pipi.piball.net.GameClient;
+import ser.pipi.piball.net.GameServer;
+import ser.pipi.piball.net.NetworkInterface;
 
 /**
  * Created by ser on 19.02.18.
@@ -19,9 +23,8 @@ public class Arena implements Screen {
 
     final RenderSystem render;
     final SoundSystem soundSystem;
-    final StateController stateController;
     final LocalController localController;
-    final NetworkInterface networkInterface;
+    final SyncSystem syncSystem;
 
     public Arena(Piball piball) {
 
@@ -29,9 +32,9 @@ public class Arena implements Screen {
         StateStore stateStore = new StateStore(ss);
         LocalState localState = new LocalState(ss);
         localController = new LocalController(localState, piball.getGameInterface());
-        stateController = new StateController(ss, stateStore, piball.getGameInterface());
         render = new RenderSystem(stateStore, localState);
         soundSystem = new SoundSystem(stateStore, localState);
+        syncSystem = new SyncSystem(ss, stateStore, localState);
     }
 
     @Override
@@ -41,7 +44,7 @@ public class Arena implements Screen {
     @Override
     public void render(float delta) {
         localController.update(delta);
-        stateController.update(delta);
+        syncSystem.update(delta);
         Gdx.gl.glClearColor(0, 0.5f, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         render.update();
