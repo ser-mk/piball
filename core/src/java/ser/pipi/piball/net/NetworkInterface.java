@@ -7,9 +7,9 @@ package ser.pipi.piball.net;
 public interface NetworkInterface {
 
     void prepare(float delta);
-    boolean noWaitPlayer(float delta);
-    void setStatus(float delta);
-
+    boolean waitPlayer(float delta);
+    void updateStatus(float delta);
+    void sendState(Object object);
     void release();
 
 }
