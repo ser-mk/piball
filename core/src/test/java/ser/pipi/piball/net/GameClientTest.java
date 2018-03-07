@@ -1,22 +1,16 @@
 package ser.pipi.piball.net;
 
-import com.badlogic.gdx.Gdx;
-
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.net.InetAddress;
-
 import ser.pipi.piball.GameTestHeadlessApplication;
 import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.engine.AllObjectsState;
 import ser.pipi.piball.engine.LocalState;
+import ser.pipi.piball.engine.SyncSystem;
 
-import static org.junit.Assert.*;
-
-import com.badlogic.gdx.Gdx;
 //import com.badlogic.gdx.backends.;
-import com.badlogic.gdx.graphics.GL20;
+
 
 /**
  * Created by ser on 04.03.18.
@@ -24,24 +18,48 @@ import com.badlogic.gdx.graphics.GL20;
 public class GameClientTest extends GameTestHeadlessApplication {
     final String TAG = this.getClass().getName();
 
-    GameClient client;
-    GameServer server;
+    SyncSystem syncSystemServer;
+    LocalState localStateServer;
+    AllObjectsState allObjectsStateServer;
+
+    SyncSystem syncSystemClient;
+    LocalState localStateClient;
+    AllObjectsState allObjectsStateClient;
 
     @Before
     public void prepare(){
 
         SettingsStruct ss = new SettingsStruct();
-        LocalState localState = new LocalState(ss);
-        server = new GameServer(ss, localState);
-        client = new GameClient(ss, localState);
+        localStateServer = new LocalState(ss);
+        allObjectsStateServer = new AllObjectsState(ss);
 
-        Assert.assertFalse(server.noWaitPlayer(0));
+        syncSystemServer = new SyncSystem(ss, allObjectsStateServer, localStateServer);
+
+        ss.server = false;
+        localStateClient = new LocalState(ss);
+        allObjectsStateClient = new AllObjectsState(ss);
+        syncSystemClient = new SyncSystem(ss, allObjectsStateClient,localStateClient);
+
+        syncSystemClient.update(0);
+        syncSystemClient.update(0);
     }
 
 
     @Test
     public void localHostCut() throws Exception {
-        Assert.assertTrue(client.noWaitPlayer(0));
+        allObjectsStateServer.selfGoal = 1;
+        while (true){
+            syncSystemServer.update(0);
+            syncSystemClient.update(0);
+            Thread.sleep(1000);
+            if(allObjectsStateClient.selfGoal == allObjectsStateServer.selfGoal){
+                break;
+            }
+        }
+        while (true){
+            syncSystemServer.update(0);
+            syncSystemClient.update(0);
+        }
     }
 
 }
