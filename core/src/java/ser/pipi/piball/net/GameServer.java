@@ -1,13 +1,10 @@
 package ser.pipi.piball.net;
 
-import com.badlogic.gdx.Gdx;
-import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
 
 import java.io.IOException;
 
 import ser.pipi.piball.SettingsStruct;
-import ser.pipi.piball.engine.LocalState;
 
 import ser.pipi.piball.net.Network.ConnectionState;
 
@@ -22,8 +19,8 @@ public class GameServer extends NetworkBaseClass {
     Server broadcastServer;
     Server gameServer;
 
-    public GameServer(SettingsStruct ss, LocalState localState) {
-        super(localState);
+    public GameServer(SettingsStruct ss, GameNetImpl gameNet) {
+        super(gameNet);
         final int bankPort = ss.bankPort;
 
         try {
@@ -48,23 +45,23 @@ public class GameServer extends NetworkBaseClass {
     ConnectionState state = ConnectionState.WAIT_PLAYER;
 
     @Override
-    public void received(Connection connection, Object object) {
-        Gdx.app.log(TAG, "received: " + object.toString());
-    }
-
-    @Override
-    public boolean noWaitPlayer(float delta) {
+    public boolean waitPlayer(float delta) {
         final int qtyConnection = gameServer.getConnections().length;
         if(qtyConnection == 1){
             state = ConnectionState.CONNECTED_PLAYER;
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
+    }
+
+    @Override
+    public void sendState(Object object) {
+        gameServer.sendToAllTCP(object);
     }
 
     @Override
     public void release() {
-        
+
     }
 }

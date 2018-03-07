@@ -10,7 +10,6 @@ import java.net.UnknownHostException;
 import java.util.List;
 
 import ser.pipi.piball.SettingsStruct;
-import ser.pipi.piball.engine.LocalState;
 
 import ser.pipi.piball.net.Network.ConnectionState;
 
@@ -28,8 +27,8 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
 
     InetAddress server;
 
-    public GameClient(SettingsStruct ss, LocalState localState) {
-        super(localState);
+    public GameClient(SettingsStruct ss, GameNetImpl gameNet) {
+        super(gameNet);
         this.ss = ss;
         client = new Client();
         discoverThread = new Thread(this);
@@ -62,11 +61,6 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
         return true;
     }
 
-    @Override
-    public void received(Connection connection, Object object) {
-        Gdx.app.log(TAG, "received: " + object.toString());
-    }
-
     static public void localHostCut(List<InetAddress> addresses){
         try {
             final InetAddress localHost = InetAddress.getByName("localhost");
@@ -90,13 +84,13 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
 
 
     @Override
-    public boolean noWaitPlayer(float delta) {
+    public boolean waitPlayer(float delta) {
         if (server != null) {
-            return true;
+            return false;
         }
 
         if (state == ConnectionState.CONNECTED_PLAYER) {
-            return true;
+            return false;
         }
 
         if (!discoverThread.isAlive()) {
@@ -104,12 +98,19 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
             discoverThread.start();
         }
 
-        return false;
+        return true;
+    }
+
+    @Override
+    public void sendState(Object object) {
+        client.sendTCP(object);
     }
 
     @Override
     public void release() {
-
+        if (discoverThread.isAlive()) {
+            discoverThread.interrupt();
+        }
     }
 
 
