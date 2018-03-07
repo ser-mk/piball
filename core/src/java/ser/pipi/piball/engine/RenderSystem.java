@@ -37,11 +37,6 @@ public class RenderSystem {
     }
 
     public void update(){
-/*
-        spriteBatch.begin();
-        spriteBatch.draw(field, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        spriteBatch.end();
-*/
         // Tells shapeRenderer to begin drawing filled shapes
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         paddleSelf();
@@ -71,8 +66,10 @@ public class RenderSystem {
         shapeRenderer.setColor(255 / 255.0f, 109 / 255.0f, 120 / 255.0f, 1);
 
         // Draws the rectangle from myWorld (Using ShapeType.Filled)
-        shapeRenderer.rect(this.stateStore.paddleSelf.getX(), this.stateStore.paddleSelf.getY(),
-                this.stateStore.paddleSelf.getWidth(), this.stateStore.paddleSelf.getHeight());
+
+        shapeRenderer.rect(this.localState.paddleSelf.getX(), this.localState.paddleSelf.getY(),
+                this.localState.paddleSelf.getWidth(), this.localState.paddleSelf.getHeight());
+
     }
 
     private void paddleEnemy(){
