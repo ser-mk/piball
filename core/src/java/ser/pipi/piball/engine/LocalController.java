@@ -13,25 +13,25 @@ public class LocalController {
 
     final GameInterface gameInterface;
     final GameInspector gameInspector;
-    LocalState localStore;
+    final LocalState localState;
 
 
-    public LocalController(LocalState localStore, GameInterface gameInterface) {
+    public LocalController(LocalState localState, GameInterface gameInterface) {
         this.gameInterface = gameInterface;
-        this.localStore = localStore;
+        this.localState = localState;
         this.gameInspector = new GameInspector(gameInterface);
     }
 
     public void update(float delta){
         gameInspector.checkPiPos(delta);
-        localStore.statusPI = gameInspector.getStatus();
+        localState.statusPI = gameInspector.getStatus();
 
         final int pos = gameInterface.getPosition();
         if (pos < GameInterface.POSITION_MIN){
             return;
         }
         final float XP = (Gdx.graphics.getWidth()*pos)/gameInterface.POSITION_MAX;
-        localStore.paddleSelf.setX(XP);
+        localState.paddleSelf.setX(XP);
 
     }
 
