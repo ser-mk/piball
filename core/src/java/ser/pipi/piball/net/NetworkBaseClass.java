@@ -15,11 +15,11 @@ import ser.pipi.piball.net.Network.ConnectionState;
 public abstract class NetworkBaseClass extends Listener implements NetworkInterface {
 
     final String TAG = this.getClass().getName();
-    final LocalState localState;
+    final GameNetImpl gameNet;
 
-    public NetworkBaseClass(LocalState localState) {
+    public NetworkBaseClass(GameNetImpl gameNet) {
         this.state = ConnectionState.WAIT_PLAYER;
-        this.localState = localState;
+        this.gameNet = gameNet;
     }
 
     protected void init(EndPoint endPoint){
@@ -35,8 +35,8 @@ public abstract class NetworkBaseClass extends Listener implements NetworkInterf
     }
 
     @Override
-    public void setStatus(float delta) {
-        localState.statusNET = getStatus();
+    public void updateStatus(float delta) {
+        gameNet.setStatus(getStatus());
     }
 
     public String getStatus(){
@@ -44,6 +44,11 @@ public abstract class NetworkBaseClass extends Listener implements NetworkInterf
             return "";
 
         return state.toString();
+    }
+
+    @Override
+    public void received(Connection connection, Object object) {
+        gameNet.recieve(connection,object);
     }
 
     @Override
