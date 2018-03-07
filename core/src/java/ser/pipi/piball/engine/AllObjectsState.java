@@ -14,6 +14,7 @@ import ser.pipi.piball.SettingsStruct;
 public class AllObjectsState {
     Rectangle paddleSelf;
     Rectangle paddleEnemy;
+    String statusPIEnemy;
     Circle ball;
     Vector2 ballVelocity;
     public int selfGoal;
@@ -32,6 +33,7 @@ public class AllObjectsState {
         paddleSelf = new Rectangle(X_MID, Y_PADDLE_SELF, WIDTH_PADDLE, HEIGHT_PADDLE);
         paddleEnemy = new Rectangle(paddleSelf);
         paddleEnemy.setY(Gdx.graphics.getHeight() - Y_PADDLE_SELF - HEIGHT_PADDLE);
+        statusPIEnemy = new String();
         final float Y_START_BALL = Gdx.graphics.getHeight()/2;
         final float RADIUS_BALL = ss.radiusBall;
         ball = new Circle(X_MID, Y_START_BALL, RADIUS_BALL);
