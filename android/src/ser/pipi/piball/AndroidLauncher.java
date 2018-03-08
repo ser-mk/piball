@@ -3,6 +3,7 @@ package ser.pipi.piball;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.util.Log;
 import android.view.WindowManager;
 
 import com.badlogic.gdx.Gdx;
@@ -39,9 +40,17 @@ public class AndroidLauncher extends AndroidApplication {
 		config.hideStatusBar = true;
 		piBind = new PiBind(this);
 		PII_Stub pii = new PII_Stub(piBind);
-		initialize(new Piball(pii), config);
+//		initialize(new Piball(pii), config);
+		initialize(new Piball(pii, getSettingsStruct()), config);
 		Gdx.input.setInputProcessor(pii);
 		Gdx.input.setCatchBackKey(true);
+	}
+
+	private SettingsStruct getSettingsStruct(){
+		final SettingsStruct ss = new SettingsStruct();
+		ss.server = this.getIntent().getBooleanExtra("Server",false);
+		Log.d ( "Server", " " + ss.server);
+		return ss;
 	}
 
 	@Override
