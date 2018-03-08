@@ -46,6 +46,7 @@ public class StateController {
     private void paddleSelf(float delta){
         final float XP = localStore.paddleSelf.getX();
         allObjectsState.paddleSelf.setX(XP);
+        allObjectsState.statusPISelf = localStore.statusPI;
     }
 
     private float valueBallVelocity(){

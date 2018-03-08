@@ -60,6 +60,9 @@ public class RenderSystem {
         final String statusNET = localState.statusNET;
         fontGoal.draw(spriteBatch,statusNET,
                 Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/2 - fontGoal.getLineHeight()*2);
+        final String statusPIEnemy = allObjectsState.statusPIEnemy;
+        fontGoal.draw(spriteBatch,statusPIEnemy,
+                Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/2 + fontGoal.getLineHeight()*2);
     }
 
     private void paddleSelf(){

@@ -76,6 +76,7 @@ public class SyncSystem implements GameNetImpl {
         server.paddleEnemy.x = width - server.paddleSelf.x - server.paddleSelf.width;
         server.ball.x = width -  server.ball.x;
         server.ball.y = heigth -  server.ball.y;
+        server.statusPIEnemy = server.statusPISelf;
     }
 
     private void inverseLocalPaddle(LocalState ls){
