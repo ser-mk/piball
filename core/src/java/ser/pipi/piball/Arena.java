@@ -27,7 +27,7 @@ public class Arena implements Screen {
         SettingsStruct ss = piball.getSettingsStruct();
         AllObjectsState allObjectsState = new AllObjectsState(ss);
         LocalState localState = new LocalState(ss);
-        localController = new LocalController(localState, piball.getGameInterface());
+        localController = new LocalController(ss, localState, piball.getGameInterface());
         render = new RenderSystem(allObjectsState, localState);
         soundSystem = new SoundSystem(allObjectsState, localState);
         syncSystem = new SyncSystem(ss, allObjectsState, localState);
