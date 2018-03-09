@@ -18,12 +18,14 @@ public class LocalController {
 
     final String TAG = this.getClass().getName();
 
+
     final GameInterface gameInterface;
     final GameInspector gameInspector;
     final LocalState localState;
     final SettingsStruct ss;
     int current_position = 0;
-    
+    float current_velocity = 0;
+
 
     public LocalController(SettingsStruct ss, LocalState localState, GameInterface gameInterface) {
         this.gameInterface = gameInterface;
@@ -48,13 +50,44 @@ public class LocalController {
         setXCenterPaddle(XP);
     }
 
-    private int filterLFPosition(float delta, int pos){
-        float diff = (pos - current_position)/delta;
-        if (Math.abs(diff) > ss.maxVelocityPaddle){
-            Gdx.app.log(TAG, "max diff " + diff);
-            diff = diff > 0 ? ss.maxVelocityPaddle : -ss.maxVelocityPaddle;
+    private static boolean collinearVelocity(float v1, float v2){
+        if(v1 > 0 && v2 > 0){
+            return true;
         }
-        return current_position + (int)(diff*delta);
+        if (v1 < 0 && v2 < 0){
+            return true;
+        }
+        return false;
+    }
+
+    private static float signV(float v){ return v > 0 ? 1 : -1; }
+
+    private int filterLFPosition(float delta, int pos){
+
+        if(Math.abs(pos - current_position) < ss.deadDiff)
+            return current_position;
+
+        float calcVelocity = (pos - current_position)/delta;
+
+        if(!collinearVelocity(calcVelocity, current_velocity)){
+            calcVelocity = ss.minAccPaddle * signV(calcVelocity);
+        } else { // same diriction
+            if (Math.abs(current_velocity) < ss.minVelocityPaddle){
+                calcVelocity = current_velocity + signV(current_velocity)*ss.minAccPaddle*delta;
+            } else {
+                calcVelocity = current_velocity + signV(current_velocity)*ss.maxAccPaddle*delta;
+            }
+        }
+
+        if(Math.abs(calcVelocity) > ss.maxVelocityPaddle){
+            calcVelocity = ss.maxVelocityPaddle * signV(calcVelocity);
+        }
+
+        //Gdx.app.log(TAG, "calcVelocity " + calcVelocity);
+
+        current_velocity = calcVelocity;
+
+        return current_position + (int)(calcVelocity*delta);
     }
 
     private void setXCenterPaddle(float xc){

@@ -15,6 +15,9 @@ public class SettingsStruct {
     public int timeoutDiscoverHost = 2000;
     public int timeoutServerConnect = 2000;
 
-    public int maxVelocityPaddle = 4000;
-    public int accPaddle = 22;
+    public int deadDiff = 11;
+    public int maxVelocityPaddle = 5555;
+    public int minVelocityPaddle = 55;
+    public int minAccPaddle = 555;
+    public int maxAccPaddle = 2000;
 }
