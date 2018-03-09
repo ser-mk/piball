@@ -57,7 +57,7 @@ public class StateController {
         float new_y_pos = allObjectsState.ball.y + delta_pos.y;
         allObjectsState.ball.setPosition(new_x_pos, new_y_pos);
         if (allObjectsState.ballVelocity.len() < ss.maxBallVelocity) {
-            Gdx.app.log(TAG, "ballVelocity.len() " + allObjectsState.ballVelocity.len());
+            //Gdx.app.log(TAG, "ballVelocity.len() " + allObjectsState.ballVelocity.len());
             allObjectsState.ballVelocity.scl(1 + ss.ballAcc * delta);
         }
     }
@@ -83,5 +83,6 @@ public class StateController {
         final int all_goals = allObjectsState.enemyGoal + allObjectsState.selfGoal;
         final float velocity = ss.startBallVelocity + all_goals * ss.goalStepVelocity;
         allObjectsState.ballVelocity.set(0,goal*velocity);
+        allObjectsState.ballVelocity.limit(ss.maxBallVelocity);
     }
 }
