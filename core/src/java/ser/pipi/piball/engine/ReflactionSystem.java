@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import ser.pipi.piball.SettingsStruct;
+
 /**
  * Created by ser on 01.03.18.
  */
@@ -17,9 +19,11 @@ class ReflactionSystem {
 
     static ReflectObject lastReflect = ReflectObject.NONE;
     final Rectangle borderLine;
+    final SettingsStruct ss;
 
-    public ReflactionSystem(Rectangle borderLine) {
+    public ReflactionSystem(SettingsStruct ss, Rectangle borderLine) {
         this.borderLine = borderLine;
+        this.ss = ss;
     }
 
     public boolean check(AllObjectsState allObjectsState){
@@ -76,18 +80,17 @@ class ReflactionSystem {
         return  newVelocity;
     }
 
-    final static int FOCUS = 220;
-    final static float deltaGap = 2;
+    //final static float deltaGap = 2;
 
 
-    static public Vector2 paddleReflectBall(AllObjectsState allObjectsState, ReflectObject type){
+    private Vector2 paddleReflectBall(AllObjectsState allObjectsState, ReflectObject type){
         Vector2 focusVector = new Vector2();
         if (type == ReflectObject.ENEMY_PADDLE){
             focusVector = allObjectsState.paddleEnemy.getCenter(focusVector);
-            focusVector.y = FOCUS;
+            focusVector.y = ss.focus;
         } else {
             focusVector = allObjectsState.paddleSelf.getCenter(focusVector);
-            focusVector.y = -FOCUS;
+            focusVector.y = -ss.focus;
         }
         focusVector.x = focusVector.x - allObjectsState.ball.x;
 
@@ -110,15 +113,15 @@ class ReflactionSystem {
     }
 
     static public boolean equalsDergee(float degreeRef, float degree, float epsilon){
-        if (Math.abs(degreeRef - degree) < deltaGap){
+        if (Math.abs(degreeRef - degree) < epsilon){
             return true;
         }
 
-        if (Math.abs(360 + degreeRef - degree) < deltaGap){
+        if (Math.abs(360 + degreeRef - degree) < epsilon){
             return true;
         }
 
-        if (Math.abs(degreeRef - degree - 360) < deltaGap){
+        if (Math.abs(degreeRef - degree - 360) < epsilon){
             return true;
         }
 

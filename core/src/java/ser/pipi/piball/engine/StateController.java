@@ -18,12 +18,14 @@ public class StateController {
     final AllObjectsState allObjectsState;
     final ReflactionSystem reflactionSystem;
     final LocalState localStore;
+    final SettingsStruct ss;
 
 
     public StateController(SettingsStruct ss, AllObjectsState allObjectsState, LocalState localStore) {
         this.allObjectsState = allObjectsState;
         this.localStore = localStore;
-        this.reflactionSystem = new ReflactionSystem(
+        this.ss = ss;
+        this.reflactionSystem = new ReflactionSystem(ss,
                 new Rectangle(
                         0,0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight()));
     }
