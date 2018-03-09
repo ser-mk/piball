@@ -49,6 +49,7 @@ public class StateController {
         final float XP = localStore.paddleSelf.getX();
         allObjectsState.paddleSelf.setX(XP);
         allObjectsState.statusPISelf = localStore.statusPI;
+        allObjectsState.flagSelf = localStore.flag;
     }
 
     private void ball(float delta){

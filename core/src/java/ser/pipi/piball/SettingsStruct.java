@@ -25,4 +25,6 @@ public class SettingsStruct {
     public float ballAcc = 0.02f;
     public int maxBallVelocity = 555;
     public int goalStepVelocity = 33;
+
+    public float TIMEOUT_TOUCH_FLAG = 0.5f;
 }

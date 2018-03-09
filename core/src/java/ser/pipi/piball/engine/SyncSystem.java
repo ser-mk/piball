@@ -67,6 +67,7 @@ public class SyncSystem implements GameNetImpl {
             inverseLocalPaddle(ls);
             allObjectsState.paddleEnemy.setX(ls.paddleSelf.getX());
             allObjectsState.statusPIEnemy = ls.statusPI;
+            allObjectsState.flagEnemy = ls.flag;
         }
     }
 
@@ -77,6 +78,7 @@ public class SyncSystem implements GameNetImpl {
         server.ball.x = width -  server.ball.x;
         server.ball.y = heigth -  server.ball.y;
         server.statusPIEnemy = server.statusPISelf;
+        server.flagEnemy = server.flagSelf;
     }
 
     private void inverseLocalPaddle(LocalState ls){

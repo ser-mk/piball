@@ -12,11 +12,13 @@ import ser.pipi.piball.SettingsStruct;
 public class LocalState {
     Rectangle paddleSelf;
     String statusPI;
-    public String statusNET;
+    String statusNET;
+
+    int flag;
 
     public LocalState(){}
 
-    public LocalState(SettingsStruct ss) {
+    public LocalState(SettingsStruct ss, int flag) {
         final float X_MID = Gdx.graphics.getWidth()/2;
         final float Y_PADDLE_SELF = ss.yPaddleSelf;
         final float WIDTH_PADDLE = ss.widthPaddle;
@@ -24,5 +26,6 @@ public class LocalState {
         this.paddleSelf = new Rectangle(X_MID, Y_PADDLE_SELF, WIDTH_PADDLE, HEIGHT_PADDLE);
         this.statusPI = new String();
         this.statusNET = new String();
+        this.flag = flag;
     }
 }

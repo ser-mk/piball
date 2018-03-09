@@ -16,6 +16,9 @@ class Welcome implements Screen {
 
     final String TAG = this.getClass().getName();
 
+    final Piball piball;
+    final SettingsStruct ss;
+
     SpriteBatch spriteBatch;
     Texture field;
     Texture confirmFlag;
@@ -34,7 +37,6 @@ class Welcome implements Screen {
 
     enum State {CHOICE, CONFIRM_WAIT, APPROVE}
 
-    final float MAX_WAIT_TIMEOUT = 2;
     float wait_timeout = 0;
     int selectFlag;
 
@@ -46,6 +48,8 @@ class Welcome implements Screen {
 
     public Welcome(Piball piball) {
         this.gameInterface = piball.getGameInterface();
+        this.piball = piball;
+        this.ss = piball.getSettingsStruct();
         gameInspector = new GameInspector(gameInterface);
     }
 
@@ -110,14 +114,15 @@ class Welcome implements Screen {
 
     private boolean need_wait(float delta){
         wait_timeout +=delta;
-        if(wait_timeout > MAX_WAIT_TIMEOUT)
+        if(wait_timeout > ss.TIMEOUT_TOUCH_FLAG)
             return false;
         return true;
     }
 
     private void approve(float delta){
         if(!need_wait(delta)){
-            Gdx.app.exit();
+            //Gdx.app.exit();
+            piball.startArena(selectFlag);
         }
     }
 

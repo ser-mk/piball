@@ -14,8 +14,10 @@ import ser.pipi.piball.SettingsStruct;
 public class AllObjectsState {
     Rectangle paddleSelf;
     String statusPISelf;
+    int flagSelf;
     Rectangle paddleEnemy;
     String statusPIEnemy;
+    int flagEnemy;
     Circle ball;
     Vector2 ballVelocity;
     public int selfGoal;
@@ -43,6 +45,7 @@ public class AllObjectsState {
         final float Y_VELOCITY = ss.startBallVelocity;
         ballVelocity = new Vector2(X_VELOCITY, Y_VELOCITY);
         selfGoal = enemyGoal = 0;
+        flagSelf = flagEnemy = -1;
 
         soundEffect = new String[0];
         musicFon = SoundSystem.getDefaultMusic();

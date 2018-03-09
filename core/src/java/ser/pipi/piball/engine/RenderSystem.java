@@ -7,11 +7,15 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import ser.pipi.piball.asserts.FlagList;
+
 /**
  * Created by ser on 19.02.18.
  */
 
 public class RenderSystem {
+
+    final String TAG = this.getClass().getName();
 
     ShapeRenderer shapeRenderer;
     SpriteBatch spriteBatch;
@@ -21,6 +25,7 @@ public class RenderSystem {
 
     final AllObjectsState allObjectsState;
     final LocalState localState;
+    final FlagList flagList;
 
     public RenderSystem(AllObjectsState allObjectsState, LocalState localState) {
 
@@ -30,6 +35,8 @@ public class RenderSystem {
         spriteBatch = new SpriteBatch();
 
         field = new Texture("field.jpg");
+
+        this.flagList = new FlagList();
 
         fontGoal = new BitmapFont();
         fontGoal.setColor(Color.RED);
@@ -49,6 +56,7 @@ public class RenderSystem {
         spriteBatch.begin();
         goalStatistic();
         print_status();
+        showFlag();
         spriteBatch.end();
     }
 
@@ -63,6 +71,10 @@ public class RenderSystem {
         final String statusPIEnemy = allObjectsState.statusPIEnemy;
         fontGoal.draw(spriteBatch,statusPIEnemy,
                 Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/2 + fontGoal.getLineHeight()*2);
+
+        final float frameRate = Gdx.graphics.getFramesPerSecond();
+        //Gdx.app.log(TAG, frameRate + " fps");
+        fontGoal.draw(spriteBatch,frameRate + " fps", 0,222);
     }
 
     private void paddleSelf(){
@@ -98,5 +110,35 @@ public class RenderSystem {
                 Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/3);
         fontGoal.draw(spriteBatch,String.valueOf(allObjectsState.enemyGoal),
                 Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()*2/3);
+    }
+
+    final float X_FLAG = 100;
+    final float Y_FLAG = 50;
+    final float FLAG_WIDTH = 600;
+    final float FLAG_HEIGHT = 350;
+
+    private void showFlag(){
+
+        final Color prevColor = spriteBatch.getColor();
+
+        final Color flagColor = prevColor.cpy();
+        flagColor.a = 0.3f;
+
+        spriteBatch.setColor(flagColor);
+
+        int numberFlag = allObjectsState.flagEnemy;
+        if(flagList.consistNumberFlag(numberFlag)){
+            final float Y_FLAG_ENEMY = Gdx.graphics.getHeight() - Y_FLAG - FLAG_HEIGHT;
+            spriteBatch.draw(flagList.getFlag(numberFlag),
+                    X_FLAG, Y_FLAG_ENEMY, FLAG_WIDTH, FLAG_HEIGHT);
+        }
+
+        numberFlag = localState.flag;
+        if(flagList.consistNumberFlag(numberFlag)){
+            spriteBatch.draw(flagList.getFlag(numberFlag),
+                    X_FLAG, Y_FLAG, FLAG_WIDTH, FLAG_HEIGHT);
+        }
+
+        spriteBatch.setColor(prevColor);
     }
 }

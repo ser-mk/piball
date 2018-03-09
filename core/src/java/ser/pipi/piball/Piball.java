@@ -29,7 +29,11 @@ public class Piball extends Game {
 
 	@Override
 	public void create () {
-		//setScreen(new Welcome(this.gameInterface));
-		setScreen(new Arena(this));
+		setScreen(new Welcome(this));
+		//setScreen(new Arena(this));
+	}
+
+	public void startArena(int flag){
+		setScreen(new Arena(this, flag));
 	}
 }

@@ -38,7 +38,6 @@ public class GameInspector {
 
         wait_exit += delta;
         if(wait_exit > TIMEOUT_EXIT){
-            //pii.update();
             Gdx.app.exit();
         }
     }

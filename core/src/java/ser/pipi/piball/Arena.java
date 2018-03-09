@@ -22,11 +22,12 @@ public class Arena implements Screen {
     final LocalController localController;
     final SyncSystem syncSystem;
 
-    public Arena(Piball piball) {
+    public Arena(Piball piball, int flag) {
 
         SettingsStruct ss = piball.getSettingsStruct();
         AllObjectsState allObjectsState = new AllObjectsState(ss);
-        LocalState localState = new LocalState(ss);
+        LocalState localState = new LocalState(ss, flag);
+
         localController = new LocalController(ss, localState, piball.getGameInterface());
         render = new RenderSystem(allObjectsState, localState);
         soundSystem = new SoundSystem(allObjectsState, localState);
