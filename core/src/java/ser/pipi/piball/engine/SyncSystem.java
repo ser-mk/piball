@@ -57,8 +57,8 @@ public class SyncSystem implements GameNetImpl {
     @Override
     public void recieve(Connection connection, Object object) {
         if (object instanceof AllObjectsState) {
+            inversServerState((AllObjectsState)object);
             cloneStateStore((AllObjectsState)object);
-            inversServerState(allObjectsState);
         }
 
         if (object instanceof LocalState) {
