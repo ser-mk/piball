@@ -51,15 +51,15 @@ public class StateController {
         allObjectsState.statusPISelf = localStore.statusPI;
     }
 
-    private float valueBallVelocity(){
-        return 222;
-    }
-
     private void ball(float delta){
         Vector2 delta_pos = allObjectsState.ballVelocity.cpy().scl(delta);
         float new_x_pos = allObjectsState.ball.x + delta_pos.x;
         float new_y_pos = allObjectsState.ball.y + delta_pos.y;
         allObjectsState.ball.setPosition(new_x_pos, new_y_pos);
+        if (allObjectsState.ballVelocity.len() < ss.maxBallVelocity) {
+            Gdx.app.log(TAG, "ballVelocity.len() " + allObjectsState.ballVelocity.len());
+            allObjectsState.ballVelocity.scl(1 + ss.ballAcc * delta);
+        }
     }
 
 
@@ -80,6 +80,8 @@ public class StateController {
 
     private void resetMatch(int goal){
         allObjectsState.ball.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
-        allObjectsState.ballVelocity.set(0,goal*valueBallVelocity());
+        final int all_goals = allObjectsState.enemyGoal + allObjectsState.selfGoal;
+        final float velocity = ss.startBallVelocity + all_goals * ss.goalStepVelocity;
+        allObjectsState.ballVelocity.set(0,goal*velocity);
     }
 }

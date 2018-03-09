@@ -20,4 +20,9 @@ public class SettingsStruct {
     public int minVelocityPaddle = 55;
     public int minAccPaddle = 555;
     public int maxAccPaddle = 2000;
+
+    public int startBallVelocity = 155;
+    public float ballAcc = 0.02f;
+    public int maxBallVelocity = 555;
+    public int goalStepVelocity = 33;
 }

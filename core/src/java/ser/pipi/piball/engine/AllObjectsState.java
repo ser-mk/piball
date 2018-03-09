@@ -40,7 +40,7 @@ public class AllObjectsState {
         final float RADIUS_BALL = ss.radiusBall;
         ball = new Circle(X_MID, Y_START_BALL, RADIUS_BALL);
         final float X_VELOCITY = 0;
-        final float Y_VELOCITY = 0;
+        final float Y_VELOCITY = ss.startBallVelocity;
         ballVelocity = new Vector2(X_VELOCITY, Y_VELOCITY);
         selfGoal = enemyGoal = 0;
 
