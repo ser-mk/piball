@@ -7,12 +7,12 @@ package pipi.piball.Asserts;
 public class SoundsList {
 
     public static class effects {
-        public static final String kick = "kick.wav";
-        public static final String referee = "referee.wav";
+        public static final String kick = "kick.ogg";
+        public static final String referee = "referee.ogg";
     }
 
     public static class musics {
-        public static final String stadium = "stadium.wav";
-        public static final String goal = "goal.wav";
+        public static final String stadium = "stadium.ogg";
+        public static final String goal = "common_fon.ogg";
     }
 }

@@ -50,7 +50,7 @@ public class SoundSystem {
     }
     
     static public String getDefaultMusic(){
-        return "stadium.wav";
+        return SoundsList.musics.stadium;
     }
 
     public void update(){
