@@ -2,7 +2,7 @@ package ser.pipi.piball.engine;
 
 import com.badlogic.gdx.Gdx;
 
-import ser.pipi.piball.GameInspector;
+import ser.pipi.piball.PositionInspector;
 import ser.pipi.piball.PositionInterface;
 import ser.pipi.piball.SettingsStruct;
 
@@ -16,7 +16,7 @@ public class LocalController {
 
 
     final PositionInterface positionInterface;
-    final GameInspector gameInspector;
+    final PositionInspector positionInspector;
     final LocalState localState;
     final SettingsStruct ss;
     int current_position = 0;
@@ -26,14 +26,14 @@ public class LocalController {
     public LocalController(SettingsStruct ss, LocalState localState, PositionInterface positionInterface) {
         this.positionInterface = positionInterface;
         this.localState = localState;
-        this.gameInspector = new GameInspector(positionInterface);
+        this.positionInspector = new PositionInspector(positionInterface);
         this.ss = ss;
         current_position = positionInterface.POSITION_MAX / 2;
     }
 
     public void update(float delta){
-        gameInspector.checkPiPos(delta);
-        localState.statusPI = gameInspector.getStatus();
+        positionInspector.checkPiPos(delta);
+        localState.statusPI = positionInspector.getStatus();
 
         int pos = positionInterface.getPosition();
         if (pos < PositionInterface.POSITION_MIN){

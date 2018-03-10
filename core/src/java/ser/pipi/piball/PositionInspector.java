@@ -6,10 +6,10 @@ import com.badlogic.gdx.Gdx;
  * Created by ser on 18.02.18.
  */
 
-public class GameInspector {
+public class PositionInspector {
 
     PositionInterface pii;
-    public GameInspector(PositionInterface pii) {
+    public PositionInspector(PositionInterface pii) {
         this.pii = pii;
     }
 

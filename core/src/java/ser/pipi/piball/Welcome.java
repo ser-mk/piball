@@ -43,14 +43,14 @@ class Welcome implements Screen {
     State state = State.CHOICE;
 
     final PositionInterface positionInterface;
-    final GameInspector  gameInspector;
+    final PositionInspector positionInspector;
     BitmapFont fontGameInspector;
 
     public Welcome(Piball piball) {
         this.positionInterface = piball.getPositionInterface();
         this.piball = piball;
         this.ss = piball.getSettingsStruct();
-        gameInspector = new GameInspector(positionInterface);
+        positionInspector = new PositionInspector(positionInterface);
     }
 
     @Override
@@ -81,7 +81,7 @@ class Welcome implements Screen {
     }
 
     private void update(float delta){
-        gameInspector.checkPiPos(delta);
+        positionInspector.checkPiPos(delta);
         switch (state) {
             case CHOICE: choice(delta); break;
             case CONFIRM_WAIT: confirm(delta); break;
@@ -137,7 +137,7 @@ class Welcome implements Screen {
     }
 
     private void print_status(){
-        final String status = gameInspector.getStatus();
+        final String status = positionInspector.getStatus();
         fontGameInspector.draw(spriteBatch,status,
                 Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/2);
     }
