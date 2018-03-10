@@ -68,7 +68,6 @@ public class StateController {
     private void reflectionEffect(boolean wasReflection){
 
         if (wasReflection){
-            Gdx.app.log(TAG, "appendSound " + SoundsList.effects.kick);
             allObjectsState.soundEffect = SoundSystem.appendSound(allObjectsState.soundEffect, SoundsList.effects.kick);
         } else {
             allObjectsState.soundEffect = SoundSystem.removeSound(allObjectsState.soundEffect, SoundsList.effects.kick);

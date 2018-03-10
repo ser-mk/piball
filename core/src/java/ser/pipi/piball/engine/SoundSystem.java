@@ -32,21 +32,17 @@ public class SoundSystem {
     private void initSounds(){
 
         sounds.put(SoundsList.effects.kick,
-                Gdx.audio.newSound(Gdx.files.internal(
-                        "sounds/" + SoundsList.effects.kick)));
+                Gdx.audio.newSound(Gdx.files.internal(SoundsList.effects.kick)));
         sounds.put(SoundsList.effects.referee,
-                Gdx.audio.newSound(Gdx.files.internal(
-                        "sounds/" + SoundsList.effects.referee)));
+                Gdx.audio.newSound(Gdx.files.internal(SoundsList.effects.referee)));
     }
 
     private void initMusics(){
 
         musics.put(SoundsList.musics.stadium,
-                Gdx.audio.newMusic(Gdx.files.internal(
-                        "musics/" + SoundsList.musics.stadium)));
-        musics.put(SoundsList.musics.goal,
-                Gdx.audio.newMusic(Gdx.files.internal(
-                        "musics/" + SoundsList.musics.goal)));
+                Gdx.audio.newMusic(Gdx.files.internal(SoundsList.musics.stadium)));
+        musics.put(SoundsList.musics.common_fon,
+                Gdx.audio.newMusic(Gdx.files.internal(SoundsList.musics.common_fon)));
     }
     
     static public String getDefaultMusic(){
