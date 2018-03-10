@@ -1,5 +1,8 @@
 package pipi.piball.Asserts;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+
 /**
  * Created by ser on 27.02.18.
  */
@@ -7,6 +10,7 @@ package pipi.piball.Asserts;
 public class SoundsList {
 
     static final String SUFFIX = ".wav";
+    //static final String SUFFIX = ".ogg";
 
     public static class effects {
         static final String SOUND_DIR = "sounds/";
@@ -18,5 +22,11 @@ public class SoundsList {
         static final String MUSIC_DIR = "musics/";
         public static final String stadium = MUSIC_DIR + "stadium" + SUFFIX;
         public static final String common_fon = MUSIC_DIR + "common_fon" + SUFFIX;
+
+        public static Music getMusic(String name){
+            final Music music = Gdx.audio.newMusic(Gdx.files.internal(name));
+            music.setLooping(true);
+            return music;
+        }
     }
 }
