@@ -16,7 +16,7 @@ public class Network {
     public static enum ConnectionState {NETWORK_EXCEPTION,
         WAIT_PLAYER,
         CONNECTED_PLAYER,
-        DISCONECTED_PLAYER,
+        DISCONNECTED_PLAYER,
         COLLISION_PLAYER}
 
     static public void register (EndPoint endPoint) {

@@ -51,7 +51,7 @@ public abstract class NetworkBaseClass extends Listener implements NetworkInterf
 
     @Override
     public void disconnected(Connection connection) {
-        state = ConnectionState.DISCONECTED_PLAYER;
+        state = ConnectionState.DISCONNECTED_PLAYER;
         Gdx.app.log(TAG, "--disconnecting! " + connection.toString());
     }
 }
