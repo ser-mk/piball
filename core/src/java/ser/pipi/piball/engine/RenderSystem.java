@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import ser.pipi.piball.asserts.FlagList;
+import ser.pipi.piball.asserts.FontList;
 
 /**
  * Created by ser on 19.02.18.
@@ -62,15 +64,18 @@ public class RenderSystem {
 
     private void print_status(){
         final String statusPI = localState.statusPI;
-        fontGoal.draw(spriteBatch,statusPI,
-                Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/2);
+        final int X_CENTER = Gdx.graphics.getWidth()/2;
+
+        FontList.printTextCenter(spriteBatch,fontGoal,statusPI,
+                X_CENTER,Gdx.graphics.getHeight()/2 + 100);
 
         final String statusNET = localState.statusNET;
-        fontGoal.draw(spriteBatch,statusNET,
-                Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/2 - fontGoal.getLineHeight()*2);
+        FontList.printTextCenter(spriteBatch,fontGoal,statusNET,
+                X_CENTER,Gdx.graphics.getHeight()/2 - 100 - - fontGoal.getLineHeight()*2);
+
         final String statusPIEnemy = allObjectsState.statusPIEnemy;
-        fontGoal.draw(spriteBatch,statusPIEnemy,
-                Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/2 + fontGoal.getLineHeight()*2);
+        FontList.printTextCenter(spriteBatch,fontGoal,statusPIEnemy,
+                X_CENTER,Gdx.graphics.getHeight()*2/3);
 
         final float frameRate = Gdx.graphics.getFramesPerSecond();
         //Gdx.app.log(TAG, frameRate + " fps");
