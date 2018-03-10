@@ -6,16 +6,14 @@ package ser.pipi.piball;
 
 public interface PositionInterface {
 
-    public static final int NORMAL_WORK = 0;
-    public static final int POSITION_UNDEFINED = -1;
-    public static final int CONNECTED_PROBLEM = -2;
-    public static final int CLOSE_GAME = -3;
-
     public static final int POSITION_MIN = 0;
     public static final int POSITION_MAX = 1000;
 
+    public enum InputStatus{NORMAL_WORK,POSITION_UNDEFINED,
+        CONNECTED_PROBLEM,CLOSE_GAME, BACKSPACE}
+
     public void update();
     public int getPosition();
-    public int getState();
+    public InputStatus getState();
 
 }

@@ -12,7 +12,7 @@ public class PositionInspector {
     public PositionInspector(PositionInterface pii) {
         this.pii = pii;
     }
-
+    
     static public final String EMPTY = new String();
     private String status = EMPTY;
     private final String CLOSE_GAME = "CLOSE_GAME";
@@ -21,10 +21,12 @@ public class PositionInspector {
     private float wait_exit = 0;
 
     public void checkPiPos(float delta){
-        checkPI(pii.getState(),delta);
+        //checkPI(pii.getState(),delta);
+        checkPI(0,delta);
     }
 
     public void checkPI(int pos, float delta){
+        /*
         if(pos >= PositionInterface.POSITION_UNDEFINED) {
             wait_exit = 0;
             status = EMPTY;
@@ -40,9 +42,14 @@ public class PositionInspector {
         if(wait_exit > TIMEOUT_EXIT){
             Gdx.app.exit();
         }
+    */
     }
 
     public String getStatus(){
         return status;
+    }
+
+    public PositionInterface.InputStatus piStatus(){
+        return pii.getState();
     }
 }

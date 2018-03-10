@@ -13,7 +13,7 @@ import sermk.pipi.pilib.PiBind;
 class PII_Stub implements PositionInterface, InputProcessor {
 
     final String TAG = this.getClass().getName();
-    int state = PositionInterface.NORMAL_WORK;
+    InputStatus status = InputStatus.NORMAL_WORK;
     int position = 500;
     PiBind piBind;
 
@@ -27,19 +27,23 @@ class PII_Stub implements PositionInterface, InputProcessor {
     }
 
     @Override
-    public int getState() {
-        return state;
+    public InputStatus getState() {
+        return status;
     }
 
     @Override
     public void update() {
-        final int answer = piBind.getPosition();
+        final int pos = piBind.getPosition();
         //Gdx.app.log(TAG, "position " + position);
-        if(answer > PositionInterface.POSITION_UNDEFINED) {
-            position = answer;
-        } else {
-            Gdx.app.log(TAG, "position " + position);
-            state = answer;
+        if(pos > PiBind.POSITION_UNDEFINED) {
+            position = pos;
+            return;
+        }
+
+        if(pos == PiBind.CLOSE_GAME){
+            status = InputStatus.CLOSE_GAME;
+        } else if (pos == PiBind.CONNECTED_PROBLEM) {
+            status = InputStatus.CONNECTED_PROBLEM;
         }
     }
 
@@ -48,8 +52,7 @@ class PII_Stub implements PositionInterface, InputProcessor {
         if(keycode == Keys.BACK){
             // Respond to the back button click here
             Gdx.app.log(TAG, "back press keycode " + keycode);
-            Gdx.app.exit();
-            //return true;
+            status = InputStatus.BACKSPACE;
         }
         return false;
     }
