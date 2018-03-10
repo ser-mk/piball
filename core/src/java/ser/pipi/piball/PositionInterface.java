@@ -4,7 +4,7 @@ package ser.pipi.piball;
  * Created by ser on 17.02.18.
  */
 
-public interface GameInterface {
+public interface PositionInterface {
 
     public static final int NORMAL_WORK = 0;
     public static final int POSITION_UNDEFINED = -1;

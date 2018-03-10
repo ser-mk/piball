@@ -42,15 +42,15 @@ class Welcome implements Screen {
 
     State state = State.CHOICE;
 
-    final GameInterface gameInterface;
+    final PositionInterface positionInterface;
     final GameInspector  gameInspector;
     BitmapFont fontGameInspector;
 
     public Welcome(Piball piball) {
-        this.gameInterface = piball.getGameInterface();
+        this.positionInterface = piball.getPositionInterface();
         this.piball = piball;
         this.ss = piball.getSettingsStruct();
-        gameInspector = new GameInspector(gameInterface);
+        gameInspector = new GameInspector(positionInterface);
     }
 
     @Override

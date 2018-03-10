@@ -10,10 +10,10 @@ import sermk.pipi.pilib.PiBind;
  * Created by ser on 17.02.18.
  */
 
-class PII_Stub implements GameInterface, InputProcessor {
+class PII_Stub implements PositionInterface, InputProcessor {
 
     final String TAG = this.getClass().getName();
-    int state = GameInterface.NORMAL_WORK;
+    int state = PositionInterface.NORMAL_WORK;
     int position = 500;
     PiBind piBind;
 
@@ -35,7 +35,7 @@ class PII_Stub implements GameInterface, InputProcessor {
     public void update() {
         final int answer = piBind.getPosition();
         //Gdx.app.log(TAG, "position " + position);
-        if(answer > GameInterface.POSITION_UNDEFINED) {
+        if(answer > PositionInterface.POSITION_UNDEFINED) {
             position = answer;
         } else {
             Gdx.app.log(TAG, "position " + position);
@@ -77,7 +77,7 @@ class PII_Stub implements GameInterface, InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        position = (screenX*GameInterface.POSITION_MAX) / Gdx.graphics.getWidth();
+        position = (screenX* PositionInterface.POSITION_MAX) / Gdx.graphics.getWidth();
         return false;
     }
 

@@ -2,20 +2,23 @@ package ser.pipi.piball;
 
 import com.badlogic.gdx.Game;
 
+import ser.pipi.piball.engine.AllObjectsState;
+import ser.pipi.piball.engine.LocalState;
+
 public class Piball extends Game {
 
-	final GameInterface gameInterface;
+	final PositionInterface positionInterface;
 
 	final SettingsStruct settingsStruct;
 
-	public Piball(GameInterface gameInterface) {
-		this.gameInterface = gameInterface;
+	public Piball(PositionInterface positionInterface) {
+		this.positionInterface = positionInterface;
 
 		settingsStruct = new SettingsStruct();
 	}
 
-	public Piball(GameInterface gameInterface, SettingsStruct settingsStruct) {
-		this.gameInterface = gameInterface;
+	public Piball(PositionInterface positionInterface, SettingsStruct settingsStruct) {
+		this.positionInterface = positionInterface;
 		this.settingsStruct = settingsStruct;
 	}
 
@@ -23,8 +26,8 @@ public class Piball extends Game {
 		return settingsStruct;
 	}
 
-	public GameInterface getGameInterface(){
-		return gameInterface;
+	public PositionInterface getPositionInterface(){
+		return positionInterface;
 	}
 
 	@Override

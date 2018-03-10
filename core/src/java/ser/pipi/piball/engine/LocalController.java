@@ -1,13 +1,9 @@
 package ser.pipi.piball.engine;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.MathUtils;
-
-import java.awt.Rectangle;
-import java.math.MathContext;
 
 import ser.pipi.piball.GameInspector;
-import ser.pipi.piball.GameInterface;
+import ser.pipi.piball.PositionInterface;
 import ser.pipi.piball.SettingsStruct;
 
 /**
@@ -19,7 +15,7 @@ public class LocalController {
     final String TAG = this.getClass().getName();
 
 
-    final GameInterface gameInterface;
+    final PositionInterface positionInterface;
     final GameInspector gameInspector;
     final LocalState localState;
     final SettingsStruct ss;
@@ -27,26 +23,25 @@ public class LocalController {
     float current_velocity = 0;
 
 
-    public LocalController(SettingsStruct ss, LocalState localState, GameInterface gameInterface) {
-        this.gameInterface = gameInterface;
+    public LocalController(SettingsStruct ss, LocalState localState, PositionInterface positionInterface) {
+        this.positionInterface = positionInterface;
         this.localState = localState;
-        this.gameInspector = new GameInspector(gameInterface);
+        this.gameInspector = new GameInspector(positionInterface);
         this.ss = ss;
-        current_position = gameInterface.POSITION_MAX / 2;
+        current_position = positionInterface.POSITION_MAX / 2;
     }
 
     public void update(float delta){
         gameInspector.checkPiPos(delta);
         localState.statusPI = gameInspector.getStatus();
 
-        int pos = gameInterface.getPosition();
-        if (pos < GameInterface.POSITION_MIN){
+        int pos = positionInterface.getPosition();
+        if (pos < PositionInterface.POSITION_MIN){
             return;
         }
         pos = filterLFPosition(delta, pos);
         current_position = pos;
-        final float XP = (Gdx.graphics.getWidth()*pos)/gameInterface.POSITION_MAX;
-        //localState.paddleSelf.setX(XP);
+        final float XP = (Gdx.graphics.getWidth()*pos)/ positionInterface.POSITION_MAX;
         setXCenterPaddle(XP);
     }
 

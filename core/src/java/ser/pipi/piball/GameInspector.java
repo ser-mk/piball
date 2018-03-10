@@ -8,8 +8,8 @@ import com.badlogic.gdx.Gdx;
 
 public class GameInspector {
 
-    GameInterface pii;
-    public GameInspector(GameInterface pii) {
+    PositionInterface pii;
+    public GameInspector(PositionInterface pii) {
         this.pii = pii;
     }
 
@@ -25,12 +25,12 @@ public class GameInspector {
     }
 
     public void checkPI(int pos, float delta){
-        if(pos >= GameInterface.POSITION_UNDEFINED) {
+        if(pos >= PositionInterface.POSITION_UNDEFINED) {
             wait_exit = 0;
             status = EMPTY;
             return;
         }
-        if(pos == GameInterface.CLOSE_GAME){
+        if(pos == PositionInterface.CLOSE_GAME){
             status = CLOSE_GAME;
         } else {
             status = CONNECTED_PROBLEM;
