@@ -5,7 +5,6 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.EndPoint;
 import com.esotericsoftware.kryonet.Listener;
 
-import ser.pipi.piball.engine.LocalState;
 import ser.pipi.piball.net.Network.ConnectionState;
 
 /**
@@ -36,14 +35,7 @@ public abstract class NetworkBaseClass extends Listener implements NetworkInterf
 
     @Override
     public void updateStatus(float delta) {
-        gameNet.setStatus(getStatus());
-    }
-
-    public String getStatus(){
-        if(state == ConnectionState.CONNECTED_PLAYER)
-            return "";
-
-        return state.toString();
+        gameNet.setState(state);
     }
 
     @Override

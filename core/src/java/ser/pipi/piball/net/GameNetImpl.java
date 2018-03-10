@@ -8,5 +8,5 @@ import com.esotericsoftware.kryonet.Connection;
 
 public interface GameNetImpl {
     public void recieve(Connection connection, Object object);
-    public void setStatus(String status);
+    public void setState(Network.ConnectionState state);
 }

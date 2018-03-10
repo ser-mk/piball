@@ -9,6 +9,7 @@ import ser.pipi.piball.SettingsStruct;
 import ser.pipi.piball.net.GameClient;
 import ser.pipi.piball.net.GameNetImpl;
 import ser.pipi.piball.net.GameServer;
+import ser.pipi.piball.net.Network;
 import ser.pipi.piball.net.NetworkInterface;
 
 /**
@@ -24,11 +25,13 @@ public class SyncSystem implements GameNetImpl {
     final LocalState localState;
     final AllObjectsState allObjectsState;
     final boolean isServer;
+    Network.ConnectionState netState;
 
     public SyncSystem(SettingsStruct ss, AllObjectsState allObjectsState, LocalState localState) {
         isServer = ss.server;
         this.localState = localState;
         this.allObjectsState = allObjectsState;
+        netState = Network.ConnectionState.WAIT_PLAYER;
         if (isServer){
             networkInterface = new GameServer(ss, this);
         } else {
@@ -100,7 +103,14 @@ public class SyncSystem implements GameNetImpl {
     }
 
     @Override
-    public void setStatus(String status) {
-        localState.statusNET = status;
+    public void setState(Network.ConnectionState state) {
+        netState = state;
+        if(state == Network.ConnectionState.CONNECTED_PLAYER){
+            localState.statusNET = "";
+        } else {
+            localState.statusNET = state.toString();
+        }
     }
+
+    public Network.ConnectionState getNetState(){ return netState; }
 }
