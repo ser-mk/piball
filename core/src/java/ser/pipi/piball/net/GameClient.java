@@ -122,7 +122,7 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
             localHostCut(servers);
 
             if (servers.size() == 0) {
-                state = ConnectionState.WAIT_PLAYER;
+                //state = ConnectionState.WAIT_PLAYER;
                 continue;
             }
 
