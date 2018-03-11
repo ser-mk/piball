@@ -25,14 +25,16 @@ public class AllObjectsState {
     String[] soundEffect;
     String musicFon;
 
-    public AllObjectsState() {
+    public AllObjectsState() { // for kryonet
     }
 
     public AllObjectsState(SettingsStruct ss) {
-        final float X_MID = Gdx.graphics.getWidth()/2;
-        final float Y_PADDLE_SELF = ss.yPaddleSelf;
+
         final float WIDTH_PADDLE = ss.widthPaddle;
         final float HEIGHT_PADDLE = ss.heigthPaddle;
+        final float X_MID = (Gdx.graphics.getWidth() - WIDTH_PADDLE)/2;
+        final float Y_PADDLE_SELF = ss.yPaddleSelf;
+
         paddleSelf = new Rectangle(X_MID, Y_PADDLE_SELF, WIDTH_PADDLE, HEIGHT_PADDLE);
         paddleEnemy = new Rectangle(paddleSelf);
         paddleEnemy.setY(Gdx.graphics.getHeight() - Y_PADDLE_SELF - HEIGHT_PADDLE);
