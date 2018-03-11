@@ -1,6 +1,7 @@
 package ser.pipi.piball.asserts;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +15,13 @@ public class FontList {
         BitmapFont font = new BitmapFont();
         //font.setColor();
         font.getData().setScale(5f);
+        return font;
+    }
+
+    public static BitmapFont welcomeFont(){
+        BitmapFont font = new BitmapFont();
+        font.setColor(Color.RED);
+        font.getData().setScale(2);
         return font;
     }
 

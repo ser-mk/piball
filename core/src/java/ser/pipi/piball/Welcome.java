@@ -2,11 +2,17 @@ package ser.pipi.piball;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import pipi.piball.Asserts.SoundsList;
+import ser.pipi.piball.asserts.FlagList;
+import ser.pipi.piball.asserts.FontList;
+import ser.pipi.piball.asserts.TextureList;
 
 /**
  * Created by ser on 15.02.18.
@@ -19,12 +25,13 @@ class Welcome implements Screen {
     final Piball piball;
     final SettingsStruct ss;
 
-    SpriteBatch spriteBatch;
-    Texture field;
-    Texture confirmFlag;
-    Texture approveFlag;
-    final int NUM_COUNTRY = 32;
-    Texture[] country = new Texture[NUM_COUNTRY];
+    final SpriteBatch spriteBatch;
+    final Texture logo;
+    final Texture confirmFlag;
+    final Texture approveFlag;
+
+    final FlagList flagList;
+    final Music fon;
 
     final int WIDTH_FLAG = 111;
     final int HEIGHT_FLAG = 77;
@@ -44,27 +51,25 @@ class Welcome implements Screen {
 
     final PositionInterface positionInterface;
     final PositionInspector positionInspector;
-    BitmapFont fontGameInspector;
+    final BitmapFont fontGameInspector;
 
     public Welcome(Piball piball) {
         this.positionInterface = piball.getPositionInterface();
         this.piball = piball;
         this.ss = piball.getSettingsStruct();
         positionInspector = new PositionInspector(positionInterface);
+        spriteBatch = new SpriteBatch();
+        logo = new Texture(TextureList.FINAL_LOGO);
+        confirmFlag = new Texture("confirm.png");
+        approveFlag = new Texture("approve.png");
+        this.flagList = new FlagList();
+        this.fon = SoundsList.musics.getMusic(SoundsList.musics.common_fon);
+        fontGameInspector = FontList.welcomeFont();
     }
 
     @Override
     public void show() {
-        spriteBatch = new SpriteBatch();
-        field = new Texture("field.jpg");
-        for (int i = 0; i < NUM_COUNTRY; i++){
-            country[i] = new Texture("country/" + i + ".png");
-        }
-        confirmFlag = new Texture("confirm.png");
-        approveFlag = new Texture("approve.png");
-        fontGameInspector = new BitmapFont();
-        fontGameInspector.setColor(Color.RED);
-        fontGameInspector.getData().setScale(2);
+        fon.play();
         reset_variable();
     }
 
@@ -121,7 +126,6 @@ class Welcome implements Screen {
 
     private void approve(float delta){
         if(!need_wait(delta)){
-            //Gdx.app.exit();
             piball.startArena(selectFlag);
         }
     }
@@ -130,7 +134,7 @@ class Welcome implements Screen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
-        spriteBatch.draw(field, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        spriteBatch.draw(logo, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         renderFlags();
         print_status();
         spriteBatch.end();
@@ -171,9 +175,9 @@ class Welcome implements Screen {
         if(selectFlag > 0 && state != State.CHOICE){
             drawBorder(selectFlag, state);
         }
-        for(int i = 0; i < NUM_COUNTRY; i++){
+        for(int i = 0; i < FlagList.NUM_COUNTRY; i++){
             final float xy[] = calcXYFlag(i);
-            spriteBatch.draw(country[i],xy[0],xy[1], WIDTH_FLAG,HEIGHT_FLAG);
+            spriteBatch.draw(flagList.getFlag(i),xy[0],xy[1], WIDTH_FLAG,HEIGHT_FLAG);
         }
 
     }
@@ -188,7 +192,7 @@ class Welcome implements Screen {
             return;
         }
 
-        if(indexFlag < 0 || indexFlag > NUM_COUNTRY){
+        if(indexFlag < 0 || indexFlag > FlagList.NUM_COUNTRY){
             return;
         }
 
@@ -215,7 +219,11 @@ class Welcome implements Screen {
     @Override
     public void dispose () {
         spriteBatch.dispose();
-        field.dispose();
+        logo.dispose();
+        fon.stop();
+        fon.dispose();
+        confirmFlag.dispose();
+        approveFlag.dispose();
     }
 
     @Override

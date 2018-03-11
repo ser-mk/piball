@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class FlagList {
 
-    static final int NUM_COUNTRY = 32;
+    public static final int NUM_COUNTRY = 32;
     static final Texture[] country = new Texture[NUM_COUNTRY];
 
     public FlagList() {
