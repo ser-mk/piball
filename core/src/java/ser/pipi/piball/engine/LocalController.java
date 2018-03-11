@@ -14,9 +14,7 @@ public class LocalController {
 
     final String TAG = this.getClass().getName();
 
-
     final PositionInterface positionInterface;
-    final PositionInspector positionInspector;
     final LocalState localState;
     final SettingsStruct ss;
     int current_position = 0;
@@ -26,14 +24,11 @@ public class LocalController {
     public LocalController(SettingsStruct ss, LocalState localState, PositionInterface positionInterface) {
         this.positionInterface = positionInterface;
         this.localState = localState;
-        this.positionInspector = new PositionInspector(positionInterface);
         this.ss = ss;
         current_position = positionInterface.POSITION_MAX / 2;
     }
 
     public void update(float delta){
-        positionInspector.checkPiPos(delta);
-        localState.statusPI = positionInspector.getStatus();
 
         int pos = positionInterface.getPosition();
         if (pos < PositionInterface.POSITION_MIN){
@@ -77,9 +72,7 @@ public class LocalController {
         if(Math.abs(calcVelocity) > ss.maxVelocityPaddle){
             calcVelocity = ss.maxVelocityPaddle * signV(calcVelocity);
         }
-
-        //Gdx.app.log(TAG, "calcVelocity " + calcVelocity);
-
+        
         current_velocity = calcVelocity;
 
         return current_position + (int)(calcVelocity*delta);

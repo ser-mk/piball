@@ -58,7 +58,6 @@ public class StateController {
         float new_y_pos = allObjectsState.ball.y + delta_pos.y;
         allObjectsState.ball.setPosition(new_x_pos, new_y_pos);
         if (allObjectsState.ballVelocity.len() < ss.maxBallVelocity) {
-            //Gdx.app.log(TAG, "ballVelocity.len() " + allObjectsState.ballVelocity.len());
             allObjectsState.ballVelocity.scl(1 + ss.ballAcc * delta);
         }
     }
