@@ -3,6 +3,7 @@ package ser.pipi.piball;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -24,7 +25,7 @@ public class ResultScreen implements Screen {
 
     final String TAG = this.getClass().getName();
 
-    static class ResultGame{
+    public static class ResultGame{
         public int flagSelf = 0;
         public int flagEnemy = 0;
         public int goalsSelf = 0;
@@ -51,6 +52,8 @@ public class ResultScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(0, 0, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
         spriteBatch.draw(logo, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         flag();
@@ -65,6 +68,11 @@ public class ResultScreen implements Screen {
     final int FLAG_HEIGHT = 160;
 
     private void flag(){
+
+        if(!flagList.consistNumberFlag(resultGame.flagSelf)
+            || !flagList.consistNumberFlag(resultGame.flagEnemy))
+            return;
+
         spriteBatch.draw(flagList.getFlag(resultGame.flagSelf),
                 X_STEP_FLAG, Y_FLAG, FLAG_WIDTH, FLAG_HEIGHT);
 
