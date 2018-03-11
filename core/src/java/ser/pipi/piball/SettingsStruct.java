@@ -5,6 +5,8 @@ package ser.pipi.piball;
  */
 
 public class SettingsStruct {
+    public float wait_end_game = 2;
+
     public float yPaddleSelf = 0;
     public float widthPaddle = 155;
     public float heigthPaddle = 22;

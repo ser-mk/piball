@@ -2,8 +2,7 @@ package ser.pipi.piball;
 
 import com.badlogic.gdx.Game;
 
-import ser.pipi.piball.engine.AllObjectsState;
-import ser.pipi.piball.engine.LocalState;
+import ser.pipi.piball.engine.*;
 
 public class Piball extends Game {
 
@@ -38,5 +37,9 @@ public class Piball extends Game {
 
 	public void startArena(int flag){
 		setScreen(new Arena(this, flag));
+	}
+
+	public void showResult(ResultScreen.ResultGame rg){
+		setScreen(new ResultScreen(rg));
 	}
 }

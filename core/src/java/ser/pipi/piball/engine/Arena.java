@@ -1,15 +1,13 @@
-package ser.pipi.piball;
+package ser.pipi.piball.engine;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 
-import ser.pipi.piball.engine.AllObjectsState;
-import ser.pipi.piball.engine.LocalController;
-import ser.pipi.piball.engine.LocalState;
-import ser.pipi.piball.engine.RenderSystem;
-import ser.pipi.piball.engine.SoundSystem;
-import ser.pipi.piball.engine.SyncSystem;
+import ser.pipi.piball.Piball;
+import ser.pipi.piball.PositionInterface;
+import ser.pipi.piball.ResultScreen;
+import ser.pipi.piball.SettingsStruct;
 import ser.pipi.piball.net.Network;
 
 /**
@@ -18,17 +16,24 @@ import ser.pipi.piball.net.Network;
 
 public class Arena implements Screen {
 
+    private final String TAG = this.getClass().getName();
+    final Piball piball;
+    final SettingsStruct ss;
     final RenderSystem render;
     final SoundSystem soundSystem;
     final LocalController localController;
     final SyncSystem syncSystem;
-    final PositionInspector positionInspector;
+    final PositionInterface positionInterface;
     final LocalState localState;
     final AllObjectsState allObjectsState;
 
-    public Arena(Piball piball, int flag) {
+    float wait = 0;
 
-        SettingsStruct ss = piball.getSettingsStruct();
+    public Arena(Piball piball, int flag) {
+        final String TAG = this.getClass().getName();
+
+        this.piball = piball;
+        this.ss = piball.getSettingsStruct();
         this.allObjectsState = new AllObjectsState(ss);
         this.localState = new LocalState(ss, flag);
 
@@ -36,30 +41,74 @@ public class Arena implements Screen {
         render = new RenderSystem(allObjectsState, localState);
         soundSystem = new SoundSystem(allObjectsState, localState);
         syncSystem = new SyncSystem(ss, allObjectsState, localState);
-        this.positionInspector = new PositionInspector(piball.getPositionInterface());
+        this.positionInterface = piball.getPositionInterface();
     }
 
     @Override
     public void render(float delta) {
         localController.update(delta);
         syncSystem.update(delta);
+        checkEventSystem(delta);
         Gdx.gl.glClearColor(0, 0.5f, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         render.update();
         soundSystem.update();
     }
 
+    final String CLEAR_STATUS = "";
+
     private void checkEventSystem(float delta) {
+
         final Network.ConnectionState netState = syncSystem.getNetState();
-        if(netState == Network.ConnectionState.CONNECTED_PLAYER){
-            printNetStatus(delta, getStringNetStatus(netState));
+        if(netState != Network.ConnectionState.CONNECTED_PLAYER){
+            markNetStatus(delta, getStringNetStatus(netState));
+        } else {
+            markNetStatus(delta, CLEAR_STATUS);
         }
 
-        final PositionInspector.PiStatus piStatus = positionInspector.piStatus();
-        if(piStatus == PositionInspector.PiStatus.NORMAL_WORK || piStatus == PositionInspector.PiStatus.POSITION_UNDEFINED)
-            return;
+        final PositionInterface.InputStatus piStatus = positionInterface.getState();
+        if(piStatus == PositionInterface.InputStatus.NORMAL_WORK
+                || piStatus == PositionInterface.InputStatus.POSITION_UNDEFINED) {
+            markPiStatus(delta, CLEAR_STATUS);
+        } else {
+            markPiStatus(delta, getStringPiStatus(piStatus));
+        }
 
+        checkEnd(delta,netState,piStatus);
+    }
 
+    private void checkEnd(float delta,
+                          Network.ConnectionState netState,
+                          PositionInterface.InputStatus piStatus){
+        boolean endForce = false;
+
+        switch (netState){
+            case DISCONNECTED_PLAYER: endForce = true; break;
+        }
+
+        switch (piStatus){
+            case CLOSE_GAME: endForce = true; break;
+            case CONNECTED_PROBLEM: endForce = true; break;
+            case BACKSPACE: endForce = true; wait = ss.wait_end_game; break;
+        }
+
+        if (endForce){
+            wait += delta;
+            if (wait > ss.wait_end_game){
+                setResultGame();
+            }
+        } else {
+            wait = 0;
+        }
+    }
+
+    private void setResultGame(){
+        ResultScreen.ResultGame rg = new ResultScreen.ResultGame();
+        rg.goalsSelf = allObjectsState.selfGoal;
+        rg.goalsEnemy = allObjectsState.enemyGoal;
+        rg.flagEnemy = allObjectsState.flagEnemy;
+        rg.flagSelf = localState.flag;
+        piball.showResult(rg);
     }
 
     static private String getStringNetStatus(Network.ConnectionState netState){
@@ -72,48 +121,41 @@ public class Arena implements Screen {
         }
     }
 
-    static private String getStringPiStatus(PositionInspector.PiStatus piState){
+    static private String getStringPiStatus(PositionInterface.InputStatus piState){
         switch (piState){
             case CLOSE_GAME: return "GAME END";
             case CONNECTED_PROBLEM: return "CAN'T FIND YOUR FLOW";
-            case KEY_BACK: return "RETURN TO BACK";
+            case BACKSPACE: return "RETURN TO BACK";
             default: return "UNDEFINED STATUS";
         }
     }
 
-    private void printPiStatus(float delta, String status) {
+    private void markPiStatus(float delta, String status) {
+        localState.statusPI = status;
     }
 
-    private void printNetStatus(float delta, String status){
-
-    }
-
-    @Override
-    public void show() {
+    private void markNetStatus(float delta, String status){
+        localState.statusNET = status;
     }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
+    public void show() {}
 
     @Override
-    public void pause() {
-
-    }
+    public void resize(int width, int height) {    }
 
     @Override
-    public void resume() {
+    public void pause() {}
 
-    }
+    @Override
+    public void resume() {    }
 
+    // todo: release
     @Override
     public void hide() {
 
     }
 
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() {}
 }
