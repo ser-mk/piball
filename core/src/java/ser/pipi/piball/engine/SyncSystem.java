@@ -82,6 +82,9 @@ public class SyncSystem implements GameNetImpl {
         server.ball.y = heigth -  server.ball.y;
         server.statusPIEnemy = server.statusPISelf;
         server.flagEnemy = server.flagSelf;
+        final int goal = server.enemyGoal;
+        server.enemyGoal = server.selfGoal;
+        server.selfGoal = goal;
     }
 
     private void inverseLocalPaddle(LocalState ls){
@@ -105,11 +108,6 @@ public class SyncSystem implements GameNetImpl {
     @Override
     public void setState(Network.ConnectionState state) {
         netState = state;
-        if(state == Network.ConnectionState.CONNECTED_PLAYER){
-            localState.statusNET = "";
-        } else {
-            localState.statusNET = state.toString();
-        }
     }
 
     public Network.ConnectionState getNetState(){ return netState; }
