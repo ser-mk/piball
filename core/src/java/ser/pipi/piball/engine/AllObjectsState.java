@@ -40,9 +40,10 @@ public class AllObjectsState {
         paddleEnemy.setY(Gdx.graphics.getHeight() - Y_PADDLE_SELF - HEIGHT_PADDLE);
         statusPIEnemy = new String();
         statusPISelf = statusPIEnemy;
+        final float X_START_BALL = Gdx.graphics.getWidth()/2;
         final float Y_START_BALL = Gdx.graphics.getHeight()/2;
         final float RADIUS_BALL = ss.radiusBall;
-        ball = new Circle(X_MID, Y_START_BALL, RADIUS_BALL);
+        ball = new Circle(X_START_BALL, Y_START_BALL, RADIUS_BALL);
         final float X_VELOCITY = 0;
         final float Y_VELOCITY = ss.startBallVelocity;
         ballVelocity = new Vector2(X_VELOCITY, Y_VELOCITY);
