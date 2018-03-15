@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import pipi.piball.Asserts.SoundsList;
+import ser.pipi.piball.asserts.SoundsList;
 
 /**
  * Created by ser on 26.02.18.

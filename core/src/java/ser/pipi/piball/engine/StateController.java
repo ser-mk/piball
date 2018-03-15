@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import pipi.piball.Asserts.SoundsList;
 import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.asserts.SoundsList;
 
 /**
  * Created by ser on 20.02.18.

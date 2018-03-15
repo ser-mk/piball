@@ -8,13 +8,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-import org.w3c.dom.Text;
-
-import pipi.piball.Asserts.SoundsList;
 import ser.pipi.piball.asserts.FlagList;
 import ser.pipi.piball.asserts.FontList;
+import ser.pipi.piball.asserts.SoundsList;
 import ser.pipi.piball.asserts.TextureList;
 
 /**
