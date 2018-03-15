@@ -3,7 +3,6 @@ package ser.pipi.piball;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -26,19 +25,19 @@ class Welcome implements Screen {
     final SettingsStruct ss;
 
     final SpriteBatch spriteBatch;
-    final Texture logo;
+    final Texture welcomeTexture;
     final Texture confirmFlag;
     final Texture approveFlag;
 
     final FlagList flagList;
     final Music fon;
 
-    final int WIDTH_FLAG = 111;
-    final int HEIGHT_FLAG = 77;
-    final int WIDTH_COL = 66 + WIDTH_FLAG;
+    final int WIDTH_FLAG = 140;
+    final int HEIGHT_FLAG = 105;
+    final int WIDTH_COL = 35 + WIDTH_FLAG;
     final int HEIGHT_ROW = 22 + HEIGHT_FLAG;
-    final int START_X = 88;
-    final int START_Y = 77;
+    final int START_X = 100;
+    final int START_Y = 10;
     final int MAX_ROWS = 8;
     final int MAX_COLS = 4;
 
@@ -59,7 +58,7 @@ class Welcome implements Screen {
         this.ss = piball.getSettingsStruct();
         positionInspector = new PositionInspector(positionInterface);
         spriteBatch = new SpriteBatch();
-        logo = new Texture(TextureList.FINAL_LOGO);
+        welcomeTexture = TextureList.loadTexture(TextureList.WELCOME);
         confirmFlag = new Texture("confirm.png");
         approveFlag = new Texture("approve.png");
         this.flagList = new FlagList();
@@ -134,7 +133,7 @@ class Welcome implements Screen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
-        spriteBatch.draw(logo, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        spriteBatch.draw(welcomeTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         renderFlags();
         print_status();
         spriteBatch.end();
@@ -219,7 +218,7 @@ class Welcome implements Screen {
     @Override
     public void dispose () {
         spriteBatch.dispose();
-        logo.dispose();
+        welcomeTexture.dispose();
         fon.stop();
         fon.dispose();
         confirmFlag.dispose();
