@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import ser.pipi.piball.Settings;
 import ser.pipi.piball.Piball;
 import ser.pipi.piball.SettingsStruct;
 
@@ -21,8 +20,8 @@ public class DesktopLauncher {
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = server ? "server" : "client";
-		config.width = Settings.screen_width;
-		config.height = Settings.screen_heigth;
+		config.width = 800;
+		config.height = 900;
 		config.resizable = false;
 		final PII_Stub pii = new PII_Stub();
 		//new LwjglApplication(new Piball(pii), config);
