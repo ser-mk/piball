@@ -109,7 +109,7 @@ public class ResultScreen implements Screen {
     private void showTitle(){
         String text = "";
 
-        if (resultGame.goalsEnemy == resultGame.goalsEnemy){
+        if (resultGame.goalsEnemy == resultGame.goalsSelf){
             text = DEAD_HEAT;
         } else if ( resultGame.goalsEnemy > resultGame.goalsSelf){
             text = MISSED;
