@@ -4,12 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import ser.pipi.piball.asserts.FlagList;
 import ser.pipi.piball.asserts.FontList;
+import ser.pipi.piball.asserts.TextureList;
 
 /**
  * Created by ser on 19.02.18.
@@ -19,11 +19,14 @@ public class RenderSystem {
 
     final String TAG = this.getClass().getName();
 
-    ShapeRenderer shapeRenderer;
-    SpriteBatch spriteBatch;
+    final ShapeRenderer shapeRenderer;
+    final SpriteBatch spriteBatch;
 
-    Texture field;
-    BitmapFont fontGoal;
+    final Texture arena;
+    final Texture ball;
+    final Texture paddle_self;
+    final Texture paddle_enemy;
+    final BitmapFont fontGoal;
 
     final AllObjectsState allObjectsState;
     final LocalState localState;
@@ -36,7 +39,10 @@ public class RenderSystem {
         shapeRenderer = new ShapeRenderer();
         spriteBatch = new SpriteBatch();
 
-        field = new Texture("field.jpg");
+        arena = TextureList.loadTexture(TextureList.ARENA);
+        ball = TextureList.loadTexture(TextureList.BALL);
+        paddle_self = TextureList.loadTexture(TextureList.PADDLE_SELF);
+        paddle_enemy = TextureList.loadTexture(TextureList.PADDLE_ENEMY);
 
         this.flagList = new FlagList();
 
@@ -47,15 +53,20 @@ public class RenderSystem {
 
     public void update(){
         // Tells shapeRenderer to begin drawing filled shapes
+        /*
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         paddleSelf();
         paddleEnemy();
         ball();
+
         // Tells the shapeRenderer to finish rendering
         // We MUST do this every time.
         shapeRenderer.end();
-
+*/
         spriteBatch.begin();
+        spriteBatch.draw(arena, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        sprite_ball();
+        spritePaddle();
         goalStatistic();
         print_status();
         showFlag();
@@ -109,12 +120,28 @@ public class RenderSystem {
                 this.allObjectsState.ball.radius);
     }
 
+    private void sprite_ball(){
+        final float X1 = allObjectsState.ball.x - allObjectsState.ball.radius;
+        final float Y1 = allObjectsState.ball.y - allObjectsState.ball.radius;
+        final float D = 2*allObjectsState.ball.radius;
+        spriteBatch.draw(ball, X1, Y1, D, D);
+    }
+
     private void goalStatistic(){
 
         fontGoal.draw(spriteBatch,String.valueOf(allObjectsState.selfGoal),
                 Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/3);
         fontGoal.draw(spriteBatch,String.valueOf(allObjectsState.enemyGoal),
                 Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()*2/3);
+    }
+
+    private void spritePaddle(){
+
+        spriteBatch.draw(paddle_self,this.localState.paddleSelf.getX(), this.localState.paddleSelf.getY(),
+                this.localState.paddleSelf.getWidth(), this.localState.paddleSelf.getHeight());
+
+        spriteBatch.draw(paddle_enemy,this.allObjectsState.paddleEnemy.getX(), this.allObjectsState.paddleEnemy.getY(),
+                this.allObjectsState.paddleEnemy.getWidth(), this.allObjectsState.paddleEnemy.getHeight());
     }
 
     final float X_FLAG = 100;
