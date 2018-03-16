@@ -31,7 +31,7 @@ public class ResultScreen implements Screen {
 
     final FlagList flagList;
     final SpriteBatch spriteBatch;
-    final Texture logo;
+    final Texture resultFon;
     final ResultGame resultGame;
     final BitmapFont font;
     final Music fon;
@@ -40,7 +40,7 @@ public class ResultScreen implements Screen {
     public ResultScreen(ResultGame resultGame) {
         this.spriteBatch = new SpriteBatch();
         this.flagList = new FlagList();
-        logo =  new Texture(TextureList.FINAL_LOGO);
+        resultFon =  new Texture(TextureList.RESULT_FON);
         this.resultGame = resultGame;
         font = FontList.resultFont();
         fon = SoundsList.musics.getMusic(SoundsList.musics.common_fon);
@@ -52,7 +52,7 @@ public class ResultScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
-        spriteBatch.draw(logo, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        spriteBatch.draw(resultFon, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         flag();
         showGoals();
         showTitle();
