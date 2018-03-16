@@ -20,19 +20,20 @@ public class SyncSystem implements GameNetImpl {
 
     final String TAG = this.getClass().getName();
 
+    final SettingsStruct ss;
     final StateController stateController;
     final NetworkInterface networkInterface;
     final LocalState localState;
     final AllObjectsState allObjectsState;
-    final boolean isServer;
     Network.ConnectionState netState;
+    private float sendTimeout = 0;
 
     public SyncSystem(SettingsStruct ss, AllObjectsState allObjectsState, LocalState localState) {
-        isServer = ss.server;
+        this.ss = ss;
         this.localState = localState;
         this.allObjectsState = allObjectsState;
         netState = Network.ConnectionState.WAIT_PLAYER;
-        if (isServer){
+        if (this.ss.server){
             networkInterface = new GameServer(ss, this);
         } else {
             networkInterface = new GameClient(ss, this);
@@ -48,11 +49,16 @@ public class SyncSystem implements GameNetImpl {
         if (networkInterface.waitPlayer(delta))
             return;
 
-        if (isServer) {
+        if (this.ss.server) {
             stateController.update(delta);
-            networkInterface.sendState(allObjectsState);
+        }
+
+        final Object state = this.ss.server ? allObjectsState : localState;
+        if (sendTimeout >= this.ss.sendPeriod){
+            networkInterface.sendState(state);
+            sendTimeout = 0;
         } else {
-            networkInterface.sendState(localState);
+            sendTimeout += delta;
         }
 
     }

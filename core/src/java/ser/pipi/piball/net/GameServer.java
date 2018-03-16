@@ -16,12 +16,14 @@ public class GameServer extends NetworkBaseClass {
 
     final String TAG = this.getClass().getName();
 
+    final SettingsStruct ss;
     Server broadcastServer;
     Server gameServer;
 
     public GameServer(SettingsStruct ss, GameNetImpl gameNet) {
         super(gameNet);
         final int bankPort = ss.bankPort;
+        this.ss = ss;
 
         try {
             broadcastServer = new Server();
@@ -57,7 +59,11 @@ public class GameServer extends NetworkBaseClass {
 
     @Override
     public void sendState(Object object) {
-        gameServer.sendToAllTCP(object);
+        if (ss.sendTCP) {
+            gameServer.sendToAllTCP(object);
+        } else {
+            gameServer.sendToAllUDP(object);
+        }
     }
 
     @Override

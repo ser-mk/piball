@@ -103,7 +103,11 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
 
     @Override
     public void sendState(Object object) {
-        client.sendTCP(object);
+        if(ss.sendTCP) {
+            client.sendTCP(object);
+        } else {
+            client.sendUDP(object);
+        }
     }
 
     @Override
