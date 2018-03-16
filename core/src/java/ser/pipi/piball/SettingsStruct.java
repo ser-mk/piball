@@ -16,6 +16,8 @@ public class SettingsStruct {
     public int bankPort = 0;
     public int timeoutDiscoverHost = 2000;
     public int timeoutServerConnect = 2000;
+    public float sendPeriod = 0;
+    public boolean sendTCP = false;
 
     public int deadDiff = 11;
     public int maxVelocityPaddle = 5555;
