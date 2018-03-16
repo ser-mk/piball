@@ -4,11 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import ser.pipi.piball.asserts.FlagList;
 import ser.pipi.piball.asserts.FontList;
+import ser.pipi.piball.asserts.NamesCountry;
 import ser.pipi.piball.asserts.TextureList;
 
 /**
@@ -127,12 +129,22 @@ public class RenderSystem {
         spriteBatch.draw(ball, X1, Y1, D, D);
     }
 
+    final int GOALS_TITLE_OFFSET_Y = 24;
+    final int GOALS_TITLE_CENTERED_Y = 13;
+    final int GOALS_TITLE_CENTERED_X = 164;
+
     private void goalStatistic(){
 
-        fontGoal.draw(spriteBatch,String.valueOf(allObjectsState.selfGoal),
-                Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/3);
-        fontGoal.draw(spriteBatch,String.valueOf(allObjectsState.enemyGoal),
-                Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()*2/3);
+        final String nameSelf = NamesCountry.getNameShortCountry(localState.flag);
+        final String nameEnemy = NamesCountry.getNameShortCountry(allObjectsState.flagEnemy);
+        final String title = nameSelf + " " + String.valueOf(allObjectsState.selfGoal)
+                + " - " +
+                 String.valueOf(allObjectsState.enemyGoal) + " " + nameEnemy;
+
+        FontList.printTextCenter(spriteBatch, fontGoal, title,
+                GOALS_TITLE_CENTERED_X, Gdx.graphics.getHeight()-
+                GOALS_TITLE_CENTERED_Y);
+
     }
 
     private void spritePaddle(){
