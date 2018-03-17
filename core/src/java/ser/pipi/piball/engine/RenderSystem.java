@@ -25,10 +25,11 @@ public class RenderSystem {
     final SpriteBatch spriteBatch;
 
     final Texture arena;
+    final Texture score;
     final Texture ball;
     final Texture paddle_self;
     final Texture paddle_enemy;
-    final BitmapFont fontGoal;
+    final BitmapFont font;
 
     final AllObjectsState allObjectsState;
     final LocalState localState;
@@ -42,15 +43,19 @@ public class RenderSystem {
         spriteBatch = new SpriteBatch();
 
         arena = TextureList.loadTexture(TextureList.ARENA);
+        score = TextureList.loadTexture(TextureList.SCORE);
         ball = TextureList.loadTexture(TextureList.BALL);
         paddle_self = TextureList.loadTexture(TextureList.PADDLE_SELF);
         paddle_enemy = TextureList.loadTexture(TextureList.PADDLE_ENEMY);
 
         this.flagList = new FlagList();
 
-        fontGoal = new BitmapFont();
-        fontGoal.setColor(Color.RED);
-        fontGoal.getData().setScale(2);
+        font = FontList.arenaFont();
+/*
+        font = new BitmapFont();
+        font.setColor(Color.RED);
+        font.getData().setScale(2);
+        */
     }
 
     public void update(){
@@ -79,20 +84,21 @@ public class RenderSystem {
         final String statusPI = localState.statusPI;
         final int X_CENTER = Gdx.graphics.getWidth()/2;
 
-        FontList.printTextCenter(spriteBatch,fontGoal,statusPI,
-                X_CENTER,Gdx.graphics.getHeight()/2 + 100);
+        FontList.printTextCenter(spriteBatch, font,statusPI,
+                X_CENTER,Gdx.graphics.getHeight()/2 - 100 - font.getLineHeight()*2);
 
         final String statusNET = localState.statusNET;
-        FontList.printTextCenter(spriteBatch,fontGoal,statusNET,
-                X_CENTER,Gdx.graphics.getHeight()/2 - 100 - - fontGoal.getLineHeight()*2);
+        FontList.printTextCenter(spriteBatch, font,statusNET,
+                X_CENTER,Gdx.graphics.getHeight()*2/3 );
 
-        final String statusPIEnemy = allObjectsState.statusPIEnemy;
-        FontList.printTextCenter(spriteBatch,fontGoal,statusPIEnemy,
-                X_CENTER,Gdx.graphics.getHeight()*2/3);
+        final String statusPIEnemy = allObjectsState.statusPIEnemy.isEmpty()
+                ? "" : "player enemy: " + allObjectsState.statusPIEnemy;
+        FontList.printTextCenter(spriteBatch, font, statusPIEnemy,
+                X_CENTER,Gdx.graphics.getHeight()/2 + 100);
 
         final float frameRate = Gdx.graphics.getFramesPerSecond();
         //Gdx.app.log(TAG, frameRate + " fps");
-        fontGoal.draw(spriteBatch,frameRate + " fps", 0,222);
+        font.draw(spriteBatch,frameRate + " fps", 0,222);
     }
 
     private void paddleSelf(){
@@ -130,21 +136,46 @@ public class RenderSystem {
     }
 
     final int GOALS_TITLE_OFFSET_Y = 24;
-    final int GOALS_TITLE_CENTERED_Y = 13;
-    final int GOALS_TITLE_CENTERED_X = 164;
+    final int GOALS_TITLE_GAP_Y = 13;
+    final int GOALS_TITLE_X = 50;
+    final int EDGING_X_SCORE = 10;
+    final int EDGING_Y_SCORE = 5;
+    final float ALPHA_SCORE = 0.65f;
 
     private void goalStatistic(){
 
         final String nameSelf = NamesCountry.getNameShortCountry(localState.flag);
         final String nameEnemy = NamesCountry.getNameShortCountry(allObjectsState.flagEnemy);
         final String title = nameSelf + " " + String.valueOf(allObjectsState.selfGoal)
-                + " - " +
+                + "-" +
                  String.valueOf(allObjectsState.enemyGoal) + " " + nameEnemy;
 
-        FontList.printTextCenter(spriteBatch, fontGoal, title,
-                GOALS_TITLE_CENTERED_X, Gdx.graphics.getHeight()-
-                GOALS_TITLE_CENTERED_Y);
+        final float Y = Gdx.graphics.getHeight() - GOALS_TITLE_GAP_Y;
 
+        final GlyphLayout layout = new GlyphLayout(font, title);
+
+        final Color prevColorScore = spriteBatch.getColor();
+        final Color scoreColor = prevColorScore.cpy();
+        scoreColor.a = ALPHA_SCORE;
+        spriteBatch.setColor(scoreColor);
+        spriteBatch.draw(score,GOALS_TITLE_X - EDGING_X_SCORE,
+                Y - layout.height - EDGING_Y_SCORE,
+                layout.width + 2*EDGING_X_SCORE, layout.height + 2*EDGING_Y_SCORE);
+        spriteBatch.setColor(prevColorScore);
+
+        final Color prevColorScoreFont = font.getColor();
+        final Color scoreColorFont = prevColorScoreFont.cpy();
+        scoreColorFont.a = ALPHA_SCORE;
+        font.setColor(scoreColorFont);
+        font.draw(spriteBatch, layout, GOALS_TITLE_X, Y);
+        font.setColor(prevColorScoreFont);
+
+
+/*
+        FontList.printTextCenter(spriteBatch, font, title,
+                GOALS_TITLE_X, Gdx.graphics.getHeight()-
+                        GOALS_TITLE_GAP_Y);
+*/
     }
 
     private void spritePaddle(){

@@ -28,7 +28,7 @@ public class FontList {
     public static BitmapFont arenaFont(){
         final BitmapFont bf = new BitmapFont(Gdx.files.internal(DIR + BEANTOWN + SUFFIX));
         bf.setColor(Color.BLACK);
-        bf.getData().setScale(0.6f);
+        bf.getData().setScale(0.3f);
         return bf;
     }
 

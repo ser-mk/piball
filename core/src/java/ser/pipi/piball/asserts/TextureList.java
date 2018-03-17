@@ -14,6 +14,7 @@ public class TextureList {
     public static final String WELCOME = "green_welcome_wr3.png";
     public static final String ARENA = "field.png";
     //public static final String ARENA = "field_simple_score.png";
+    public static final String SCORE = "score" + PNG;
     public static final String BALL = "big.png";
     public static final String PADDLE_ENEMY = "paddle_enemy.png";
     public static final String PADDLE_SELF = "paddle_self.png";
