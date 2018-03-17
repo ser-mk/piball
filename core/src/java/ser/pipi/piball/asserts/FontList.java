@@ -11,17 +11,31 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 
 public class FontList {
-    public static BitmapFont resultFont(){
-        BitmapFont font = new BitmapFont();
-        //font.setColor();
-        font.getData().setScale(5f);
+
+    static final String BEANTOWN = "beantown";
+    static final String DIR = "fonts/";
+    static final String SUFFIX = ".fnt";
+
+
+    public static BitmapFont welcomeFont(){
+        BitmapFont font = new BitmapFont(Gdx.files.internal(DIR + BEANTOWN + SUFFIX));
+        font.setColor(Color.WHITE);
+        font.getData().setScale(0.9f);
         return font;
     }
 
-    public static BitmapFont welcomeFont(){
-        BitmapFont font = new BitmapFont();
-        font.setColor(Color.RED);
-        font.getData().setScale(2);
+
+    public static BitmapFont arenaFont(){
+        final BitmapFont bf = new BitmapFont(Gdx.files.internal(DIR + BEANTOWN + SUFFIX));
+        bf.setColor(Color.BLACK);
+        bf.getData().setScale(0.6f);
+        return bf;
+    }
+
+    public static BitmapFont resultFont(){
+        BitmapFont font = new BitmapFont(Gdx.files.internal(DIR + BEANTOWN + SUFFIX));
+        //font.setColor();
+        font.getData().setScale(0.9f);
         return font;
     }
 
