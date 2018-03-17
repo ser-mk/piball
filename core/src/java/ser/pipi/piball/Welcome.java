@@ -3,6 +3,7 @@ package ser.pipi.piball;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -26,8 +27,8 @@ class Welcome implements Screen {
 
     final SpriteBatch spriteBatch;
     final Texture welcomeTexture;
-    final Texture confirmFlag;
-    final Texture approveFlag;
+    final float borderWidth = 15;
+    final Texture edging;
 
     final FlagList flagList;
     final Music fon;
@@ -40,6 +41,7 @@ class Welcome implements Screen {
     final int START_Y = 10;
     final int MAX_ROWS = 8;
     final int MAX_COLS = 4;
+    final int START_GROUP_X = 25;
 
     enum State {CHOICE, CONFIRM_WAIT, APPROVE}
 
@@ -50,7 +52,7 @@ class Welcome implements Screen {
 
     final PositionInterface positionInterface;
     final PositionInspector positionInspector;
-    final BitmapFont fontGameInspector;
+    final BitmapFont fontStatus;
 
     public Welcome(Piball piball) {
         this.positionInterface = piball.getPositionInterface();
@@ -59,11 +61,10 @@ class Welcome implements Screen {
         positionInspector = new PositionInspector(positionInterface);
         spriteBatch = new SpriteBatch();
         welcomeTexture = TextureList.loadTexture(TextureList.WELCOME);
-        confirmFlag = new Texture("confirm.png");
-        approveFlag = new Texture("approve.png");
+        edging = TextureList.loadTexture(TextureList.EDGING);
         this.flagList = new FlagList();
         this.fon = SoundsList.musics.getMusic(SoundsList.musics.common_fon);
-        fontGameInspector = FontList.welcomeFont();
+        fontStatus = FontList.welcomeFont();
     }
 
     @Override
@@ -136,12 +137,14 @@ class Welcome implements Screen {
         spriteBatch.draw(welcomeTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         renderFlags();
         print_status();
+        printTitle(state);
+        printColNameGroup();
         spriteBatch.end();
     }
 
     private void print_status(){
         final String status = positionInspector.getStatus();
-        fontGameInspector.draw(spriteBatch,status,
+        fontStatus.draw(spriteBatch,status,
                 Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/2);
     }
 
@@ -182,23 +185,25 @@ class Welcome implements Screen {
     }
 
     private void drawBorder(final int indexFlag, State state){
-        Texture border;
-        if(state == State.CONFIRM_WAIT){
-            border = confirmFlag;
-        } else if(state == State.APPROVE){
-            border = approveFlag;
-        } else {
-            return;
-        }
-
         if(indexFlag < 0 || indexFlag > FlagList.NUM_COUNTRY){
             return;
         }
 
+        Texture border = edging;
+        final Color prevColor = spriteBatch.getColor();
+        final Color edgingColor = prevColor.cpy();
+
+        if(state == State.CONFIRM_WAIT){
+            edgingColor.a = 0.5f;
+            spriteBatch.setColor(edgingColor);
+        }
+
         final float[] xy = calcXYFlag(indexFlag);
-        final float borderWidth = 22;
+
         spriteBatch.draw(border,xy[0] - borderWidth,xy[1] - borderWidth,
                 WIDTH_FLAG + borderWidth*2,HEIGHT_FLAG + 2*borderWidth);
+
+        spriteBatch.setColor(prevColor);
     }
 
     private boolean touchedPosition(int[] xy){
@@ -215,14 +220,45 @@ class Welcome implements Screen {
         return true;
     }
 
+    final String CHOICE_TITLE = "CHOICE YOUR COUNTRY:";
+    final String APPROVE_TITLE = "LOAD GAME...";
+    final String CONFIRM_WAIT_TITLE = "APPROVE YOUR CHOICE:";
+    final int Y_TITLE = 1150;
+
+    private void printTitle(State state){
+        switch (state){
+            case CHOICE:
+                FontList.printTextCenter(spriteBatch, fontStatus, CHOICE_TITLE,
+                    Gdx.graphics.getWidth() / 2, Y_TITLE);
+                break;
+            case CONFIRM_WAIT:
+                FontList.printTextCenter(spriteBatch, fontStatus, CONFIRM_WAIT_TITLE,
+                        Gdx.graphics.getWidth() / 2, Y_TITLE);
+                break;
+            case APPROVE:
+                FontList.printTextCenter(spriteBatch, fontStatus, APPROVE_TITLE,
+                        Gdx.graphics.getWidth() / 2, Y_TITLE);
+                break;
+        }
+    }
+
+    private void printColNameGroup(){
+        final int A_pos = 65;
+
+        for(int i = 0; i < MAX_ROWS; i++){
+            final String group = Character.toString((char) (A_pos + i)) + ":";
+            final float Y = START_Y + i*HEIGHT_ROW + fontStatus.getLineHeight();
+            fontStatus.draw(spriteBatch,group,START_GROUP_X,Y);
+        }
+    }
+
     @Override
     public void dispose () {
         spriteBatch.dispose();
         welcomeTexture.dispose();
         fon.stop();
         fon.dispose();
-        confirmFlag.dispose();
-        approveFlag.dispose();
+        edging.dispose();
     }
 
     @Override
