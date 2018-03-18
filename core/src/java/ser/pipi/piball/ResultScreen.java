@@ -23,6 +23,9 @@ public class ResultScreen implements Screen {
 
     final String TAG = this.getClass().getName();
 
+    private final PositionInterface positionInterface;
+    private final Piball piball;
+
     public static class ResultGame{
         public int flagSelf = 3;
         public int flagEnemy = 4;
@@ -39,7 +42,9 @@ public class ResultScreen implements Screen {
     //final Label skin;
 
 
-    public ResultScreen(ResultGame resultGame) {
+    public ResultScreen(Piball piball, ResultGame resultGame) {
+        this.piball = piball;
+        this.positionInterface = piball.getPositionInterface();
         this.spriteBatch = new SpriteBatch();
         this.flagList = new FlagList();
         resultFon =  new Texture(TextureList.RESULT_FON);
@@ -60,6 +65,7 @@ public class ResultScreen implements Screen {
         showTitle();
         showNamesShort();
         spriteBatch.end();
+        checkEnd();
     }
 
     final int X_STEP_FLAG = 19;
@@ -140,6 +146,20 @@ public class ResultScreen implements Screen {
         final float fontY = Gdx.graphics.getHeight() - Y_STEP_TITLE;
 
         font.draw(spriteBatch, layout, fontX, fontY);
+    }
+
+    public void checkEnd(){
+        final PositionInterface.InputStatus piStatus = positionInterface.getState();
+        if(piStatus == PositionInterface.InputStatus.BACKSPACE) {
+            piball.startWelcome();
+            return;
+        }
+
+        if(piStatus == PositionInterface.InputStatus.CLOSE_GAME ||
+                piStatus == PositionInterface.InputStatus.CONNECTED_PROBLEM) {
+            piball.exit();
+            return;
+        }
     }
 
     @Override
