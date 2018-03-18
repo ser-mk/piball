@@ -1,6 +1,7 @@
 package ser.pipi.piball;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 
 import ser.pipi.piball.engine.*;
 
@@ -31,15 +32,24 @@ public class Piball extends Game {
 
 	@Override
 	public void create () {
+		//setScreen(new Welcome(this));
+		//startArena(0);
+		showResult(( new ResultScreen.ResultGame()));
+	}
+
+	public void startWelcome(){
 		setScreen(new Welcome(this));
-		//setScreen(new Arena(this));
 	}
 
 	public void startArena(int flag){
 		setScreen(new Arena(this, flag));
 	}
 
+	public void exit(){
+		Gdx.app.exit();
+	}
+
 	public void showResult(ResultScreen.ResultGame rg){
-		setScreen(new ResultScreen(rg));
+		setScreen(new ResultScreen(this, rg));
 	}
 }
