@@ -71,7 +71,7 @@ public class Arena implements Screen {
                 || piStatus == PositionInterface.InputStatus.POSITION_UNDEFINED) {
             markPiStatus(delta, CLEAR_STATUS);
         } else {
-            markPiStatus(delta, getStringPiStatus(piStatus));
+            markPiStatus(delta, PositionInterface.getStringErrorPiStatus(piStatus));
         }
 
         checkEnd(delta,netState,piStatus);
@@ -118,15 +118,6 @@ public class Arena implements Screen {
             case NETWORK_EXCEPTION: return "NETWORK PROBLEMS";
             case COLLISION_PLAYER: return "MORE PLAYER FOR TOURNAMENT";
             default: return "UNDEFINED NETWORK ERROR";
-        }
-    }
-
-    static private String getStringPiStatus(PositionInterface.InputStatus piState){
-        switch (piState){
-            case CLOSE_GAME: return "GAME END";
-            case CONNECTED_PROBLEM: return "CAN'T FIND YOUR FLOW";
-            case BACKSPACE: return "RETURN TO BACK";
-            default: return "UNDEFINED STATUS";
         }
     }
 

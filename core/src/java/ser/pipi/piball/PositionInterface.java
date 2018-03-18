@@ -26,4 +26,18 @@ public abstract class PositionInterface {
         return status;
     }
 
+    public String getStringErrorPiStatus(){
+        return getStringErrorPiStatus(status);
+    }
+
+    static public String getStringErrorPiStatus(PositionInterface.InputStatus piState){
+        switch (piState){
+
+            case CLOSE_GAME: return "GAME END";
+            case CONNECTED_PROBLEM: return "CAN'T FIND FLOW";
+            case BACKSPACE: return "RETURN TO BACK";
+            default: return "";
+        }
+    }
+
 }
