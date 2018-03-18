@@ -89,7 +89,7 @@ public class Arena implements Screen {
         switch (piStatus){
             case CLOSE_GAME: endForce = true; break;
             case CONNECTED_PROBLEM: endForce = true; break;
-            case BACKSPACE: endForce = true; wait = ss.wait_end_game; break;
+            case BACKSPACE: endForce = true; piball.startWelcome(); break;
         }
 
         if (endForce){
