@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import ser.pipi.piball.SettingsStruct;
 import ser.pipi.piball.asserts.FlagList;
 import ser.pipi.piball.asserts.FontList;
 import ser.pipi.piball.asserts.NamesCountry;
@@ -35,10 +37,14 @@ public class RenderSystem {
     final LocalState localState;
     final FlagList flagList;
 
-    public RenderSystem(AllObjectsState allObjectsState, LocalState localState) {
+    final Sprite spriteBall;
+    final SettingsStruct ss;
+
+    public RenderSystem(SettingsStruct ss, AllObjectsState allObjectsState, LocalState localState) {
 
         this.allObjectsState = allObjectsState;
         this.localState = localState;
+        this.ss = ss;
         shapeRenderer = new ShapeRenderer();
         spriteBatch = new SpriteBatch();
 
@@ -51,14 +57,13 @@ public class RenderSystem {
         this.flagList = new FlagList();
 
         font = FontList.arenaFont();
-/*
-        font = new BitmapFont();
-        font.setColor(Color.RED);
-        font.getData().setScale(2);
-        */
+
+        spriteBall = new Sprite(ball);
+        final float scale = 2*ss.radiusBall/spriteBall.getHeight();
+        spriteBall.setScale(scale);
     }
 
-    public void update(){
+    public void update(float delta){
         // Tells shapeRenderer to begin drawing filled shapes
         /*
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -72,7 +77,7 @@ public class RenderSystem {
 */
         spriteBatch.begin();
         spriteBatch.draw(arena, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        sprite_ball();
+        sprite_ball(delta);
         spritePaddle();
         goalStatistic();
         print_status();
@@ -128,11 +133,12 @@ public class RenderSystem {
                 this.allObjectsState.ball.radius);
     }
 
-    private void sprite_ball(){
-        final float X1 = allObjectsState.ball.x - allObjectsState.ball.radius;
-        final float Y1 = allObjectsState.ball.y - allObjectsState.ball.radius;
-        final float D = 2*allObjectsState.ball.radius;
-        spriteBatch.draw(ball, X1, Y1, D, D);
+    private void sprite_ball(float delta){
+        spriteBall.setCenter(allObjectsState.ball.x, allObjectsState.ball.y);
+
+        spriteBall.rotate(delta*allObjectsState.ballVelocity.len()*ss.rateAnglefromLiniarVelocity);
+
+        spriteBall.draw(spriteBatch);
     }
 
     final int GOALS_TITLE_OFFSET_Y = 24;

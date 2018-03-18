@@ -38,7 +38,7 @@ public class Arena implements Screen {
         this.localState = new LocalState(ss, flag);
 
         localController = new LocalController(ss, localState, piball.getPositionInterface());
-        render = new RenderSystem(allObjectsState, localState);
+        render = new RenderSystem(ss, allObjectsState, localState);
         soundSystem = new SoundSystem(allObjectsState, localState);
         syncSystem = new SyncSystem(ss, allObjectsState, localState);
         this.positionInterface = piball.getPositionInterface();
@@ -51,7 +51,7 @@ public class Arena implements Screen {
         checkEventSystem(delta);
         Gdx.gl.glClearColor(0, 0.5f, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        render.update();
+        render.update(delta);
         soundSystem.update();
     }
 
