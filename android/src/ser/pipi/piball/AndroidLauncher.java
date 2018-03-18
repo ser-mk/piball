@@ -40,7 +40,6 @@ public class AndroidLauncher extends AndroidApplication {
 		config.hideStatusBar = true;
 		piBind = new PiBind(this);
 		PII_Stub pii = new PII_Stub(piBind);
-//		initialize(new Piball(pii), config);
 		initialize(new Piball(pii, getSettingsStruct()), config);
 		Gdx.input.setInputProcessor(pii);
 		Gdx.input.setCatchBackKey(true);
