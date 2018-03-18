@@ -24,8 +24,8 @@ public class ResultScreen implements Screen {
     final String TAG = this.getClass().getName();
 
     public static class ResultGame{
-        public int flagSelf = 0;
-        public int flagEnemy = 0;
+        public int flagSelf = 3;
+        public int flagEnemy = 4;
         public int goalsSelf = 0;
         public int goalsEnemy = 0;
     }
@@ -36,6 +36,7 @@ public class ResultScreen implements Screen {
     final ResultGame resultGame;
     final BitmapFont font;
     final Music fon;
+    //final Label skin;
 
 
     public ResultScreen(ResultGame resultGame) {
@@ -62,7 +63,7 @@ public class ResultScreen implements Screen {
     }
 
     final int X_STEP_FLAG = 19;
-    final int Y_FLAG = 190;
+    final int Y_FLAG = 100;
     final int FLAG_WIDTH = 250;
     final int FLAG_HEIGHT = 160;
     final int X_FLAG_CENTERED = X_STEP_FLAG + FLAG_WIDTH/2;
@@ -89,25 +90,31 @@ public class ResultScreen implements Screen {
 
         final int Y = Y_FLAG + FLAG_HEIGHT + Y_CENTERED_OFFSET_GOALS;
 
+        final float prevScaleX = font.getScaleX();
+        final float prevScaleY = font.getScaleY();
+        font.getData().setScale(2.5f);
 
-        FontList.printTextCenter(spriteBatch, font, "" + resultGame.goalsSelf,
-                X_FLAG_CENTERED , Y);
+        FontList.printTextCenterFitWidth(spriteBatch, font, "" + resultGame.goalsSelf,
+                X_FLAG_CENTERED , Y,FLAG_WIDTH);
 
-        FontList.printTextCenter(spriteBatch, font, "" + resultGame.goalsEnemy,
-                Gdx.graphics.getWidth() - X_FLAG_CENTERED , Y);
+        FontList.printTextCenterFitWidth(spriteBatch, font, "" + resultGame.goalsEnemy,
+                Gdx.graphics.getWidth() - X_FLAG_CENTERED , Y,FLAG_WIDTH);
+
+        font.getData().setScale(prevScaleX,prevScaleY);
     }
 
-    final float Y_CENTERED_NAME = 691;
+    final float Y_CENTERED_NAME = 650;
 
     private void showNamesShort(){
-        final String nameSelf = NamesCountry.getNameShortCountry(resultGame.flagSelf);
-        final String nameEnemy = NamesCountry.getNameShortCountry(resultGame.flagEnemy);
+        final String nameSelf = NamesCountry.getNameCountry(resultGame.flagSelf);
+        final String nameEnemy = NamesCountry.getNameCountry(resultGame.flagEnemy);
 
-        FontList.printTextCenter(spriteBatch, font, nameSelf,
-                X_FLAG_CENTERED, Y_CENTERED_NAME);
+        FontList.printTextCenterFitWidth(spriteBatch, font, nameSelf,
+                X_FLAG_CENTERED, Y_CENTERED_NAME, FLAG_WIDTH);
 
-        FontList.printTextCenter(spriteBatch, font, nameEnemy,
-                Gdx.graphics.getWidth() - X_FLAG_CENTERED, Y_CENTERED_NAME);
+        FontList.printTextCenterFitWidth(spriteBatch, font, nameEnemy,
+                Gdx.graphics.getWidth() - X_FLAG_CENTERED,
+                Y_CENTERED_NAME, FLAG_WIDTH);
     }
 
     final String DEAD_HEAT = "Dead heat!";
