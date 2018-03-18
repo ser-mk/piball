@@ -4,7 +4,7 @@ package ser.pipi.piball;
  * Created by ser on 17.02.18.
  */
 
-public interface PositionInterface {
+public abstract class PositionInterface {
 
     public static final int POSITION_MIN = 0;
     public static final int POSITION_MAX = 1000;
@@ -12,8 +12,18 @@ public interface PositionInterface {
     public enum InputStatus{NORMAL_WORK,POSITION_UNDEFINED,
         CONNECTED_PROBLEM,CLOSE_GAME, BACKSPACE}
 
-    public void update();
-    public int getPosition();
-    public InputStatus getState();
+    protected InputStatus status = InputStatus.NORMAL_WORK;
+
+    public abstract void update();
+    public abstract int getPosition();
+    public InputStatus getState() {
+
+        if(status == InputStatus.BACKSPACE){
+            status = InputStatus.POSITION_UNDEFINED;
+            return InputStatus.BACKSPACE;
+        }
+
+        return status;
+    }
 
 }

@@ -10,10 +10,10 @@ import sermk.pipi.pilib.PiBind;
  * Created by ser on 17.02.18.
  */
 
-class PII_Stub implements PositionInterface, InputProcessor {
+class PII_Stub extends PositionInterface implements InputProcessor {
 
     final String TAG = this.getClass().getName();
-    InputStatus status = InputStatus.NORMAL_WORK;
+    //InputStatus status = InputStatus.NORMAL_WORK;
     int position = 500;
     PiBind piBind;
 
@@ -24,11 +24,6 @@ class PII_Stub implements PositionInterface, InputProcessor {
     @Override
     public int getPosition() {
         return position;
-    }
-
-    @Override
-    public InputStatus getState() {
-        return status;
     }
 
     @Override
