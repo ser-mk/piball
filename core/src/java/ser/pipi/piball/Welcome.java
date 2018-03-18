@@ -51,14 +51,12 @@ class Welcome implements Screen {
     State state = State.CHOICE;
 
     final PositionInterface positionInterface;
-    final PositionInspector positionInspector;
     final BitmapFont fontStatus;
 
     public Welcome(Piball piball) {
         this.positionInterface = piball.getPositionInterface();
         this.piball = piball;
         this.ss = piball.getSettingsStruct();
-        positionInspector = new PositionInspector(positionInterface);
         spriteBatch = new SpriteBatch();
         welcomeTexture = TextureList.loadTexture(TextureList.WELCOME);
         edging = TextureList.loadTexture(TextureList.EDGING);
@@ -82,15 +80,36 @@ class Welcome implements Screen {
     @Override
     public void render(float delta) {
         update(delta);
+        checkEnd(delta);
         render();
     }
 
     private void update(float delta){
-        positionInspector.checkPiPos(delta);
         switch (state) {
             case CHOICE: choice(delta); break;
             case CONFIRM_WAIT: confirm(delta); break;
             case APPROVE: approve(delta); break;
+        }
+    }
+
+    private float waitEnd = 0;
+
+    private void checkEnd(float delta){
+        boolean endForce = false;
+
+        switch (positionInterface.getState()){
+            case CLOSE_GAME: endForce = true; break;
+            case CONNECTED_PROBLEM: endForce = true; break;
+            case BACKSPACE: piball.exit(); break;
+        }
+
+        if (endForce){
+            waitEnd += delta;
+            if (waitEnd > ss.wait_end_game){
+                piball.exit();
+            }
+        } else {
+            waitEnd = 0;
         }
     }
 
@@ -143,7 +162,7 @@ class Welcome implements Screen {
     }
 
     private void print_status(){
-        final String status = positionInspector.getStatus();
+        final String status = positionInterface.getStringErrorPiStatus();
         fontStatus.draw(spriteBatch,status,
                 Gdx.graphics.getWidth()/3,Gdx.graphics.getHeight()/2);
     }
