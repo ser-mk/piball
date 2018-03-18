@@ -46,4 +46,25 @@ public class FontList {
         final float fontY = Y - layout.height/2;
         font.draw(spriteBatch, layout, fontX, fontY);
     }
+
+    public static void printTextCenterFitWidth(SpriteBatch spriteBatch, BitmapFont font,
+                                               String text, float X, float Y, float widthResctrict){
+        GlyphLayout layout = new GlyphLayout(font, text);
+        final float prevScaleX = font.getScaleX();
+        final float prevScaleY = font.getScaleY();
+
+        final float stepScale = 0.01f;
+
+        for(int i = 1; layout.width > widthResctrict; i++){
+            font.getData().setScale(prevScaleX - stepScale*i,
+                    prevScaleY - stepScale*i);
+            layout.setText(font, text);
+        }
+
+        final float fontX = X - layout.width/2;
+        final float fontY = Y + layout.height/2;
+        font.draw(spriteBatch, layout, fontX, fontY);
+
+        font.getData().setScale(prevScaleX,prevScaleY);
+    }
 }
