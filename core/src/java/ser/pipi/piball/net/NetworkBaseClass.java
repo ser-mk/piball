@@ -45,8 +45,12 @@ public abstract class NetworkBaseClass extends Listener implements NetworkInterf
 
     @Override
     public void connected(Connection connection) {
-        state = ConnectionState.CONNECTED_PLAYER;
         Gdx.app.log(TAG, "++connecting! " + connection.toString());
+        if (state == ConnectionState.CONNECTED_PLAYER){
+            state = ConnectionState.COLLISION_PLAYER;
+        } else {
+            state = ConnectionState.CONNECTED_PLAYER;
+        }
     }
 
     @Override
