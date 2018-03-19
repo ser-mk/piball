@@ -15,7 +15,7 @@ public class NamesCountry {
             "Argentina" , "Croatia", "Iceland", "Nigeria",
             "France","Denmark" ,  "Peru", "Australia",
             "Portugal" , "Spain", "Iran", "Morocco",
-            "Russia", "Egypt", "Uruguay", "Saudi\nArabia",};
+            "Russia", "Uruguay", "Egypt", "Saudi\nArabia",};
 
     final static String[] nameShort = {
             "Pol" , "Col", "Sen", "Japan",
@@ -25,7 +25,7 @@ public class NamesCountry {
             "Arg" , "Croat", "Ice", "Nig",
             "Fran","Den" ,  "Peru", "Aust",
             "Port" , "Spain", "Iran", "Mor",
-            "Rus", "Egy", "Uru", "S.A.",
+            "Rus", "Uru", "Egy", "S.A.",
     };
 
     static final String ERROR = "undefined";
