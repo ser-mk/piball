@@ -10,7 +10,7 @@ public class SettingsStruct {
     public float yPaddleSelf = 0;
     public float widthPaddle = 155;
     public float heigthPaddle = 22;
-    public float radiusBall = 15;
+    public float radiusBall = 22;
     public float focus = 220;
     public boolean server = true;
     public int bankPort = 0;
