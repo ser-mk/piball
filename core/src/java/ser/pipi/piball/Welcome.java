@@ -265,7 +265,7 @@ class Welcome implements Screen {
         final int A_pos = 65;
 
         for(int i = 0; i < MAX_ROWS; i++){
-            final String group = Character.toString((char) (A_pos + i)) + ":";
+            final String group = Character.toString((char) (A_pos + MAX_ROWS - 1 - i)) + ":";
             final float Y = START_Y + i*HEIGHT_ROW + fontStatus.getLineHeight();
             fontStatus.draw(spriteBatch,group,START_GROUP_X,Y);
         }
