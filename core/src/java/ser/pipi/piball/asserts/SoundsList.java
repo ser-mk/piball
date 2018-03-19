@@ -9,8 +9,8 @@ import com.badlogic.gdx.audio.Music;
 
 public class SoundsList {
 
-    static final String SUFFIX = ".wav";
-    //static final String SUFFIX = ".ogg";
+    //static final String SUFFIX = ".wav";
+    static final String SUFFIX = ".ogg";
 
     public static class effects {
         static final String SOUND_DIR = "sounds/";
@@ -22,6 +22,8 @@ public class SoundsList {
         static final String MUSIC_DIR = "musics/";
         public static final String stadium = MUSIC_DIR + "stadium" + SUFFIX;
         public static final String common_fon = MUSIC_DIR + "common_fon" + SUFFIX;
+        public static final String atmosphere = MUSIC_DIR + "atm" + SUFFIX;
+        public static final String ole = MUSIC_DIR + "ole" + SUFFIX;
 
         public static Music getMusic(String name){
             final Music music = Gdx.audio.newMusic(Gdx.files.internal(name));
