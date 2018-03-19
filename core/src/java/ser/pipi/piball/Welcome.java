@@ -61,7 +61,7 @@ class Welcome implements Screen {
         welcomeTexture = TextureList.loadTexture(TextureList.WELCOME);
         edging = TextureList.loadTexture(TextureList.EDGING);
         this.flagList = new FlagList();
-        this.fon = SoundsList.musics.getMusic(SoundsList.musics.common_fon);
+        this.fon = SoundsList.musics.getMusic(SoundsList.musics.ole);
         fontStatus = FontList.welcomeFont();
     }
 

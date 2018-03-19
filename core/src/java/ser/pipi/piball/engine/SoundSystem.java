@@ -46,7 +46,7 @@ public class SoundSystem {
     }
     
     static public String getDefaultMusic(){
-        return SoundsList.musics.stadium;
+        return SoundsList.musics.atmosphere;
     }
 
     public void update(){

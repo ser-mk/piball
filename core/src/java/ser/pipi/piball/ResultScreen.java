@@ -50,7 +50,7 @@ public class ResultScreen implements Screen {
         resultFon =  new Texture(TextureList.RESULT_FON);
         this.resultGame = resultGame;
         font = FontList.resultFont();
-        fon = SoundsList.musics.getMusic(SoundsList.musics.common_fon);
+        fon = SoundsList.musics.getMusic(SoundsList.musics.ole);
     }
 
 
