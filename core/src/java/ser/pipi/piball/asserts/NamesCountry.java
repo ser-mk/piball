@@ -7,23 +7,26 @@ package ser.pipi.piball.asserts;
 public class NamesCountry {
     final static int NUM_COUNTRY = FlagList.NUM_COUNTRY;
 
-    final static  String[] name = {"Russia", "Egypt", "Uruguay", "Saudi Arabia",
-            "Portugal" , "Spain", "Iran", "Morocco",
-            "Denmark" , "France", "Peru", "Australia",
-            "Argentina" , "Croatia", "Iceland", "Nigeria",
-            "Brazil" , "Switzerland", "Costa-Rica", "Serbia",
-            "Mexico" , "Sweden", "Germany", "Korea",
+    final static  String[] name = {
+            "Poland" , "Colombia", "Senegal", "Japan",
             "Belgium" , "England", "Tunisia", "Panama",
-            "Poland" , "Colombia", "Senegal", "Japan",};
+            "Germany", "Mexico" , "Sweden",  "Korea",
+            "Brazil" , "Switzerland", "Costa-Rica", "Serbia",
+            "Argentina" , "Croatia", "Iceland", "Nigeria",
+            "France","Denmark" ,  "Peru", "Australia",
+            "Portugal" , "Spain", "Iran", "Morocco",
+            "Russia", "Egypt", "Uruguay", "Saudi\nArabia",};
 
-    final static String[] nameShort = {"Rus", "Egypt", "Urug", "S.A.",
-            "Port" , "Spain", "Iran", "Moroc",
-            "Den" , "Fran", "Peru", "Austr",
-            "Arg" , "Croa", "Ice", "Nig",
-            "Braz" , "Swit", "C.R.", "Serb",
-            "Mex" , "Swed", "Germ", "Korea",
+    final static String[] nameShort = {
+            "Pol" , "Col", "Sen", "Japan",
             "Belg" , "Eng", "Tun", "Pan",
-            "Pol" , "Colom", "Sen", "Japan",};
+            "Germ", "Mex" , "Swed",  "Korea",
+            "Brazil" , "Switz", "C.-R.", "Serb",
+            "Arg" , "Croat", "Ice", "Nig",
+            "Fran","Den" ,  "Peru", "Aust",
+            "Port" , "Spain", "Iran", "Mor",
+            "Rus", "Egy", "Uru", "S.A.",
+    };
 
     static final String ERROR = "undefined";
 
