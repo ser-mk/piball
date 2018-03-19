@@ -50,7 +50,6 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
                     inetAddress,
                     Network.portTCP(ss.bankPort),
                     Network.portUDP(ss.bankPort));
-            state = ConnectionState.CONNECTED_PLAYER;
         } catch (IOException e) {
             e.printStackTrace();
             Gdx.app.log(TAG, " @@@@@@@@@" +  e.toString());
