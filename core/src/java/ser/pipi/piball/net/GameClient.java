@@ -1,6 +1,7 @@
 package ser.pipi.piball.net;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Disposable;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 
@@ -63,7 +64,7 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
     static public void localHostCut(List<InetAddress> addresses){
         try {
             final InetAddress localHost = InetAddress.getByName("localhost");
-            Gdx.app.log("localHostCut", "getLocalHost : " + localHost);
+            //Gdx.app.log("localHostCut", "getLocalHost : " + localHost);
             while (addresses.contains(localHost)) {
                 addresses.remove(localHost);
             }
@@ -114,13 +115,19 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
         if (discoverThread.isAlive()) {
             discoverThread.interrupt();
         }
+        client.stop();
+        try {
+            client.dispose();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
     @Override
     public void run() {
         List<InetAddress> servers = discoverServer();
-        while(servers.size() != 1) {
+        while(servers.size() != 1 && !Thread.currentThread().isInterrupted()) {
             servers = discoverServer();
             localHostCut(servers);
 
@@ -135,6 +142,7 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
             }
         }
 
-        while(!tryConnect(servers.get(0))){}
+        while(!Thread.currentThread().isInterrupted()
+                && !tryConnect(servers.get(0))){}
     }
 }

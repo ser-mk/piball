@@ -146,6 +146,7 @@ public class Arena implements Screen {
     public void hide() {
         Gdx.app.log(TAG, " - hide");
         soundSystem.release();
+        syncSystem.dispose();
     }
 
     @Override

@@ -2,6 +2,8 @@ package ser.pipi.piball.net;
 
 import com.esotericsoftware.kryonet.Server;
 
+import java.io.IOException;
+
 import ser.pipi.piball.SettingsStruct;
 
 import ser.pipi.piball.net.Network.ConnectionState;
@@ -68,6 +70,11 @@ public class GameServer extends NetworkBaseClass {
 
     @Override
     public void release() {
-
+        gameServer.stop();
+        try {
+            gameServer.dispose();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

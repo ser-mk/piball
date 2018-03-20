@@ -1,6 +1,7 @@
 package ser.pipi.piball.engine;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Disposable;
 import com.esotericsoftware.kryonet.Connection;
 
 import java.lang.reflect.Field;
@@ -16,7 +17,7 @@ import ser.pipi.piball.net.NetworkInterface;
  * Created by ser on 06.03.18.
  */
 
-public class SyncSystem implements GameNetImpl {
+public class SyncSystem implements GameNetImpl, Disposable {
 
     final String TAG = this.getClass().getName();
 
@@ -117,4 +118,9 @@ public class SyncSystem implements GameNetImpl {
     }
 
     public Network.ConnectionState getNetState(){ return netState; }
+
+    @Override
+    public void dispose() {
+        networkInterface.release();
+    }
 }
