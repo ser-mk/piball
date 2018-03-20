@@ -179,9 +179,10 @@ class Welcome implements Screen {
         if(col < 0 || col >= MAX_COLS)
             return -1;
 
-        Gdx.app.log(TAG, "row " + row + "col " + col);
-
         int number = col + row * MAX_COLS;
+
+        Gdx.app.log(TAG, "row " + row + "col " + col + " select " + number);
+
         return number;
     }
 
