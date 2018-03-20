@@ -43,6 +43,10 @@ public class SoundSystem {
                 Gdx.audio.newMusic(Gdx.files.internal(SoundsList.musics.stadium)));
         musics.put(SoundsList.musics.common_fon,
                 Gdx.audio.newMusic(Gdx.files.internal(SoundsList.musics.common_fon)));
+        musics.put(SoundsList.musics.atmosphere,
+                Gdx.audio.newMusic(Gdx.files.internal(SoundsList.musics.atmosphere)));
+        musics.put(SoundsList.musics.ole,
+                Gdx.audio.newMusic(Gdx.files.internal(SoundsList.musics.ole)));
     }
     
     static public String getDefaultMusic(){
