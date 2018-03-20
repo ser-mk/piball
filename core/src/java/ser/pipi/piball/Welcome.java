@@ -297,7 +297,9 @@ class Welcome implements Screen {
 
     @Override
     public void hide() {
-
+        Gdx.app.log(TAG, " - hide");
+        fon.stop();
+        fon.dispose();
     }
 
 }

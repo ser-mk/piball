@@ -99,6 +99,17 @@ public class SoundSystem {
         musics.get(currentMusic).play();
     }
 
+    public void release(){
+        if(currentMusic == null)
+            return;
+
+        if(musics.get(currentMusic) == null)
+            return;
+
+        musics.get(currentMusic).stop();
+        musics.get(currentMusic).dispose();
+    }
+
     private static boolean appendSound(ArrayList<String> soundList, String effect){
         if(soundList.contains(effect)){
             return false;
