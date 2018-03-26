@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import ser.pipi.piball.PositionInterface;
 import ser.pipi.piball.SettingsStruct;
 import ser.pipi.piball.asserts.FlagList;
 import ser.pipi.piball.asserts.FontList;
@@ -30,7 +31,9 @@ public class RenderSystem {
     final Texture score;
     final Texture ball;
     final Texture paddle_self;
+    final Texture paddle_self_undefined;
     final Texture paddle_enemy;
+    final Texture paddle_enemy_undefined;
     final BitmapFont font;
 
     final AllObjectsState allObjectsState;
@@ -53,6 +56,8 @@ public class RenderSystem {
         ball = TextureList.loadTexture(TextureList.BALL);
         paddle_self = TextureList.loadTexture(TextureList.PADDLE_SELF);
         paddle_enemy = TextureList.loadTexture(TextureList.PADDLE_ENEMY);
+        paddle_self_undefined = TextureList.loadTexture(TextureList.PADDLE_SELF_UNDEFINED);
+        paddle_enemy_undefined = TextureList.loadTexture(TextureList.PADDLE_ENEMY_UNDEFINED);
 
         this.flagList = new FlagList();
 
@@ -186,10 +191,24 @@ public class RenderSystem {
 
     private void spritePaddle(){
 
-        spriteBatch.draw(paddle_self,this.localState.paddleSelf.getX(), this.localState.paddleSelf.getY(),
+        Texture self = paddle_self;
+
+        if(!PositionInterface.InputStatus.NORMAL_WORK.equals(
+                localState.inputStatus)){
+            self = paddle_self_undefined;
+        }
+
+        spriteBatch.draw(self,this.localState.paddleSelf.getX(), this.localState.paddleSelf.getY(),
                 this.localState.paddleSelf.getWidth(), this.localState.paddleSelf.getHeight());
 
-        spriteBatch.draw(paddle_enemy,this.allObjectsState.paddleEnemy.getX(), this.allObjectsState.paddleEnemy.getY(),
+        Texture enemy = paddle_enemy;
+
+        if(!PositionInterface.InputStatus.NORMAL_WORK.equals(
+                allObjectsState.inputStatusEnemy)){
+            enemy = paddle_enemy_undefined;
+        }
+
+        spriteBatch.draw(enemy,this.allObjectsState.paddleEnemy.getX(), this.allObjectsState.paddleEnemy.getY(),
                 this.allObjectsState.paddleEnemy.getWidth(), this.allObjectsState.paddleEnemy.getHeight());
     }
 
