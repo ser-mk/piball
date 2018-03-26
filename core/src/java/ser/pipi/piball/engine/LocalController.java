@@ -30,6 +30,8 @@ public class LocalController {
 
     public void update(float delta){
 
+        localState.inputStatus = positionInterface.getState();
+
         int pos = positionInterface.getPosition();
         if (pos < PositionInterface.POSITION_MIN){
             return;

@@ -50,6 +50,7 @@ public class StateController {
         allObjectsState.paddleSelf.setX(XP);
         allObjectsState.statusPISelf = localStore.statusPI;
         allObjectsState.flagSelf = localStore.flag;
+        allObjectsState.inputStatusSelf = localStore.inputStatus;
     }
 
     private void ball(float delta){
