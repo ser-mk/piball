@@ -18,6 +18,8 @@ public class TextureList {
     public static final String BALL = "big.png";
     public static final String PADDLE_ENEMY = "paddle_enemy.png";
     public static final String PADDLE_SELF = "paddle_self.png";
+    public static final String PADDLE_ENEMY_UNDEFINED = "paddle_enemy_gray.png";
+    public static final String PADDLE_SELF_UNDEFINED = "paddle_self_gray.png";
 
     public static Texture loadTexture(String name){
         return new Texture(name);
