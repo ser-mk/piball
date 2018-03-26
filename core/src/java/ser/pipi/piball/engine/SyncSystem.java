@@ -78,6 +78,7 @@ public class SyncSystem implements GameNetImpl, Disposable {
             allObjectsState.paddleEnemy.setX(ls.paddleSelf.getX());
             allObjectsState.statusPIEnemy = ls.statusPI;
             allObjectsState.flagEnemy = ls.flag;
+            allObjectsState.inputStatusEnemy = ls.inputStatus;
         }
     }
 
@@ -92,6 +93,7 @@ public class SyncSystem implements GameNetImpl, Disposable {
         final int goal = server.enemyGoal;
         server.enemyGoal = server.selfGoal;
         server.selfGoal = goal;
+        server.inputStatusEnemy = server.inputStatusSelf;
     }
 
     private void inverseLocalPaddle(LocalState ls){
