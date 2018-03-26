@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import ser.pipi.piball.PositionInterface;
 import ser.pipi.piball.SettingsStruct;
 
 /**
@@ -12,11 +13,14 @@ import ser.pipi.piball.SettingsStruct;
  */
 
 public class AllObjectsState {
+
     Rectangle paddleSelf;
     String statusPISelf;
+    PositionInterface.InputStatus inputStatusSelf;
     int flagSelf;
     Rectangle paddleEnemy;
     String statusPIEnemy;
+    PositionInterface.InputStatus inputStatusEnemy;
     int flagEnemy;
     Circle ball;
     Vector2 ballVelocity;
@@ -40,6 +44,8 @@ public class AllObjectsState {
         paddleEnemy.setY(Gdx.graphics.getHeight() - Y_PADDLE_SELF - HEIGHT_PADDLE);
         statusPIEnemy = new String();
         statusPISelf = statusPIEnemy;
+        inputStatusEnemy = PositionInterface.InputStatus.POSITION_UNDEFINED;
+        inputStatusSelf = PositionInterface.InputStatus.POSITION_UNDEFINED;
         final float X_START_BALL = Gdx.graphics.getWidth()/2;
         final float Y_START_BALL = Gdx.graphics.getHeight()/2;
         final float RADIUS_BALL = ss.radiusBall;

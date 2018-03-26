@@ -3,6 +3,7 @@ package ser.pipi.piball.engine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 
+import ser.pipi.piball.PositionInterface;
 import ser.pipi.piball.SettingsStruct;
 
 /**
@@ -13,6 +14,7 @@ public class LocalState {
     Rectangle paddleSelf;
     String statusPI;
     String statusNET;
+    PositionInterface.InputStatus inputStatus;
 
     int flag;
 
@@ -27,5 +29,6 @@ public class LocalState {
         this.statusPI = new String();
         this.statusNET = new String();
         this.flag = flag;
+        inputStatus = PositionInterface.InputStatus.POSITION_UNDEFINED;
     }
 }
