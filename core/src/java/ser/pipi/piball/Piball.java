@@ -32,9 +32,9 @@ public class Piball extends Game {
 
 	@Override
 	public void create () {
-		//setScreen(new Welcome(this));
+		setScreen(new Welcome(this));
 		//startArena(0);
-		showResult(( new ResultScreen.ResultGame()));
+		//showResult(( new ResultScreen.ResultGame()));
 	}
 
 	public void startWelcome(){
