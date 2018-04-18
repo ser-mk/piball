@@ -68,7 +68,9 @@ public class SyncSystem implements GameNetImpl, Disposable {
     public void recieve(Connection connection, Object object) {
         if (object instanceof AllObjectsState) {
             inversServerState((AllObjectsState)object);
-            cloneStateStore((AllObjectsState)object);
+            if(!checkHasNullPublicField((AllObjectsState)object, AllObjectsState.class)) {
+                cloneStateStore((AllObjectsState) object);
+            }
         }
 
         if (object instanceof LocalState) {
@@ -81,6 +83,22 @@ public class SyncSystem implements GameNetImpl, Disposable {
             allObjectsState.inputStatusEnemy = ls.inputStatus;
         }
     }
+
+    static public <T> boolean checkHasNullPublicField(T tmp, Class<T> clazz){
+        if(tmp == null){
+            return true;
+        }
+        try {
+            for (Field f : clazz.getDeclaredFields())
+                if (f.get(tmp) == null)
+                    return true;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return true;
+        }
+        return false;
+    }
+
 
     private void inversServerState(AllObjectsState server){
         final float width =  Gdx.graphics.getWidth();
