@@ -88,7 +88,7 @@ public class SoundSystem {
         if(!musics.containsKey(musicState))
             return;
 
-        if(musicState == currentMusic)
+        if(musicState.equals(currentMusic))
             return;
 
         if (currentMusic != EMPTY_MUSIC )
