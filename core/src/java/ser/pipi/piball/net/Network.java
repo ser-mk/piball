@@ -13,7 +13,7 @@ import ser.pipi.piball.engine.LocalState;
 
 public class Network {
 
-    public static enum ConnectionState {NETWORK_EXCEPTION,
+    public enum ConnectionState {NETWORK_EXCEPTION,
         WAIT_PLAYER,
         CONNECTED_PLAYER,
         DISCONNECTED_PLAYER,
