@@ -30,13 +30,13 @@ public class GameClientTest extends GameTestHeadlessApplication {
     public void prepare(){
 
         SettingsStruct ss = new SettingsStruct();
-        localStateServer = new LocalState(ss);
+        localStateServer = new LocalState(ss,0);
         allObjectsStateServer = new AllObjectsState(ss);
 
         syncSystemServer = new SyncSystem(ss, allObjectsStateServer, localStateServer);
 
         ss.server = false;
-        localStateClient = new LocalState(ss);
+        localStateClient = new LocalState(ss, 2);
         allObjectsStateClient = new AllObjectsState(ss);
         syncSystemClient = new SyncSystem(ss, allObjectsStateClient,localStateClient);
 
