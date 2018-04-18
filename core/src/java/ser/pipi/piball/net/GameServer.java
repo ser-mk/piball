@@ -85,7 +85,9 @@ public class GameServer extends NetworkBaseClass {
         if(gameServer==null)
             return;
         gameServer.stop();
+        broadcastServer.stop();
         try {
+            broadcastServer.dispose();
             gameServer.dispose();
         } catch (IOException e) {
             e.printStackTrace();
