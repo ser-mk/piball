@@ -151,6 +151,7 @@ public class ResultScreen implements Screen {
     public void checkEnd(){
         final PositionInterface.InputStatus piStatus = positionInterface.getState();
         if(piStatus == PositionInterface.InputStatus.BACKSPACE) {
+            positionInterface.clearState();
             piball.startWelcome();
             return;
         }

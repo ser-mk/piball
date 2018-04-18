@@ -16,14 +16,13 @@ public abstract class PositionInterface {
 
     public abstract void update();
     public abstract int getPosition();
+
     public InputStatus getState() {
-
-        if(status == InputStatus.BACKSPACE){
-            status = InputStatus.POSITION_UNDEFINED;
-            return InputStatus.BACKSPACE;
-        }
-
         return status;
+    }
+
+    public void clearState(){
+        status = InputStatus.POSITION_UNDEFINED;
     }
 
     public String getStringErrorPiStatus(){
