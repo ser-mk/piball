@@ -61,7 +61,7 @@ public class SettingsReciever extends BroadcastReceiver {
     }
 
     private String setSettings(Context context, String content, String action) {
-        final boolean success = Settings.saveSettings(context, content);
+        final boolean success = AndroidSettings.saveSettings(context, content);
         MClient.sendMessage(context, action,
                 NameFieldCollection.errSaveSettings(success));
         return ErrorCollector.NO_ERROR;

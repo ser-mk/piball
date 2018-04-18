@@ -12,9 +12,9 @@ import sermk.pipi.pilib.PiUtils;
  * Created by ser on 18.03.18.
  */
 
-public class Settings {
+public class AndroidSettings {
 
-    private final static  String TAG = "Game Settings:";
+    private final static  String TAG = "Game AndroidSettings:";
 
     private final static  String SETTINGS_NAME_FIELD = TAG;
     private final static  String SETTINGS_FILE_NAME = "settings";

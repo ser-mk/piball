@@ -16,7 +16,6 @@ import org.junit.runner.RunWith;
 import sermk.pipi.pilib.CommandCollection;
 
 
-import static org.junit.Assert.*;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -51,7 +50,7 @@ public class SettingsRecieverTest {
         Thread.sleep(14111);
 
 
-        settingsStruct = Settings.getSettingsStruct(al.getActivity());
+        settingsStruct = AndroidSettings.getSettingsStruct(al.getActivity());
 
         Assert.assertEquals(bankPort_test, settingsStruct.bankPort);
 
@@ -62,7 +61,7 @@ public class SettingsRecieverTest {
                 CommandCollection.ACTION_RECIVER_PIBALL_SET_SETTINGS,json);
 
         Thread.sleep(14111);
-        settingsStruct = Settings.getSettingsStruct(al.getActivity());
+        settingsStruct = AndroidSettings.getSettingsStruct(al.getActivity());
         Assert.assertNotEquals(bankPort_test, settingsStruct.bankPort);
     }
 

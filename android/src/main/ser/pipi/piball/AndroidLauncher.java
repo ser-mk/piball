@@ -46,7 +46,8 @@ public class AndroidLauncher extends AndroidApplication {
 	}
 
 	private SettingsStruct getSettingsStruct(){
-		final SettingsStruct ss = Settings.getSettingsStruct(this);
+
+		final SettingsStruct ss = AndroidSettings.getSettingsStruct(this);
 		if (this.getIntent().hasExtra("Server")) {
 			ss.server = this.getIntent().getBooleanExtra("Server", false);
 		}
