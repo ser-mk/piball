@@ -157,9 +157,16 @@ public class RenderSystem {
 
         final String nameSelf = NamesCountry.getNameShortCountry(localState.flag);
         final String nameEnemy = NamesCountry.getNameShortCountry(allObjectsState.flagEnemy);
-        final String title = nameSelf + " " + String.valueOf(allObjectsState.selfGoal)
+
+        String title = nameSelf + " " + String.valueOf(allObjectsState.selfGoal)
                 + "-" +
                  String.valueOf(allObjectsState.enemyGoal) + " " + nameEnemy;
+        if(!ss.server){
+            title = String.valueOf(allObjectsState.enemyGoal) + " " + nameEnemy
+                    + "-" +
+                    nameSelf + " " + String.valueOf(allObjectsState.selfGoal)
+                    ;
+        }
 
         final float Y = Gdx.graphics.getHeight() - GOALS_TITLE_GAP_Y;
 
