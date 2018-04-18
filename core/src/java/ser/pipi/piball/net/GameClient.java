@@ -82,6 +82,14 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
         connection.close();
     }
 
+    private boolean isFinishState(){
+        if (state == ConnectionState.DISCONNECTED_PLAYER
+                ||
+                state == ConnectionState.NETWORK_EXCEPTION) {
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public boolean waitPlayer(float delta) {
@@ -93,7 +101,7 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
             return false;
         }
 
-        if (state == ConnectionState.DISCONNECTED_PLAYER) {
+        if (isFinishState()) {
             return true;
         }
 
@@ -118,13 +126,30 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
     public void release() {
         if (discoverThread.isAlive()) {
             discoverThread.interrupt();
+            while(discoverThread.isAlive()){
+                try {
+                    Thread.sleep(300);
+                    System.out.println("wait client thread\r\n");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         client.stop();
+        while(client.isConnected()){
+            try {
+                System.out.println("client.isConnected");
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         try {
             client.dispose();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("release client\r\n");
     }
 
 
@@ -147,6 +172,13 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
         }
 
         while(!Thread.currentThread().isInterrupted()
-                && !tryConnect(servers.get(0))){}
+                && !tryConnect(servers.get(0))
+                && !isFinishState()){
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
