@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.Date;
+
 import ser.pipi.piball.asserts.FlagList;
 import ser.pipi.piball.asserts.FontList;
 import ser.pipi.piball.asserts.SoundsList;
@@ -53,6 +55,8 @@ class Welcome implements Screen {
     final PositionInterface positionInterface;
     final BitmapFont fontStatus;
 
+    final Date dateCreating;
+
     public Welcome(Piball piball) {
         this.positionInterface = piball.getPositionInterface();
         this.piball = piball;
@@ -63,6 +67,7 @@ class Welcome implements Screen {
         this.flagList = new FlagList();
         this.fon = SoundsList.musics.getMusic(SoundsList.musics.ole);
         fontStatus = FontList.welcomeFont();
+        dateCreating = new Date();
     }
 
     @Override
@@ -94,13 +99,23 @@ class Welcome implements Screen {
 
     private float waitEnd = 0;
 
+    private long DEAD_TIME_MS_EXIT =3*1000;
+
     private void checkEnd(float delta){
         boolean endForce = false;
 
         switch (positionInterface.getState()){
             case CLOSE_GAME: endForce = true; break;
             case CONNECTED_PROBLEM: endForce = true; break;
-            case BACKSPACE: piball.exit(); break;
+            case BACKSPACE:
+                final long diff = new Date().getTime() - dateCreating.getTime();
+                if(diff > DEAD_TIME_MS_EXIT) {
+                    System.out.println("backspace@@@@@@@@");
+                    piball.exit();
+                } else {
+                    positionInterface.clearState();
+                }
+                break;
         }
 
         if (endForce){
