@@ -1,7 +1,6 @@
 package ser.pipi.piball.net;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Disposable;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 
@@ -80,6 +79,7 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
         super.disconnected(connection);
         Gdx.app.log(TAG,"disconnected : " + connection);
         server = null;
+        connection.close();
     }
 
 
@@ -91,6 +91,10 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
 
         if (state == ConnectionState.CONNECTED_PLAYER) {
             return false;
+        }
+
+        if (state == ConnectionState.DISCONNECTED_PLAYER) {
+            return true;
         }
 
         if (!discoverThread.isAlive()) {
