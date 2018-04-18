@@ -1,5 +1,6 @@
 package ser.pipi.piball.net;
 
+import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
 
 import java.io.IOException;
@@ -44,9 +45,20 @@ public class GameServer extends NetworkBaseClass {
     }
 
     @Override
+    public void disconnected(Connection connection) {
+        super.disconnected(connection);
+        //connection.close();
+        gameServer.stop();
+    }
+
+    @Override
     public boolean waitPlayer(float delta) {
 
         if (state == ConnectionState.NETWORK_EXCEPTION){
+            return true;
+        }
+
+        if (state == ConnectionState.DISCONNECTED_PLAYER){
             return true;
         }
 
