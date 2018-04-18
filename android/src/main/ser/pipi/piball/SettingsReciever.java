@@ -8,6 +8,9 @@ import android.util.Log;
 import sermk.pipi.pilib.CommandCollection;
 import sermk.pipi.pilib.ErrorCollector;
 import sermk.pipi.pilib.MClient;
+import sermk.pipi.pilib.NameFieldCollection;
+import sermk.pipi.pilib.PiUtils;
+import sermk.pipi.pilib.UniversalReciver;
 
 public class SettingsReciever extends BroadcastReceiver {
 
@@ -22,32 +25,14 @@ public class SettingsReciever extends BroadcastReceiver {
         // TODO: This method is called when the BroadcastReceiver is receiving
         // an Intent broadcast.
         EC.clear();
-        Log.v(TAG, "inent: " + intent.toString());
-        String action;
-        try{
-            action = intent.getAction().trim();
-        } catch (Exception e){
-            action = "wrong action!";
-            EC.addError(action);
-            Log.w(TAG, "action is not exist!");
-        }
-        Log.v(TAG, action);
 
-        String content;
-        try{
-            content = intent.getStringExtra(Intent.EXTRA_TEXT).trim();
-        } catch (Exception e){
-            content = "wrong content!";
-            EC.addError(content);
-            Log.w(TAG, "content is not exist!");
-        }
-        Log.v(TAG, content);
-
+        final UniversalReciver.ReciverVarible rv
+                = UniversalReciver.parseIntent(intent, TAG);
 
         String success = ErrorCollector.NO_ERROR;
 
         try {
-            success = doAction(context, content, action);
+            success = doAction(context, rv.content, rv.action);
         } catch (Exception e){
             e.printStackTrace();
             EC.addError(EC.getStackTraceString(e));
@@ -58,13 +43,13 @@ public class SettingsReciever extends BroadcastReceiver {
 
         Log.v(TAG, EC.error);
 
-        MClient.sendMessage(context, EC.subjError(TAG,action), EC.error);
+        MClient.sendMessage(context, EC.subjError(TAG,rv.action), EC.error);
     }
 
     private String doAction(Context context, String content, String action) {
-        if(action.equals(CommandCollection.ACTION_RECIVER_PIBALL_GET_SETTINGS)){
+        if(action.equals(CommandCollection.ACTION_RECIVER_FOR_ALL_QUERY_SETTINGS)){
             return getSettings(context, action);
-        } else if (action.equals(CommandCollection.ACTION_RECIVER_PIBALL_SET_SETTINGS)){
+        } else if (action.equals(CommandCollection.ACTION_RECIVER_PIBALL_SET_AND_SAVE_SETTINGS)){
             return setSettings(context, content, action);
         }
 
@@ -76,13 +61,14 @@ public class SettingsReciever extends BroadcastReceiver {
     }
 
     private String setSettings(Context context, String content, String action) {
-        final String res = Settings.setSettings(context, content);
-        MClient.sendMessage(context, action, res);
+        final boolean success = Settings.saveSettings(context, content);
+        MClient.sendMessage(context, action,
+                NameFieldCollection.errSaveSettings(success));
         return ErrorCollector.NO_ERROR;
     }
 
     private String getSettings(Context context, String action) {
-        final String settings = Settings.getSettingsJson(context);
+        final String settings = PiUtils.getJsonFromShared(context);
         MClient.sendMessage(context, action, settings);
         return ErrorCollector.NO_ERROR;
     }
