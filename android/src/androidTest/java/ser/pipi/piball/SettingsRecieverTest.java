@@ -45,7 +45,7 @@ public class SettingsRecieverTest {
         String json = new Json().toJson(settingsStruct, SettingsStruct.class);
 
         sendBroadCastStringContent(al.getActivity(),
-                CommandCollection.ACTION_RECIVER_PIBALL_SET_SETTINGS,json);
+                CommandCollection.ACTION_RECIVER_PIBALL_SET_AND_SAVE_SETTINGS,json);
 
         Thread.sleep(14111);
 
@@ -58,7 +58,7 @@ public class SettingsRecieverTest {
         json = new Json().toJson(settingsStruct);
 
         sendBroadCastStringContent(al.getActivity(),
-                CommandCollection.ACTION_RECIVER_PIBALL_SET_SETTINGS,json);
+                CommandCollection.ACTION_RECIVER_PIBALL_SET_AND_SAVE_SETTINGS,json);
 
         Thread.sleep(14111);
         settingsStruct = AndroidSettings.getSettingsStruct(al.getActivity());
