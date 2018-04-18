@@ -70,6 +70,8 @@ public class GameServer extends NetworkBaseClass {
 
     @Override
     public void release() {
+        if(gameServer==null)
+            return;
         gameServer.stop();
         try {
             gameServer.dispose();
