@@ -40,9 +40,9 @@ public class SettingsRecieverTest {
     @Test
     public void onReceive() throws Exception {
 
-        SettingsStruct settingsStruct = new SettingsStruct();
-        settingsStruct.bankPort = bankPort_test;
-        String json = new Json().toJson(settingsStruct, SettingsStruct.class);
+        Settings settings = new Settings();
+        settings.bankPort = bankPort_test;
+        String json = new Json().toJson(settings, Settings.class);
 
         sendBroadCastStringContent(al.getActivity(),
                 CommandCollection.ACTION_RECIVER_PIBALL_SET_AND_SAVE_SETTINGS,json);
@@ -50,19 +50,19 @@ public class SettingsRecieverTest {
         Thread.sleep(14111);
 
 
-        settingsStruct = AndroidSettings.getSettingsStruct(al.getActivity());
+        settings = AndroidSettings.getSettings(al.getActivity());
 
-        Assert.assertEquals(bankPort_test, settingsStruct.bankPort);
+        Assert.assertEquals(bankPort_test, settings.bankPort);
 
-        settingsStruct.bankPort = -bankPort_test;
-        json = new Json().toJson(settingsStruct);
+        settings.bankPort = -bankPort_test;
+        json = new Json().toJson(settings);
 
         sendBroadCastStringContent(al.getActivity(),
                 CommandCollection.ACTION_RECIVER_PIBALL_SET_AND_SAVE_SETTINGS,json);
 
         Thread.sleep(14111);
-        settingsStruct = AndroidSettings.getSettingsStruct(al.getActivity());
-        Assert.assertNotEquals(bankPort_test, settingsStruct.bankPort);
+        settings = AndroidSettings.getSettings(al.getActivity());
+        Assert.assertNotEquals(bankPort_test, settings.bankPort);
     }
 
     private void sendBroadCastStringContent(Context context,String action, String content){

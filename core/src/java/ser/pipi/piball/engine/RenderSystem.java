@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import ser.pipi.piball.PositionInterface;
-import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.Settings;
 import ser.pipi.piball.asserts.FlagList;
 import ser.pipi.piball.asserts.FontList;
 import ser.pipi.piball.asserts.NamesCountry;
@@ -41,9 +41,9 @@ public class RenderSystem {
     final FlagList flagList;
 
     final Sprite spriteBall;
-    final SettingsStruct ss;
+    final Settings ss;
 
-    public RenderSystem(SettingsStruct ss, AllObjectsState allObjectsState, LocalState localState) {
+    public RenderSystem(Settings ss, AllObjectsState allObjectsState, LocalState localState) {
 
         this.allObjectsState = allObjectsState;
         this.localState = localState;

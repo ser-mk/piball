@@ -5,14 +5,14 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import ser.pipi.piball.Piball;
-import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.Settings;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 
 		System.out.println("arg : " + arg[0] + " " + arg[1]);
 
-		final SettingsStruct ss = new SettingsStruct();
+		final Settings ss = new Settings();
 		final boolean server = arg[0].equals("s");
 		final int bankport = Integer.parseInt(arg[1]);
 		ss.server = server;

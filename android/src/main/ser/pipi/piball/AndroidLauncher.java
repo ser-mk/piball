@@ -42,14 +42,14 @@ public class AndroidLauncher extends AndroidApplication {
 		config.hideStatusBar = true;
 		piBind = new PiBind(this);
 		PII_Stub pii = new PII_Stub(piBind);
-		initialize(new Piball(pii, getSettingsStruct()), config);
+		initialize(new Piball(pii, getcurrentSettings()), config);
 		Gdx.input.setInputProcessor(pii);
 		Gdx.input.setCatchBackKey(true);
 	}
 
-	private SettingsStruct getSettingsStruct(){
+	private Settings getcurrentSettings(){
 
-		final SettingsStruct ss = AndroidSettings.getSettingsStruct(this);
+		final Settings ss = AndroidSettings.getSettings(this);
 		if (this.getIntent().hasExtra("Server")) {
 			ss.server = this.getIntent().getBooleanExtra("Server", false);
 		}

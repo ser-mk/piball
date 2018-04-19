@@ -1,7 +1,6 @@
 package ser.pipi.piball;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.esotericsoftware.jsonbeans.Json;
@@ -22,9 +21,9 @@ public class AndroidSettings {
     private final static  String SUCCES_SET_SETTINGS = "SUCCES_SET_SETTINGS";
 
     static public boolean saveSettings(Context context, String json){
-        final SettingsStruct temp = new Json().
-                fromJson(SettingsStruct.class,json);
-        if(PiUtils.checkHasNullPublicField(temp, SettingsStruct.class)){
+        final Settings temp = new Json().
+                fromJson(Settings.class,json);
+        if(PiUtils.checkHasNullPublicField(temp, Settings.class)){
             Log.v(TAG,"object settings has null object!");
             return false;
         }
@@ -35,13 +34,13 @@ public class AndroidSettings {
     }
 
     //todo: check null and null field and new settings
-    static public SettingsStruct getSettingsStruct(Context context){
+    static public Settings getSettings(Context context){
         final String json = PiUtils.getJsonFromShared(context);
-        final SettingsStruct temp =  new Json().fromJson(SettingsStruct.class, json);
+        final Settings temp =  new Json().fromJson(Settings.class, json);
 
-        if(PiUtils.checkHasNullPublicField(temp, SettingsStruct.class)){
+        if(PiUtils.checkHasNullPublicField(temp, Settings.class)){
             Log.v(TAG,"saved settings broken!");
-            return new SettingsStruct();
+            return new Settings();
         }
 
         return temp;

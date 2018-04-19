@@ -25,7 +25,7 @@ class Welcome implements Screen {
     final String TAG = this.getClass().getName();
 
     final Piball piball;
-    final SettingsStruct ss;
+    final Settings ss;
 
     final SpriteBatch spriteBatch;
     final Texture welcomeTexture;
@@ -60,7 +60,7 @@ class Welcome implements Screen {
     public Welcome(Piball piball) {
         this.positionInterface = piball.getPositionInterface();
         this.piball = piball;
-        this.ss = piball.getSettingsStruct();
+        this.ss = piball.getSettings();
         spriteBatch = new SpriteBatch();
         welcomeTexture = TextureList.loadTexture(TextureList.WELCOME);
         edging = TextureList.loadTexture(TextureList.EDGING);

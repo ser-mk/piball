@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ser.pipi.piball.GameTestHeadlessApplication;
-import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.Settings;
 import ser.pipi.piball.engine.AllObjectsState;
 import ser.pipi.piball.engine.LocalState;
 import ser.pipi.piball.engine.SyncSystem;
@@ -29,7 +29,7 @@ public class GameClientTest extends GameTestHeadlessApplication {
     @Before
     public void prepare(){
 
-        SettingsStruct ss = new SettingsStruct();
+        Settings ss = new Settings();
         localStateServer = new LocalState(ss,0);
         allObjectsStateServer = new AllObjectsState(ss);
 

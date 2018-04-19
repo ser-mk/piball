@@ -9,7 +9,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
 
-import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.Settings;
 
 import ser.pipi.piball.net.Network.ConnectionState;
 
@@ -22,12 +22,12 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
     final String TAG = this.getClass().getName();
 
     final private Client client;
-    final SettingsStruct ss;
+    final Settings ss;
     Thread discoverThread;
 
     InetAddress server;
 
-    public GameClient(SettingsStruct ss, GameNetImpl gameNet) {
+    public GameClient(Settings ss, GameNetImpl gameNet) {
         super(gameNet);
         this.ss = ss;
         client = new Client();

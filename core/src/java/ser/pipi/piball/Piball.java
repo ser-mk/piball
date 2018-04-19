@@ -9,21 +9,21 @@ public class Piball extends Game {
 
 	final PositionInterface positionInterface;
 
-	final SettingsStruct settingsStruct;
+	final Settings settings;
 
 	public Piball(PositionInterface positionInterface) {
 		this.positionInterface = positionInterface;
 
-		settingsStruct = new SettingsStruct();
+		settings = new Settings();
 	}
 
-	public Piball(PositionInterface positionInterface, SettingsStruct settingsStruct) {
+	public Piball(PositionInterface positionInterface, Settings settings) {
 		this.positionInterface = positionInterface;
-		this.settingsStruct = settingsStruct;
+		this.settings = settings;
 	}
 
-	public SettingsStruct getSettingsStruct(){
-		return settingsStruct;
+	public Settings getSettings(){
+		return settings;
 	}
 
 	public PositionInterface getPositionInterface(){

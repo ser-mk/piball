@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import ser.pipi.piball.Piball;
 import ser.pipi.piball.PositionInterface;
 import ser.pipi.piball.ResultScreen;
-import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.Settings;
 import ser.pipi.piball.net.Network;
 
 /**
@@ -18,7 +18,7 @@ public class Arena implements Screen {
 
     private final String TAG = this.getClass().getName();
     final Piball piball;
-    final SettingsStruct ss;
+    final Settings ss;
     final RenderSystem render;
     final SoundSystem soundSystem;
     final LocalController localController;
@@ -33,7 +33,7 @@ public class Arena implements Screen {
         final String TAG = this.getClass().getName();
 
         this.piball = piball;
-        this.ss = piball.getSettingsStruct();
+        this.ss = piball.getSettings();
         this.allObjectsState = new AllObjectsState(ss);
         this.localState = new LocalState(ss, flag);
 

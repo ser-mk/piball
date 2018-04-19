@@ -5,7 +5,7 @@ import com.esotericsoftware.kryonet.Server;
 
 import java.io.IOException;
 
-import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.Settings;
 
 import ser.pipi.piball.net.Network.ConnectionState;
 
@@ -17,11 +17,11 @@ public class GameServer extends NetworkBaseClass {
 
     final String TAG = this.getClass().getName();
 
-    final SettingsStruct ss;
+    final Settings ss;
     Server broadcastServer;
     Server gameServer;
 
-    public GameServer(SettingsStruct ss, GameNetImpl gameNet) {
+    public GameServer(Settings ss, GameNetImpl gameNet) {
         super(gameNet);
         final int bankPort = ss.bankPort;
         this.ss = ss;

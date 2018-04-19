@@ -6,7 +6,7 @@ import com.esotericsoftware.kryonet.Connection;
 
 import java.lang.reflect.Field;
 
-import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.Settings;
 import ser.pipi.piball.net.GameClient;
 import ser.pipi.piball.net.GameNetImpl;
 import ser.pipi.piball.net.GameServer;
@@ -21,7 +21,7 @@ public class SyncSystem implements GameNetImpl, Disposable {
 
     final String TAG = this.getClass().getName();
 
-    final SettingsStruct ss;
+    final Settings ss;
     final StateController stateController;
     final NetworkInterface networkInterface;
     final LocalState localState;
@@ -29,7 +29,7 @@ public class SyncSystem implements GameNetImpl, Disposable {
     Network.ConnectionState netState;
     private float sendTimeout = 0;
 
-    public SyncSystem(SettingsStruct ss, AllObjectsState allObjectsState, LocalState localState) {
+    public SyncSystem(Settings ss, AllObjectsState allObjectsState, LocalState localState) {
         this.ss = ss;
         this.localState = localState;
         this.allObjectsState = allObjectsState;

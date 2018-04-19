@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 
 import ser.pipi.piball.PositionInterface;
-import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.Settings;
 
 /**
  * Created by ser on 25.02.18.
@@ -20,7 +20,7 @@ public class LocalState {
 
     public LocalState(){}
 
-    public LocalState(SettingsStruct ss, int flag) {
+    public LocalState(Settings ss, int flag) {
         final float X_MID = Gdx.graphics.getWidth()/2;
         final float Y_PADDLE_SELF = ss.yPaddleSelf;
         final float WIDTH_PADDLE = ss.widthPaddle;

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.Settings;
 import ser.pipi.piball.asserts.SoundsList;
 
 /**
@@ -18,10 +18,10 @@ public class StateController {
     final AllObjectsState allObjectsState;
     final ReflactionSystem reflactionSystem;
     final LocalState localStore;
-    final SettingsStruct ss;
+    final Settings ss;
 
 
-    public StateController(SettingsStruct ss, AllObjectsState allObjectsState, LocalState localStore) {
+    public StateController(Settings ss, AllObjectsState allObjectsState, LocalState localStore) {
         this.allObjectsState = allObjectsState;
         this.localStore = localStore;
         this.ss = ss;

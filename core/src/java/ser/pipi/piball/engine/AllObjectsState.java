@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import ser.pipi.piball.PositionInterface;
-import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.Settings;
 
 /**
  * Created by ser on 20.02.18.
@@ -32,7 +32,7 @@ public class AllObjectsState {
     public AllObjectsState() { // for kryonet
     }
 
-    public AllObjectsState(SettingsStruct ss) {
+    public AllObjectsState(Settings ss) {
 
         final float WIDTH_PADDLE = ss.widthPaddle;
         final float HEIGHT_PADDLE = ss.heigthPaddle;

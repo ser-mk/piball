@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.Settings;
 
 /**
  * Created by ser on 01.03.18.
@@ -19,9 +19,9 @@ class ReflactionSystem {
 
     static ReflectObject lastReflect = ReflectObject.NONE;
     final Rectangle borderLine;
-    final SettingsStruct ss;
+    final Settings ss;
 
-    public ReflactionSystem(SettingsStruct ss, Rectangle borderLine) {
+    public ReflactionSystem(Settings ss, Rectangle borderLine) {
         this.borderLine = borderLine;
         this.ss = ss;
     }

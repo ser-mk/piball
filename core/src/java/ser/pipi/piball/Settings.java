@@ -4,7 +4,7 @@ package ser.pipi.piball;
  * Created by ser on 20.02.18.
  */
 
-public class SettingsStruct {
+public class Settings {
     public float wait_end_game = 2;
 
     public float yPaddleSelf = 0;

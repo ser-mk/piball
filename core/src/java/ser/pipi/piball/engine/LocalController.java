@@ -2,9 +2,8 @@ package ser.pipi.piball.engine;
 
 import com.badlogic.gdx.Gdx;
 
-import ser.pipi.piball.PositionInspector;
 import ser.pipi.piball.PositionInterface;
-import ser.pipi.piball.SettingsStruct;
+import ser.pipi.piball.Settings;
 
 /**
  * Created by ser on 20.02.18.
@@ -16,12 +15,12 @@ public class LocalController {
 
     final PositionInterface positionInterface;
     final LocalState localState;
-    final SettingsStruct ss;
+    final Settings ss;
     int current_position = 0;
     float current_velocity = 0;
 
 
-    public LocalController(SettingsStruct ss, LocalState localState, PositionInterface positionInterface) {
+    public LocalController(Settings ss, LocalState localState, PositionInterface positionInterface) {
         this.positionInterface = positionInterface;
         this.localState = localState;
         this.ss = ss;
