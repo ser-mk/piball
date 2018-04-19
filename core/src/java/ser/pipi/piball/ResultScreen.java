@@ -39,7 +39,6 @@ public class ResultScreen implements Screen {
     final ResultGame resultGame;
     final BitmapFont font;
     final Music fon;
-    //final Label skin;
 
 
     public ResultScreen(Piball piball, ResultGame resultGame) {

@@ -15,11 +15,6 @@ public class AndroidSettings {
 
     private final static  String TAG = "Game AndroidSettings:";
 
-    private final static  String SETTINGS_NAME_FIELD = TAG;
-    private final static  String SETTINGS_FILE_NAME = "settings";
-
-    private final static  String SUCCES_SET_SETTINGS = "SUCCES_SET_SETTINGS";
-
     static public boolean saveSettings(Context context, String json){
         final Settings temp = new Json().
                 fromJson(Settings.class,json);
