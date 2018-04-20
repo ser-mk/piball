@@ -55,23 +55,23 @@ public class LocalController {
 
     private int filterLFPosition(float delta, int pos){
 
-        if(Math.abs(pos - current_position) < ss.deadDiff)
+        if(Math.abs(pos - current_position) < ss.DEAD_DIFF_POSITION_CHANGE_PADDLE)
             return current_position;
 
         float calcVelocity = (pos - current_position)/delta;
 
         if(!collinearVelocity(calcVelocity, current_velocity)){
-            calcVelocity = ss.minAccPaddle * signV(calcVelocity);
+            calcVelocity = ss.MIN_ACC_PADDLE * signV(calcVelocity);
         } else { // same diriction
-            if (Math.abs(current_velocity) < ss.minVelocityPaddle){
-                calcVelocity = current_velocity + signV(current_velocity)*ss.minAccPaddle*delta;
+            if (Math.abs(current_velocity) < ss.TRESHOLD_VELOCITY_FOR_MAX_ACC_PADDLE){
+                calcVelocity = current_velocity + signV(current_velocity)*ss.MIN_ACC_PADDLE *delta;
             } else {
-                calcVelocity = current_velocity + signV(current_velocity)*ss.maxAccPaddle*delta;
+                calcVelocity = current_velocity + signV(current_velocity)*ss.MAX_ACC_PADDLE *delta;
             }
         }
 
-        if(Math.abs(calcVelocity) > ss.maxVelocityPaddle){
-            calcVelocity = ss.maxVelocityPaddle * signV(calcVelocity);
+        if(Math.abs(calcVelocity) > ss.MAX_VELOCITY_PADDLE){
+            calcVelocity = ss.MAX_VELOCITY_PADDLE * signV(calcVelocity);
         }
         
         current_velocity = calcVelocity;

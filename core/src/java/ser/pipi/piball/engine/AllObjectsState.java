@@ -34,10 +34,10 @@ public class AllObjectsState {
 
     public AllObjectsState(Settings ss) {
 
-        final float WIDTH_PADDLE = ss.widthPaddle;
-        final float HEIGHT_PADDLE = ss.heigthPaddle;
+        final float WIDTH_PADDLE = ss.WIDTH_PADDLE;
+        final float HEIGHT_PADDLE = ss.HEIGHT_PADDLE;
         final float X_MID = (Gdx.graphics.getWidth() - WIDTH_PADDLE)/2;
-        final float Y_PADDLE_SELF = ss.yPaddleSelf;
+        final float Y_PADDLE_SELF = ss.Y_PADDLES_HIFT;
 
         paddleSelf = new Rectangle(X_MID, Y_PADDLE_SELF, WIDTH_PADDLE, HEIGHT_PADDLE);
         paddleEnemy = new Rectangle(paddleSelf);
@@ -48,10 +48,10 @@ public class AllObjectsState {
         inputStatusSelf = PositionInterface.InputStatus.POSITION_UNDEFINED;
         final float X_START_BALL = Gdx.graphics.getWidth()/2;
         final float Y_START_BALL = Gdx.graphics.getHeight()/2;
-        final float RADIUS_BALL = ss.radiusBall;
+        final float RADIUS_BALL = ss.RADIUS_BALL;
         ball = new Circle(X_START_BALL, Y_START_BALL, RADIUS_BALL);
         final float X_VELOCITY = 0;
-        final float Y_VELOCITY = ss.startBallVelocity;
+        final float Y_VELOCITY = ss.START_BALL_VELOCITY;
         ballVelocity = new Vector2(X_VELOCITY, Y_VELOCITY);
         selfGoal = enemyGoal = 0;
         flagSelf = flagEnemy = -1;

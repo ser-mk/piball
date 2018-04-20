@@ -64,7 +64,7 @@ public class RenderSystem {
         font = FontList.arenaFont();
 
         spriteBall = new Sprite(ball);
-        final float scale = 2*ss.radiusBall/spriteBall.getHeight();
+        final float scale = 2*ss.RADIUS_BALL /spriteBall.getHeight();
         spriteBall.setScale(scale);
     }
 
@@ -141,7 +141,7 @@ public class RenderSystem {
     private void sprite_ball(float delta){
         spriteBall.setCenter(allObjectsState.ball.x, allObjectsState.ball.y);
 
-        spriteBall.rotate(delta*allObjectsState.ballVelocity.len()*ss.rateAnglefromLiniarVelocity);
+        spriteBall.rotate(delta*allObjectsState.ballVelocity.len()*ss.RATE_ANGLE_ROTATE_RELATE_LINIAR_VELOCITY);
 
         spriteBall.draw(spriteBatch);
     }
@@ -161,7 +161,7 @@ public class RenderSystem {
         String title = nameSelf + " " + String.valueOf(allObjectsState.selfGoal)
                 + "-" +
                  String.valueOf(allObjectsState.enemyGoal) + " " + nameEnemy;
-        if(!ss.server){
+        if(!ss.IS_SERVER){
             title = String.valueOf(allObjectsState.enemyGoal) + " " + nameEnemy
                     + "-" +
                     nameSelf + " " + String.valueOf(allObjectsState.selfGoal)

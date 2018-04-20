@@ -34,7 +34,7 @@ public class SyncSystem implements GameNetImpl, Disposable {
         this.localState = localState;
         this.allObjectsState = allObjectsState;
         netState = Network.ConnectionState.WAIT_PLAYER;
-        if (this.ss.server){
+        if (this.ss.IS_SERVER){
             networkInterface = new GameServer(ss, this);
         } else {
             networkInterface = new GameClient(ss, this);
@@ -50,12 +50,12 @@ public class SyncSystem implements GameNetImpl, Disposable {
         if (networkInterface.waitPlayer(delta))
             return;
 
-        if (this.ss.server) {
+        if (this.ss.IS_SERVER) {
             stateController.update(delta);
         }
 
-        final Object state = this.ss.server ? allObjectsState : localState;
-        if (sendTimeout >= this.ss.sendPeriod){
+        final Object state = this.ss.IS_SERVER ? allObjectsState : localState;
+        if (sendTimeout >= this.ss.SEND_PERIOD_SEC){
             networkInterface.sendState(state);
             sendTimeout = 0;
         } else {

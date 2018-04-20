@@ -97,7 +97,7 @@ public class Arena implements Screen {
 
         if (endForce){
             wait += delta;
-            if (wait > ss.wait_end_game){
+            if (wait > ss.WAIT_SEC_END_WELCOME){
                 setResultGame();
             }
         } else {

@@ -35,7 +35,7 @@ public class GameClientTest extends GameTestHeadlessApplication {
 
         syncSystemServer = new SyncSystem(ss, allObjectsStateServer, localStateServer);
 
-        ss.server = false;
+        ss.IS_SERVER = false;
         localStateClient = new LocalState(ss, 2);
         allObjectsStateClient = new AllObjectsState(ss);
         syncSystemClient = new SyncSystem(ss, allObjectsStateClient,localStateClient);

@@ -51,9 +51,9 @@ public class AndroidLauncher extends AndroidApplication {
 
 		final Settings ss = AndroidSettings.getSettings(this);
 		if (this.getIntent().hasExtra("Server")) {
-			ss.server = this.getIntent().getBooleanExtra("Server", false);
+			ss.IS_SERVER = this.getIntent().getBooleanExtra("Server", false);
 		}
-		Log.d ( "Server:", "" + ss.server);
+		Log.d ( "Server:", "" + ss.IS_SERVER);
 		return ss;
 	}
 

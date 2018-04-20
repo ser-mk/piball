@@ -58,8 +58,8 @@ public class StateController {
         float new_x_pos = allObjectsState.ball.x + delta_pos.x;
         float new_y_pos = allObjectsState.ball.y + delta_pos.y;
         allObjectsState.ball.setPosition(new_x_pos, new_y_pos);
-        if (allObjectsState.ballVelocity.len() < ss.maxBallVelocity) {
-            allObjectsState.ballVelocity.scl(1 + ss.ballAcc * delta);
+        if (allObjectsState.ballVelocity.len() < ss.MAX_BALL_VELOCITY) {
+            allObjectsState.ballVelocity.scl(1 + ss.BALL_ACC * delta);
         }
     }
 
@@ -81,8 +81,8 @@ public class StateController {
     private void resetMatch(int goal){
         allObjectsState.ball.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
         final int all_goals = allObjectsState.enemyGoal + allObjectsState.selfGoal;
-        final float velocity = ss.startBallVelocity + all_goals * ss.goalStepVelocity;
+        final float velocity = ss.START_BALL_VELOCITY + all_goals * ss.ADD_VELOCITY_AFTER_GOAL;
         allObjectsState.ballVelocity.set(0,goal*velocity);
-        allObjectsState.ballVelocity.limit(ss.maxBallVelocity);
+        allObjectsState.ballVelocity.limit(ss.MAX_BALL_VELOCITY);
     }
 }

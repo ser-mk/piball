@@ -16,11 +16,11 @@ public class DesktopLauncher {
 		ss = new Settings();
 		final boolean server = arg[0].equals("s");
 		final int bankport = Integer.parseInt(arg[1]);
-		ss.server = server;
-		ss.bankPort = bankport;
+		ss.IS_SERVER = server;
+		ss.PORT_GROUP = bankport;
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.title = server ? "server" : "client";
+		config.title = server ? "IS_SERVER" : "client";
 		config.width = 800;
 		config.height = 1230;
 		config.resizable = true;

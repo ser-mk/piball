@@ -41,7 +41,7 @@ public class SettingsRecieverTest {
     public void onReceive() throws Exception {
 
         Settings settings = new Settings();
-        settings.bankPort = bankPort_test;
+        settings.PORT_GROUP = bankPort_test;
         String json = new Json().toJson(settings, Settings.class);
 
         sendBroadCastStringContent(al.getActivity(),
@@ -52,9 +52,9 @@ public class SettingsRecieverTest {
 
         settings = AndroidSettings.getSettings(al.getActivity());
 
-        Assert.assertEquals(bankPort_test, settings.bankPort);
+        Assert.assertEquals(bankPort_test, settings.PORT_GROUP);
 
-        settings.bankPort = -bankPort_test;
+        settings.PORT_GROUP = -bankPort_test;
         json = new Json().toJson(settings);
 
         sendBroadCastStringContent(al.getActivity(),
@@ -62,7 +62,7 @@ public class SettingsRecieverTest {
 
         Thread.sleep(14111);
         settings = AndroidSettings.getSettings(al.getActivity());
-        Assert.assertNotEquals(bankPort_test, settings.bankPort);
+        Assert.assertNotEquals(bankPort_test, settings.PORT_GROUP);
     }
 
     private void sendBroadCastStringContent(Context context,String action, String content){

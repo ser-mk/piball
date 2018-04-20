@@ -120,7 +120,7 @@ class Welcome implements Screen {
 
         if (endForce){
             waitEnd += delta;
-            if (waitEnd > ss.wait_end_game){
+            if (waitEnd > ss.WAIT_SEC_END_WELCOME){
                 piball.exit();
             }
         } else {
@@ -153,7 +153,7 @@ class Welcome implements Screen {
 
     private boolean need_wait(float delta){
         wait_timeout +=delta;
-        if(wait_timeout > ss.TIMEOUT_TOUCH_FLAG)
+        if(wait_timeout > ss.TIMEOUT_SECOND_TOUCH_FLAG)
             return false;
         return true;
     }

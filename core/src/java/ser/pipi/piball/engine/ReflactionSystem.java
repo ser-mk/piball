@@ -87,10 +87,10 @@ class ReflactionSystem {
         Vector2 focusVector = new Vector2();
         if (type == ReflectObject.ENEMY_PADDLE){
             focusVector = allObjectsState.paddleEnemy.getCenter(focusVector);
-            focusVector.y = ss.focus;
+            focusVector.y = ss.FOCUS_PADDLE;
         } else {
             focusVector = allObjectsState.paddleSelf.getCenter(focusVector);
-            focusVector.y = -ss.focus;
+            focusVector.y = -ss.FOCUS_PADDLE;
         }
         focusVector.x = focusVector.x - allObjectsState.ball.x;
 

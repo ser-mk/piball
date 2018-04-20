@@ -23,7 +23,7 @@ public class GameServer extends NetworkBaseClass {
 
     public GameServer(Settings ss, GameNetImpl gameNet) {
         super(gameNet);
-        final int bankPort = ss.bankPort;
+        final int bankPort = ss.PORT_GROUP;
         this.ss = ss;
 
         try {
@@ -73,7 +73,7 @@ public class GameServer extends NetworkBaseClass {
 
     @Override
     public void sendState(Object object) {
-        if (ss.sendTCP) {
+        if (ss.SEND_TCP) {
             gameServer.sendToAllTCP(object);
         } else {
             gameServer.sendToAllUDP(object);

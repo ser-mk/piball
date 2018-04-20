@@ -37,7 +37,7 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
 
     private List<InetAddress> discoverServer(){
         List<InetAddress> hosts = client.discoverHosts(
-                Network.portBrodcast(ss.bankPort), ss.timeoutDiscoverHost);
+                Network.portBrodcast(ss.PORT_GROUP), ss.TIMEOUT_MS_DISCOVERING_HOST);
         Gdx.app.log(TAG,"InetAddress : " + hosts);
 
         return  hosts;
@@ -46,10 +46,10 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
     private boolean tryConnect(InetAddress inetAddress){
         try {
             client.start();
-            client.connect(ss.timeoutServerConnect,
+            client.connect(ss.TIMEOUT_MS_SERVER_CONNECTING,
                     inetAddress,
-                    Network.portTCP(ss.bankPort),
-                    Network.portUDP(ss.bankPort));
+                    Network.portTCP(ss.PORT_GROUP),
+                    Network.portUDP(ss.PORT_GROUP));
         } catch (IOException e) {
             e.printStackTrace();
             Gdx.app.log(TAG, " @@@@@@@@@" +  e.toString());
@@ -115,7 +115,7 @@ public class GameClient extends  NetworkBaseClass implements Runnable {
 
     @Override
     public void sendState(Object object) {
-        if(ss.sendTCP) {
+        if(ss.SEND_TCP) {
             client.sendTCP(object);
         } else {
             client.sendUDP(object);

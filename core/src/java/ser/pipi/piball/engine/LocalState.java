@@ -22,9 +22,9 @@ public class LocalState {
 
     public LocalState(Settings ss, int flag) {
         final float X_MID = Gdx.graphics.getWidth()/2;
-        final float Y_PADDLE_SELF = ss.yPaddleSelf;
-        final float WIDTH_PADDLE = ss.widthPaddle;
-        final float HEIGHT_PADDLE = ss.heigthPaddle;
+        final float Y_PADDLE_SELF = ss.Y_PADDLES_HIFT;
+        final float WIDTH_PADDLE = ss.WIDTH_PADDLE;
+        final float HEIGHT_PADDLE = ss.HEIGHT_PADDLE;
         this.paddleSelf = new Rectangle(X_MID, Y_PADDLE_SELF, WIDTH_PADDLE, HEIGHT_PADDLE);
         this.statusPI = new String();
         this.statusNET = new String();

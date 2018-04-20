@@ -5,31 +5,31 @@ package ser.pipi.piball;
  */
 
 public class Settings {
-    public float wait_end_game = 2;
+    public float WAIT_SEC_END_WELCOME = 2;
 
-    public float yPaddleSelf = 0;
-    public float widthPaddle = 155;
-    public float heigthPaddle = 22;
-    public float radiusBall = 22;
-    public float focus = 220;
-    public boolean server = true;
-    public int bankPort = 0;
-    public int timeoutDiscoverHost = 2000;
-    public int timeoutServerConnect = 2000;
-    public float sendPeriod = 0;
-    public boolean sendTCP = false;
+    public float Y_PADDLES_HIFT = 0;
+    public float WIDTH_PADDLE = 155;
+    public float HEIGHT_PADDLE = 22;
+    public float RADIUS_BALL = 22;
+    public float FOCUS_PADDLE = 220;
+    public boolean IS_SERVER = true;
+    public int PORT_GROUP = 0;
+    public int TIMEOUT_MS_DISCOVERING_HOST = 2000;
+    public int TIMEOUT_MS_SERVER_CONNECTING = 2000;
+    public float SEND_PERIOD_SEC = 0;
+    public boolean SEND_TCP = false;
 
-    public int deadDiff = 11;
-    public int maxVelocityPaddle = 5555;
-    public int minVelocityPaddle = 55;
-    public int minAccPaddle = 555;
-    public int maxAccPaddle = 2000;
+    public int DEAD_DIFF_POSITION_CHANGE_PADDLE = 11;
+    public int MAX_VELOCITY_PADDLE = 5555;
+    public int TRESHOLD_VELOCITY_FOR_MAX_ACC_PADDLE = 55;
+    public int MIN_ACC_PADDLE = 555;
+    public int MAX_ACC_PADDLE = 2000;
 
-    public float rateAnglefromLiniarVelocity = 0.2f;
-    public int startBallVelocity = 155;
-    public float ballAcc = 0.02f;
-    public int maxBallVelocity = 555;
-    public int goalStepVelocity = 33;
+    public float RATE_ANGLE_ROTATE_RELATE_LINIAR_VELOCITY = 0.2f;
+    public int START_BALL_VELOCITY = 155;
+    public float BALL_ACC = 0.02f;
+    public int MAX_BALL_VELOCITY = 555;
+    public int ADD_VELOCITY_AFTER_GOAL = 33;
 
-    public float TIMEOUT_TOUCH_FLAG = 0.5f;
+    public float TIMEOUT_SECOND_TOUCH_FLAG = 0.5f;
 }
