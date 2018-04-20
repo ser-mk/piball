@@ -21,8 +21,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = server ? "server" : "client";
 		config.width = 800;
-		config.height = 900;
-		config.resizable = false;
+		config.height = 1230;
+		config.resizable = true;
 		final PII_Stub pii = new PII_Stub();
 		//new LwjglApplication(new Piball(pii), config);
 
