@@ -43,7 +43,6 @@ public class AndroidLauncher extends AndroidApplication {
 		piBind = new PiBind(this);
 		PII_Stub pii = new PII_Stub(piBind);
 		initialize(new Piball(pii, getcurrentSettings()), config);
-		Gdx.input.setInputProcessor(pii);
 		Gdx.input.setCatchBackKey(true);
 	}
 

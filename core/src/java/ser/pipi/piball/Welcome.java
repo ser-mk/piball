@@ -74,6 +74,8 @@ class Welcome implements Screen {
     public void show() {
         fon.play();
         reset_variable();
+
+        Gdx.input.setInputProcessor(this.positionInterface);
     }
 
     private void reset_variable(){

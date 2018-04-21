@@ -1,10 +1,12 @@
 package ser.pipi.piball;
 
+import com.badlogic.gdx.InputProcessor;
+
 /**
  * Created by ser on 17.02.18.
  */
 
-public abstract class PositionInterface {
+public abstract class PositionInterface implements InputProcessor {
 
     public static final int POSITION_MIN = 0;
     public static final int POSITION_MAX = 1000;

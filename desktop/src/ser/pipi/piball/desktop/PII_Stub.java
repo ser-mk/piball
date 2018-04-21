@@ -10,7 +10,7 @@ import com.badlogic.gdx.InputProcessor;
  * Created by ser on 17.02.18.
  */
 
-class PII_Stub extends PositionInterface implements InputProcessor {
+class PII_Stub extends PositionInterface {
 
     final String TAG = this.getClass().getName();
     int position = 500;

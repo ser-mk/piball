@@ -27,8 +27,6 @@ public class DesktopLauncher {
 		final PII_Stub pii = new PII_Stub();
 
 		new LwjglApplication(new Piball(pii,settingsManager), config);
-
-		Gdx.input.setInputProcessor(pii);
 	}
 
 	static Settings ss;
