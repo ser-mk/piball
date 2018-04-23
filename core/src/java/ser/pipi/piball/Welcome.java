@@ -22,7 +22,7 @@ import ser.pipi.piball.asserts.TextureList;
  * Created by ser on 15.02.18.
  */
 
-class Welcome implements Screen {
+public class Welcome implements Screen {
 
     final String TAG = this.getClass().getName();
 
@@ -46,14 +46,13 @@ class Welcome implements Screen {
     final int MAX_ROWS = 8;
     final int MAX_COLS = 4;
     final int START_GROUP_X = 25;
-    final private int UNDEFINED_FLAG = -1;
+    final static public int UNDEFINED_FLAG = -1;
 
     enum State {CHOICE, CONFIRM_WAIT, APPROVE}
 
     float wait_timeout = 0;
     int selectFlag = UNDEFINED_FLAG;
 
-    final int LEN_PASSWORD = 4;
     final ArrayList<Integer> historyChoiceFlag= new ArrayList<Integer>();
     final ArrayList<Integer> FLAG_PASSWORD = new ArrayList<Integer>(
             Arrays.asList(24,28,24,28, 20,28,20,28));

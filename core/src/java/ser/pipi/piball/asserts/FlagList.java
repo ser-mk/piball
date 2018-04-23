@@ -2,6 +2,8 @@ package ser.pipi.piball.asserts;
 
 import com.badlogic.gdx.graphics.Texture;
 
+import ser.pipi.piball.Welcome;
+
 /**
  * Created by ser on 09.03.18.
  */
@@ -26,6 +28,6 @@ public class FlagList {
     }
 
     public boolean consistNumberFlag(int number){
-        return number > 0 && number < NUM_COUNTRY;
+        return number != Welcome.UNDEFINED_FLAG && number < NUM_COUNTRY;
     }
 }
