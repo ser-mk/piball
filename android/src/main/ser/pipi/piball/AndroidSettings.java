@@ -28,6 +28,20 @@ public class AndroidSettings {
         return true;
     }
 
+    static public boolean saveStructSettings(Context context, Settings settings){
+
+        if(PiUtils.checkHasNullPublicField(settings, Settings.class)){
+            Log.v(TAG,"object settings has null object!");
+            return false;
+        }
+
+        final String json = new Json().toJson(settings, Settings.class);
+
+        PiUtils.saveJson(context, json);
+
+        return true;
+    }
+
     //todo: check null and null field and new settings
     static public Settings getSettings(Context context){
         final String json = PiUtils.getJsonFromShared(context);

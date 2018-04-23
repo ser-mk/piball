@@ -11,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
+import ser.pipi.piball.settings.SettingsManagerImp;
 import sermk.pipi.pilib.PiBind;
 
 public class AndroidLauncher extends AndroidApplication {
@@ -42,13 +43,30 @@ public class AndroidLauncher extends AndroidApplication {
 		config.hideStatusBar = true;
 		piBind = new PiBind(this);
 		PII_Stub pii = new PII_Stub(piBind);
-		initialize(new Piball(pii, getcurrentSettings()), config);
+		ss = getcurrentSettings();
+		initialize(new Piball(pii, settingsManager), config);
 		Gdx.input.setCatchBackKey(true);
 	}
 
+	static Settings ss;
+
+	final SettingsManagerImp settingsManager = new SettingsManagerImp() {
+		@Override
+		public Settings getSettings4Game() {
+			return ss;
+		}
+
+		@Override
+		public void saveSettingsFromGame(Settings settings) {
+			System.out.println("---- saveSettingsFromGame ---");
+			System.out.println(settings);
+			AndroidSettings.saveStructSettings(AndroidLauncher.this,settings);
+		}
+	};
+
 	private Settings getcurrentSettings(){
 
-		final Settings ss = AndroidSettings.getSettings(this);
+		ss = AndroidSettings.getSettings(this);
 		if (this.getIntent().hasExtra("Server")) {
 			ss.IS_SERVER = this.getIntent().getBooleanExtra("Server", false);
 		}
