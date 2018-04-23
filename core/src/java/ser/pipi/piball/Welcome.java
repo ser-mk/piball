@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import ser.pipi.piball.asserts.FlagList;
@@ -50,6 +52,11 @@ class Welcome implements Screen {
 
     float wait_timeout = 0;
     int selectFlag = UNDEFINED_FLAG;
+
+    final int LEN_PASSWORD = 4;
+    final ArrayList<Integer> historyChoiceFlag= new ArrayList<Integer>();
+    final ArrayList<Integer> FLAG_PASSWORD = new ArrayList<Integer>(
+            Arrays.asList(24,28,24,28, 20,28,20,28));
 
     State state = State.CHOICE;
 
@@ -131,6 +138,14 @@ class Welcome implements Screen {
         }
     }
 
+    private void archiveSelectedChoiceFlag(int flag){
+        historyChoiceFlag.add(flag);
+        Gdx.app.log(TAG,"flag= " + flag);
+        if(FLAG_PASSWORD.equals(historyChoiceFlag)){
+            piball.setSettingsScreen();
+        }
+    }
+
     private void choice(float delta){
 
         selectFlag = getNumberTouchedFlag();
@@ -149,6 +164,8 @@ class Welcome implements Screen {
             return;
         if(indexFlag == selectFlag){
             state = State.APPROVE;
+        } else {
+            archiveSelectedChoiceFlag(indexFlag);
         }
         selectFlag = indexFlag;
         wait_timeout = 0;
