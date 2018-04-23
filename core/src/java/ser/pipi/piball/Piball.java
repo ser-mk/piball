@@ -3,27 +3,30 @@ package ser.pipi.piball;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
+import ser.pipi.piball.settings.UI.SettingsScreen;
 import ser.pipi.piball.engine.*;
+import ser.pipi.piball.settings.SettingsManagerImp;
 
 public class Piball extends Game {
 
 	final PositionInterface positionInterface;
 
-	final Settings settings;
+	private final SettingsManagerImp settingsManager;
 
-	public Piball(PositionInterface positionInterface) {
+	private Settings settings;
+
+	public Piball(PositionInterface positionInterface, SettingsManagerImp settingsManager) {
 		this.positionInterface = positionInterface;
-
-		settings = new Settings();
-	}
-
-	public Piball(PositionInterface positionInterface, Settings settings) {
-		this.positionInterface = positionInterface;
-		this.settings = settings;
+		this.settingsManager = settingsManager;
+		this.settings = settingsManager.getSettings4Game();
 	}
 
 	public Settings getSettings(){
 		return settings;
+	}
+
+	public void setSettings(Settings settings){
+		this.settings = settings;
 	}
 
 	public PositionInterface getPositionInterface(){
@@ -32,7 +35,8 @@ public class Piball extends Game {
 
 	@Override
 	public void create () {
-		setScreen(new Welcome(this));
+		setSettingsScreen();
+		//startWelcome();
 		//startArena(0);
 		//showResult(( new ResultScreen.ResultGame()));
 	}
@@ -51,5 +55,13 @@ public class Piball extends Game {
 
 	public void showResult(ResultScreen.ResultGame rg){
 		setScreen(new ResultScreen(this, rg));
+	}
+
+	public void setSettingsScreen(){
+		setScreen(new SettingsScreen(this));
+	}
+
+	public void saveSettings(){
+		this.settingsManager.saveSettingsFromGame(this.settings);
 	}
 }
