@@ -44,11 +44,12 @@ class Welcome implements Screen {
     final int MAX_ROWS = 8;
     final int MAX_COLS = 4;
     final int START_GROUP_X = 25;
+    final private int UNDEFINED_FLAG = -1;
 
     enum State {CHOICE, CONFIRM_WAIT, APPROVE}
 
     float wait_timeout = 0;
-    int selectFlag;
+    int selectFlag = UNDEFINED_FLAG;
 
     State state = State.CHOICE;
 
@@ -81,7 +82,7 @@ class Welcome implements Screen {
     private void reset_variable(){
         state = State.CHOICE;
         wait_timeout = 0;
-        selectFlag = -1;
+        selectFlag = UNDEFINED_FLAG;
     }
 
     @Override
@@ -187,14 +188,14 @@ class Welcome implements Screen {
     private int getNumberTouchedFlag(){
         int[] xy = new int[2];
         if(!touchedPosition(xy)){
-            return -1;
+            return UNDEFINED_FLAG;
         }
         int row = (Gdx.graphics.getHeight() - xy[1] - START_Y) / HEIGHT_ROW;
         int col = (xy[0] - START_X) / WIDTH_COL;
         if(row < 0 || row >= MAX_ROWS)
-            return -1;
+            return UNDEFINED_FLAG;
         if(col < 0 || col >= MAX_COLS)
-            return -1;
+            return UNDEFINED_FLAG;
 
         int number = col + row * MAX_COLS;
 
@@ -211,7 +212,7 @@ class Welcome implements Screen {
 
     private void renderFlags(){
 
-        if(selectFlag > 0 && state != State.CHOICE){
+        if(selectFlag != UNDEFINED_FLAG && state != State.CHOICE){
             drawBorder(selectFlag, state);
         }
         for(int i = 0; i < FlagList.NUM_COUNTRY; i++){
