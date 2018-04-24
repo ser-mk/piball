@@ -83,7 +83,13 @@ public class NormalizeNumberField {
         mapInterval.put("MIN_ACC_PADDLE", new Interval(1,2000));
         mapInterval.put("MAX_ACC_PADDLE", new Interval(1,10000));
         mapInterval.put("RATE_ANGLE_ROTATE_RELATE_LINIAR_VELOCITY", new Interval(0,2));
-        mapInterval.put("START_BALL_VELOCITY", new Interval(-500,500));
+        mapInterval.put("START_BALL_Y_VELOCITY", new Interval(-500,500));
+
+        mapInterval.put("START_BALL_X_VELOCITY", new Interval(-500,500));
+        mapInterval.put("LITTLE_ANGLE_HALF_INTERVAL_DEG", new Interval(0,40));
+        mapInterval.put("ADD_DEG_FOR_FORCED_ANGLE", new Interval(0,50));
+
+
         mapInterval.put("BALL_ACC", new Interval(0,10));
         mapInterval.put("MAX_BALL_VELOCITY", new Interval(10,10*1000));
         mapInterval.put("ADD_VELOCITY_AFTER_GOAL", new Interval(0,1000));

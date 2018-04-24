@@ -50,8 +50,8 @@ public class AllObjectsState {
         final float Y_START_BALL = Gdx.graphics.getHeight()/2;
         final float RADIUS_BALL = ss.RADIUS_BALL;
         ball = new Circle(X_START_BALL, Y_START_BALL, RADIUS_BALL);
-        final float X_VELOCITY = 0;
-        final float Y_VELOCITY = ss.START_BALL_VELOCITY;
+        final float X_VELOCITY = ss.START_BALL_X_VELOCITY;
+        final float Y_VELOCITY = ss.START_BALL_Y_VELOCITY;
         ballVelocity = new Vector2(X_VELOCITY, Y_VELOCITY);
         selfGoal = enemyGoal = 0;
         flagSelf = flagEnemy = -1;
