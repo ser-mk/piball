@@ -1,5 +1,6 @@
 package ser.pipi.piball.engine;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
@@ -40,7 +41,7 @@ class ReflactionSystem {
         switch (reflect){
             case LEFT_BORDER:
             case RIGHT_BORDER:
-                allObjectsState.ballVelocity = forwardXReflectBall(allObjectsState.ballVelocity);
+                allObjectsState.ballVelocity = reflectBallfromWall(allObjectsState.ballVelocity);
                 break;
             case SELF_PADDLE:
             case ENEMY_PADDLE:
@@ -74,13 +75,36 @@ class ReflactionSystem {
         return ReflectObject.NONE;
     }
 
-    static private Vector2 forwardXReflectBall(Vector2 velocityBall){
-        Vector2 newVelocity = velocityBall.cpy();
-        newVelocity.set(-newVelocity.x, newVelocity.y);
-        return  newVelocity;
+    private Vector2 reflectBallfromWall(Vector2 velocityBall){
+        Vector2 velocity = velocityBall.cpy();
+        float degree = velocity.angle();
+        if(ss.IS_FORCED_LITTLE_ANGLE_REFLECT) {
+            final int addAngle = addAngleForcedReflect(velocity);
+            velocity.rotate(addAngle);
+        }
+        velocity.set(-velocity.x, velocity.y);
+        return  velocity;
     }
 
-    //final static float deltaGap = 2;
+    private int addAngleForcedReflect(Vector2 velocity){
+        float degree = velocity.angle();
+        int addAngle = 0;
+        float halfInterval = ss.LITTLE_ANGLE_HALF_INTERVAL_DEG;
+        if(equalsDergee(halfInterval/2,degree, halfInterval)){
+            addAngle = ss.ADD_DEG_FOR_FORCED_ANGLE; //I
+        } else if (equalsDergee(180+halfInterval/2,degree, halfInterval)){
+            addAngle = ss.ADD_DEG_FOR_FORCED_ANGLE; //III
+        }else if (equalsDergee(-halfInterval/2,degree, halfInterval)){
+            addAngle = -ss.ADD_DEG_FOR_FORCED_ANGLE; //VI
+        } else if (equalsDergee(180-halfInterval/2,degree, halfInterval)){
+            addAngle = -ss.ADD_DEG_FOR_FORCED_ANGLE; //II
+        }
+        if (addAngle != 0){
+            Gdx.app.log(TAG,"addAngle = " + addAngle);
+        }
+        return addAngle;
+    }
+
 
 
     private Vector2 paddleReflectBall(AllObjectsState allObjectsState, ReflectObject type){
