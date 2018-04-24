@@ -41,7 +41,7 @@ class PII_Stub extends PositionInterface {
             Gdx.app.log(TAG, "POSITION_UNDEFINED");
             status = InputStatus.POSITION_UNDEFINED;
         }
-        else if (keycode == Input.Keys.BACKSPACE){
+        else if (keycode == Input.Keys.B){
             Gdx.app.log(TAG, "BACKSPACE");
             status = InputStatus.BACKSPACE;
         }
