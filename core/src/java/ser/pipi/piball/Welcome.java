@@ -113,6 +113,8 @@ public class Welcome implements Screen {
     private void checkEnd(float delta){
         boolean endForce = false;
 
+        positionInterface.update();
+
         switch (positionInterface.getState()){
             case CLOSE_GAME: endForce = true; break;
             case CONNECTED_PROBLEM: endForce = true; break;

@@ -46,6 +46,7 @@ public class Arena implements Screen {
 
     @Override
     public void render(float delta) {
+        positionInterface.update();
         localController.update(delta);
         syncSystem.update(delta);
         checkEventSystem(delta);
