@@ -64,7 +64,7 @@ public class ResultScreen implements Screen {
         showTitle();
         showNamesShort();
         spriteBatch.end();
-        checkEnd();
+        checkEnd(delta);
     }
 
     final int X_STEP_FLAG = 19;
@@ -147,11 +147,19 @@ public class ResultScreen implements Screen {
         font.draw(spriteBatch, layout, fontX, fontY);
     }
 
-    public void checkEnd(){
+    float timeWaitEnd = 0;
+    final float TIMEOUT_END = 10;
+
+    public void checkEnd(float delta){
         final PositionInterface.InputStatus piStatus = positionInterface.getState();
         if(piStatus == PositionInterface.InputStatus.BACKSPACE) {
             positionInterface.clearState();
             piball.startWelcome();
+            return;
+        }
+
+        if(timeWaitEnd < TIMEOUT_END){
+            timeWaitEnd += delta;
             return;
         }
 
