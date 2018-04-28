@@ -83,7 +83,7 @@ public class RenderSystem {
         spriteBatch.begin();
         spriteBatch.draw(arena, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sprite_ball(delta);
-        spritePaddle();
+        spritePaddle(delta);
         goalStatistic();
         print_status();
         showFlag();
@@ -187,21 +187,23 @@ public class RenderSystem {
         font.setColor(scoreColorFont);
         font.draw(spriteBatch, layout, GOALS_TITLE_X, Y);
         font.setColor(prevColorScoreFont);
-
-
-/*
-        FontList.printTextCenter(spriteBatch, font, title,
-                GOALS_TITLE_X, Gdx.graphics.getHeight()-
-                        GOALS_TITLE_GAP_Y);
-*/
     }
 
-    private void spritePaddle(){
+    private Float wait_undef_self = 0f;
+    private float wait_undef_enemy= 0;
+
+    private void spritePaddle(float delta){
 
         Texture self = paddle_self;
 
-        if(!PositionInterface.InputStatus.NORMAL_WORK.equals(
-                localState.inputStatus)){
+        if(PositionInterface.InputStatus.NORMAL_WORK.
+                equals(localState.inputStatus)) {
+            wait_undef_self = 0f;
+        } else {
+            wait_undef_self += delta;
+        }
+
+        if(wait_undef_self > ss.TIMEOUT_SEC_DEADTIME_PADDLE_UNDEF){
             self = paddle_self_undefined;
         }
 
@@ -210,8 +212,14 @@ public class RenderSystem {
 
         Texture enemy = paddle_enemy;
 
-        if(!PositionInterface.InputStatus.NORMAL_WORK.equals(
-                allObjectsState.inputStatusEnemy)){
+        if(PositionInterface.InputStatus.NORMAL_WORK.
+                equals(allObjectsState.inputStatusEnemy)) {
+            wait_undef_enemy = 0f;
+        } else {
+            wait_undef_enemy += delta;
+        }
+
+        if(wait_undef_enemy > ss.TIMEOUT_SEC_DEADTIME_PADDLE_UNDEF){
             enemy = paddle_enemy_undefined;
         }
 
