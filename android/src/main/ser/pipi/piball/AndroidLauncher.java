@@ -42,8 +42,8 @@ public class AndroidLauncher extends AndroidApplication {
 		config.useWakelock = true;
 		config.hideStatusBar = true;
 		piBind = new PiBind(this);
-		PII_Stub pii = new PII_Stub(piBind);
 		ss = getcurrentSettings();
+		PII_Stub pii = new PII_Stub(piBind,ss.MANUAL_TOUCH_CONTROL);
 		initialize(new Piball(pii, settingsManager), config);
 		Gdx.input.setCatchBackKey(true);
 	}

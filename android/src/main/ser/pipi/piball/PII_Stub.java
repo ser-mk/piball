@@ -15,10 +15,12 @@ class PII_Stub extends PositionInterface {
     final String TAG = this.getClass().getName();
     //InputStatus status = InputStatus.NORMAL_WORK;
     int position = 500;
-    PiBind piBind;
+    final PiBind piBind;
+    final boolean touchEnable;
 
-    public PII_Stub(PiBind piBind) {
+    public PII_Stub(PiBind piBind, boolean touchEnable) {
         this.piBind = piBind;
+        this.touchEnable = touchEnable;
     }
 
     @Override
@@ -86,7 +88,9 @@ class PII_Stub extends PositionInterface {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        position = (screenX* PositionInterface.POSITION_MAX) / Gdx.graphics.getWidth();
+        if(touchEnable) {
+            position = (screenX * PositionInterface.POSITION_MAX) / Gdx.graphics.getWidth();
+        }
         return false;
     }
 
