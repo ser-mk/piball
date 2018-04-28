@@ -106,9 +106,10 @@ public class RenderSystem {
         FontList.printTextCenter(spriteBatch, font, statusPIEnemy,
                 X_CENTER,Gdx.graphics.getHeight()/2 + 100);
 
-        final float frameRate = Gdx.graphics.getFramesPerSecond();
-        //Gdx.app.log(TAG, frameRate + " fps");
-        font.draw(spriteBatch,frameRate + " fps", 0,222);
+        if(ss.SHOW_FPS) {
+            final float frameRate = Gdx.graphics.getFramesPerSecond();
+            font.draw(spriteBatch, frameRate + " fps", 0, 222);
+        }
     }
 
     private void paddleSelf(){
