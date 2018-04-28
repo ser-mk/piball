@@ -38,4 +38,10 @@ public class Settings {
     public int ADD_VELOCITY_AFTER_GOAL = 33;
 
     public float TIMEOUT_SECOND_TOUCH_FLAG = 0.5f;
+
+    public float TIMEOUT_SEC_DEADTIME_PADDLE_UNDEF = 1;
+
+    public boolean SHOW_FPS = false;
+
+    public boolean MANUAL_TOUCH_CONTROL = true;
 }
