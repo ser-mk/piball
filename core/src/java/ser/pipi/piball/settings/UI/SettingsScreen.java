@@ -51,7 +51,7 @@ public class SettingsScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         stage.addActor(prefTable);
-        prefTable.setPosition(0, 100);
+        prefTable.setPosition(0, 0);
 
         //prefTable.debug();
         prefTable.convertSettingsStruct2Table(piball.getSettings());
