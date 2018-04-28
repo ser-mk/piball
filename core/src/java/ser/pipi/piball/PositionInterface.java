@@ -14,7 +14,7 @@ public abstract class PositionInterface implements InputProcessor {
     public enum InputStatus{NORMAL_WORK,POSITION_UNDEFINED,
         CONNECTED_PROBLEM,CLOSE_GAME, BACKSPACE}
 
-    protected InputStatus status = InputStatus.NORMAL_WORK;
+    protected InputStatus status = InputStatus.POSITION_UNDEFINED;
 
     public abstract void update();
     public abstract int getPosition();

@@ -30,15 +30,26 @@ class PII_Stub extends PositionInterface {
     public void update() {
         final int pos = piBind.getPosition();
         //Gdx.app.log(TAG, "position " + position);
+
+        if(status == InputStatus.BACKSPACE)
+            return;
+
         if(pos > PiBind.POSITION_UNDEFINED) {
             position = pos;
+            status = InputStatus.NORMAL_WORK;
             return;
         }
 
-        if(pos == PiBind.CLOSE_GAME){
-            status = InputStatus.CLOSE_GAME;
-        } else if (pos == PiBind.CONNECTED_PROBLEM) {
-            status = InputStatus.CONNECTED_PROBLEM;
+        switch (pos){
+            case PiBind.POSITION_UNDEFINED:
+                status = InputStatus.POSITION_UNDEFINED;
+                break;
+            case PiBind.CLOSE_GAME:
+                status = InputStatus.CLOSE_GAME;
+                break;
+            case PiBind.CONNECTED_PROBLEM:
+                status = InputStatus.CONNECTED_PROBLEM;
+                break;
         }
     }
 
