@@ -121,7 +121,6 @@ public class Welcome implements Screen {
             case BACKSPACE:
                 final long diff = new Date().getTime() - dateCreating.getTime();
                 if(diff > DEAD_TIME_MS_EXIT) {
-                    System.out.println("backspace@@@@@@@@");
                     piball.exit();
                 } else {
                     positionInterface.clearState();

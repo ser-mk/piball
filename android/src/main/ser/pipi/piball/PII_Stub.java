@@ -31,7 +31,7 @@ class PII_Stub extends PositionInterface {
     @Override
     public void update() {
         final int pos = piBind.getPosition();
-        //Gdx.app.log(TAG, "position " + position);
+        Gdx.app.log(TAG, "position " + position);
 
         if(status == InputStatus.BACKSPACE)
             return;

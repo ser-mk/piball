@@ -9,6 +9,7 @@ import ser.pipi.piball.settings.SettingsManagerImp;
 
 public class Piball extends Game {
 
+	private final String TAG = this.getClass().getName();
 	final PositionInterface positionInterface;
 
 	private final SettingsManagerImp settingsManager;
@@ -50,6 +51,7 @@ public class Piball extends Game {
 	}
 
 	public void exit(){
+		Gdx.app.log(TAG,"exit!");
 		Gdx.app.exit();
 	}
 
