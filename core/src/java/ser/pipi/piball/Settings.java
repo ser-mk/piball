@@ -17,7 +17,7 @@ public class Settings {
     public int TIMEOUT_MS_DISCOVERING_HOST = 2000;
     public int TIMEOUT_MS_SERVER_CONNECTING = 2000;
     public float SEND_PERIOD_SEC = 0;
-    public boolean SEND_TCP = false;
+    public boolean SEND_TCP = true;
 
     public int DEAD_DIFF_POSITION_CHANGE_PADDLE = 11;
     public int MAX_VELOCITY_PADDLE = 5555;
