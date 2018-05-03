@@ -26,8 +26,8 @@ public class Settings {
     public int MAX_ACC_PADDLE = 2000;
 
     public float RATE_ANGLE_ROTATE_RELATE_LINIAR_VELOCITY = 0.2f;
-    public int START_BALL_Y_VELOCITY = 1;
-    public int START_BALL_X_VELOCITY = 111;
+    public int START_BALL_Y_VELOCITY = 200;
+    public int START_BALL_X_VELOCITY = 0;
 
     public boolean IS_FORCED_LITTLE_ANGLE_REFLECT = true;
     public float LITTLE_ANGLE_HALF_INTERVAL_DEG = 10;
