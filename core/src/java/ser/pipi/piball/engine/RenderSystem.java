@@ -94,17 +94,23 @@ public class RenderSystem {
         final String statusPI = localState.statusPI;
         final int X_CENTER = Gdx.graphics.getWidth()/2;
 
+        final float preScale = font.getData().scaleX;
+
+        font.getData().setScale(0.3f*3);
+
         FontList.printTextCenter(spriteBatch, font,statusPI,
                 X_CENTER,Gdx.graphics.getHeight()/2 - 100 - font.getLineHeight()*2);
 
         final String statusNET = localState.statusNET;
         FontList.printTextCenter(spriteBatch, font,statusNET,
-                X_CENTER,Gdx.graphics.getHeight()*2/3 );
+                X_CENTER,Gdx.graphics.getHeight()*3/4 );
 
         final String statusPIEnemy = allObjectsState.statusPIEnemy.isEmpty()
                 ? "" : "player enemy: " + allObjectsState.statusPIEnemy;
         FontList.printTextCenter(spriteBatch, font, statusPIEnemy,
                 X_CENTER,Gdx.graphics.getHeight()/2 + 100);
+
+        font.getData().setScale(preScale);
 
         if(ss.SHOW_FPS) {
             final float frameRate = Gdx.graphics.getFramesPerSecond();
