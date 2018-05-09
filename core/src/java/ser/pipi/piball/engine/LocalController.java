@@ -32,12 +32,15 @@ public class LocalController {
         localState.inputStatus = positionInterface.getState();
 
         int pos = positionInterface.getPosition();
-        if (pos < PositionInterface.POSITION_MIN){
+        if (pos < PositionInterface.POSITION_MIN || pos > PositionInterface.POSITION_MAX){
             return;
+        }
+        if(ss.INVERT_POSITION){
+            pos = PositionInterface.POSITION_MAX - pos;
         }
         pos = filterLFPosition(delta, pos);
         current_position = pos;
-        final float XP = (Gdx.graphics.getWidth()*pos)/ positionInterface.POSITION_MAX;
+        final float XP = (Gdx.graphics.getWidth()*pos)/ PositionInterface.POSITION_MAX;
         setXCenterPaddle(XP);
     }
 
