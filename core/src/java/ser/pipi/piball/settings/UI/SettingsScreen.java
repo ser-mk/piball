@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
@@ -32,6 +33,7 @@ public class SettingsScreen implements Screen {
     final Skin skin;
     final Stage stage;
     final SpriteBatch spriteBatch;
+    final ScrollPane scrollPane;
     final PrefTable prefTable;
 
     public SettingsScreen(Piball piball) {
@@ -44,13 +46,16 @@ public class SettingsScreen implements Screen {
                 ".json"));
 
         prefTable = new PrefTable(skin);
+        scrollPane = new ScrollPane(prefTable);
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
 
-        stage.addActor(prefTable);
+        scrollPane.setBounds(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+
+        stage.addActor(scrollPane);
         prefTable.setPosition(0, 0);
 
         //prefTable.debug();
