@@ -89,6 +89,7 @@ public class NormalizeNumberField {
         mapInterval.put("LITTLE_ANGLE_HALF_INTERVAL_DEG", new Interval(0,40));
         mapInterval.put("ADD_DEG_FOR_FORCED_ANGLE", new Interval(0,50));
 
+        mapInterval.put("TIMEOUT_SEC_DEADTIME_PADDLE_UNDEF", new Interval(0,5));
 
         mapInterval.put("BALL_ACC", new Interval(0,10));
         mapInterval.put("MAX_BALL_VELOCITY", new Interval(10,10*1000));
