@@ -44,4 +44,5 @@ public class Settings {
     public boolean SHOW_FPS = false;
 
     public boolean MANUAL_TOUCH_CONTROL = true;
+    public boolean INVERT_POSITION = false;
 }
