@@ -71,7 +71,10 @@ public class AndroidLauncher extends AndroidApplication {
 			ss.IS_SERVER = this.getIntent().getBooleanExtra("Server", false);
 		}
 		Log.d ( "Server:", "" + ss.IS_SERVER);
-		return ss;
+		if (BuildConfig.DEBUG){
+			ss.SHOW_DEBUG = true;
+		}
+			return ss;
 	}
 
 	@Override
