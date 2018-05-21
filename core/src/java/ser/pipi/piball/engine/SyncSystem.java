@@ -52,6 +52,14 @@ public class SyncSystem implements GameNetImpl, Disposable {
 
         if (this.ss.IS_SERVER) {
             stateController.update(delta);
+        } else {
+            if(recievePassMessages > 0) {
+                stateController.updateClient(delta);
+                timePassFromServer += delta;
+            } else {
+                timePassFromServer = 0;
+            }
+            recievePassMessages += 1;
         }
 
         final Object state = this.ss.IS_SERVER ? allObjectsState : localState;
@@ -61,26 +69,35 @@ public class SyncSystem implements GameNetImpl, Disposable {
         } else {
             sendTimeout += delta;
         }
-
     }
+
+    final Object netMonitor = new Object();
+    static int recievePassMessages = 0;
+    static float timePassFromServer = 0;
+
+    public static int  getPassMessage(){ return recievePassMessages; }
+    public static float getTimePass(){ return timePassFromServer; }
 
     @Override
     public void recieve(Connection connection, Object object) {
-        if (object instanceof AllObjectsState) {
-            inversServerState((AllObjectsState)object);
-            if(!checkHasNullPublicField((AllObjectsState)object, AllObjectsState.class)) {
-                cloneStateStore((AllObjectsState) object);
+        synchronized (netMonitor) {
+            if (object instanceof AllObjectsState) {
+                inversServerState((AllObjectsState) object);
+                if (!checkHasNullPublicField((AllObjectsState) object, AllObjectsState.class)) {
+                    cloneStateStore((AllObjectsState) object);
+                }
             }
-        }
 
-        if (object instanceof LocalState) {
-            final LocalState ls =  (LocalState) object;
-            //Gdx.app.log(TAG, "enemy : " + ls.paddleSelf.getX());
-            inverseLocalPaddle(ls);
-            allObjectsState.paddleEnemy.setX(ls.paddleSelf.getX());
-            allObjectsState.statusPIEnemy = ls.statusPI;
-            allObjectsState.flagEnemy = ls.flag;
-            allObjectsState.inputStatusEnemy = ls.inputStatus;
+            if (object instanceof LocalState) {
+                final LocalState ls = (LocalState) object;
+                inverseLocalPaddle(ls);
+                allObjectsState.paddleEnemy.setX(ls.paddleSelf.getX());
+                allObjectsState.statusPIEnemy = ls.statusPI;
+                allObjectsState.flagEnemy = ls.flag;
+                allObjectsState.inputStatusEnemy = ls.inputStatus;
+            }
+
+            recievePassMessages = 0;
         }
     }
 
