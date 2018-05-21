@@ -115,6 +115,11 @@ public class RenderSystem {
         if(ss.SHOW_FPS) {
             final float frameRate = Gdx.graphics.getFramesPerSecond();
             font.draw(spriteBatch, frameRate + " fps", 0, 222);
+
+            font.draw(spriteBatch,
+                    SyncSystem.getPassMessage() + " pm", 0, 255);
+            font.draw(spriteBatch,
+                    SyncSystem.getTimePass() + " ms", 0, 288);
         }
     }
 
