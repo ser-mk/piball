@@ -45,6 +45,12 @@ public class StateController {
         }
     }
 
+    public void updateClient(float delta){
+        ball(delta);
+        final boolean wasReflection = reflection();
+        reflectionEffect(wasReflection);
+    }
+
     private void paddleSelf(float delta){
         final float XP = localStore.paddleSelf.getX();
         allObjectsState.paddleSelf.setX(XP);
