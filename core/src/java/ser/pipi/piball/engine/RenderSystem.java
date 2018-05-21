@@ -112,7 +112,7 @@ public class RenderSystem {
 
         font.getData().setScale(preScale);
 
-        if(ss.SHOW_FPS) {
+        if(ss.SHOW_DEBUG) {
             final float frameRate = Gdx.graphics.getFramesPerSecond();
             font.draw(spriteBatch, frameRate + " fps", 0, 222);
 

@@ -41,7 +41,7 @@ public class Settings {
 
     public float TIMEOUT_SEC_DEADTIME_PADDLE_UNDEF = 1;
 
-    public boolean SHOW_FPS = false;
+    public boolean SHOW_DEBUG = false;
 
     public boolean MANUAL_TOUCH_CONTROL = true;
     public boolean INVERT_POSITION = false;
