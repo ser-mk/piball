@@ -54,7 +54,7 @@ public class SyncSystem implements GameNetImpl, Disposable {
             stateController.update(delta);
         } else {
             if(recievePassMessages > 0) {
-                stateController.updateClient(delta);
+                //stateController.updateClient(delta);
                 timePassFromServer += delta;
             } else {
                 timePassFromServer = 0;
