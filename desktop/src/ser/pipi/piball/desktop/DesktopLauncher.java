@@ -18,6 +18,7 @@ public class DesktopLauncher {
 		final int bankport = Integer.parseInt(arg[1]);
 		ss.IS_SERVER = server;
 		ss.PORT_GROUP = bankport;
+		ss.SHOW_DEBUG = true;
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = server ? "IS_SERVER" : "client";
