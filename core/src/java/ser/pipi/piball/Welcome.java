@@ -55,7 +55,7 @@ public class Welcome implements Screen {
 
     final ArrayList<Integer> historyChoiceFlag= new ArrayList<Integer>();
     final ArrayList<Integer> FLAG_PASSWORD = new ArrayList<Integer>(
-            Arrays.asList(24,28,24,28, 20,28,20,28));
+            Arrays.asList(15,3,0)); //Argentina->Croatia->Japan->Poland
 
     State state = State.CHOICE;
 
