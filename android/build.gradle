@@ -10,7 +10,7 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     buildToolsVersion "26.0.2"
-    compileSdkVersion 23
+    compileSdkVersion 24
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -29,8 +29,8 @@ android {
     }
     defaultConfig {
         applicationId "ser.pipi.piball"
-        minSdkVersion 23
-        targetSdkVersion 23
+        minSdkVersion 24
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
 
@@ -122,9 +122,11 @@ idea {
 
 dependencies {
     compile project(':PiLib')
+
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support:support-annotations:' + rootProject.supportLibVersion
     androidTestCompile 'com.android.support.test:runner:' + rootProject.runnerVersion
     androidTestCompile 'com.android.support.test:rules:' + rootProject.rulesVersion
     androidTestCompile 'com.android.support.test.espresso:espresso-core:' + rootProject.espressoVersion
+
 }
