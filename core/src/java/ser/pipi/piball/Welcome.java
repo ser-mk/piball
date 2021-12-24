@@ -131,6 +131,7 @@ public class Welcome implements Screen {
         if (endForce){
             waitEnd += delta;
             if (waitEnd > ss.WAIT_SEC_END_WELCOME){
+                Gdx.app.log(TAG,"end force; waitEnd= " + waitEnd + " / " + ss.WAIT_SEC_END_WELCOME);
                 piball.exit();
             }
         } else {

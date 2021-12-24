@@ -165,7 +165,8 @@ public class ResultScreen implements Screen {
 
         if(piStatus == PositionInterface.InputStatus.CLOSE_GAME ||
                 piStatus == PositionInterface.InputStatus.CONNECTED_PROBLEM) {
-            piball.exit();
+            // piball.exit();
+            Gdx.app.log(TAG, "Get Pi status: " + piStatus);
             return;
         }
     }

@@ -5,7 +5,7 @@ package ser.pipi.piball;
  */
 
 public class Settings {
-    public float WAIT_SEC_END_WELCOME = 2;
+    public float WAIT_SEC_END_WELCOME = 120;
 
     public float Y_PADDLES_HIFT = 0;
     public float WIDTH_PADDLE = 155;
